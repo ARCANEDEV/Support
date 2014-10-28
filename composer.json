@@ -1,0 +1,22 @@
+{
+    "name": "arcanedev/support",
+    "description": "ARCANEDEV Support Library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ARCANEDEV",
+            "email": "contact@arcanedev.net"
+        }
+    ],
+    "require": {
+        "patchwork/utf8": "~1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Arcanedev\\Support\\": "src/",
+            "Arcanedev\\Support\\Tests\\": "tests/"
+        },
+        "files": ["src/helpers.php"]
+    },
+    "minimum-stability": "stable"
+}
