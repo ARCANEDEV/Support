@@ -23,7 +23,7 @@
         "psr-4": {
             "Arcanedev\\Support\\": "src/"
         },
-        "files": ["src/helpers.php"]
+        "files": ["helpers.php"]
     },
     "autoload-dev": {
         "psr-4": {
