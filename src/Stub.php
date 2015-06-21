@@ -43,8 +43,8 @@ class Stub
      */
     public function __construct($path, array $replaces = [])
     {
-        $this->path     = $path;
-        $this->replaces = $replaces;
+        $this->setPath($path);
+        $this->setReplaces($replaces);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -110,13 +110,25 @@ class Stub
      *
      * @param  array $replaces
      *
-     * @return $this
+     * @return self
      */
-    public function replace(array $replaces = [])
+    public function setReplaces(array $replaces = [])
     {
         $this->replaces = $replaces;
 
         return $this;
+    }
+
+    /**
+     * Set replacements array.
+     *
+     * @param  array $replaces
+     *
+     * @return self
+     */
+    public function replaces(array $replaces = [])
+    {
+        return $this->setReplaces($replaces);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -163,22 +175,6 @@ class Stub
     }
 
     /**
-     * Get stub contents.
-     *
-     * @return mixed|string
-     */
-    public function getContents()
-    {
-        $contents = file_get_contents($this->getPath());
-
-        foreach ($this->replaces as $search => $replace) {
-            $contents = str_replace('$' . strtoupper($search) . '$', $replace, $contents);
-        }
-
-        return $contents;
-    }
-
-    /**
      * Save stub to specific path.
      *
      * @param  string $path
@@ -188,7 +184,23 @@ class Stub
      */
     public function saveTo($path, $filename)
     {
-        return file_put_contents($path . '/' . $filename, $this->getContents());
+        return file_put_contents($path . '/' . $filename, $this->render());
+    }
+
+    /**
+     * Get stub contents.
+     *
+     * @return mixed|string
+     */
+    public function getContents()
+    {
+        $contents = file_get_contents($this->getPath());
+
+        foreach ($this->getReplaces() as $search => $replace) {
+            $contents = str_replace('$' . strtoupper($search) . '$', $replace, $contents);
+        }
+
+        return $contents;
     }
 
     /**

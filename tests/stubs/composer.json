@@ -1,0 +1,20 @@
+{
+    "name": "arcanedev/package",
+    "description": "",
+    "authors": [
+        {
+            "name": "ARCANEDEV",
+            "email": "arcanedev.maroc@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Arcanedev\\Package\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Arcanedev\\Package\\Tests\\": "tests/"
+        }
+    }
+}
