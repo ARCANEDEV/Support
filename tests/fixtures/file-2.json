@@ -8,5 +8,11 @@
             "name": "ARCANEDEV",
             "email": "contact@arcanedev.net"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Arcanedev\\Support\\": "src/"
+        },
+        "files": ["helpers.php"]
+    }
 }

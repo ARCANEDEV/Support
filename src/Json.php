@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\Support;
 
 use Arcanedev\Support\Contracts\Arrayable;
+use Arcanedev\Support\Contracts\FilesystemInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 
@@ -24,7 +25,7 @@ class Json implements Arrayable
     /**
      * The laravel filesystem instance.
      *
-     * @var Filesystem
+     * @var FilesystemInterface
      */
     protected $filesystem;
 
@@ -42,10 +43,10 @@ class Json implements Arrayable
     /**
      * The constructor.
      *
-     * @param mixed      $path
-     * @param Filesystem $filesystem
+     * @param mixed               $path
+     * @param FilesystemInterface $filesystem
      */
-    public function __construct($path, Filesystem $filesystem = null)
+    public function __construct($path, FilesystemInterface $filesystem = null)
     {
         $this->path         = (string) $path;
         $this->filesystem   = $filesystem ?: new Filesystem;
@@ -59,7 +60,7 @@ class Json implements Arrayable
     /**
      * Get filesystem.
      *
-     * @return Filesystem
+     * @return FilesystemInterface
      */
     public function getFilesystem()
     {
@@ -69,11 +70,11 @@ class Json implements Arrayable
     /**
      * Set filesystem.
      *
-     * @param  Filesystem $filesystem
+     * @param  FilesystemInterface $filesystem
      *
      * @return self
      */
-    public function setFilesystem(Filesystem $filesystem)
+    public function setFilesystem(FilesystemInterface $filesystem)
     {
         $this->filesystem = $filesystem;
 
@@ -111,12 +112,12 @@ class Json implements Arrayable
     /**
      * Make new instance.
      *
-     * @param string     $path
-     * @param Filesystem $filesystem
+     * @param  string              $path
+     * @param  FilesystemInterface $filesystem
      *
      * @return static
      */
-    public static function make($path, Filesystem $filesystem = null)
+    public static function make($path, FilesystemInterface $filesystem = null)
     {
         return new static($path, $filesystem);
     }
@@ -132,28 +133,6 @@ class Json implements Arrayable
     }
 
     /**
-     * Get file contents as array.
-     *
-     * @return array
-     */
-    public function getAttributes()
-    {
-        return json_decode($this->getContents(), true);
-    }
-
-    /**
-     * Convert the given array data to pretty json.
-     *
-     * @param  array $data
-     *
-     * @return string
-     */
-    public function toJsonPretty(array $data = null)
-    {
-        return json_encode($data ?: $this->attributes, JSON_PRETTY_PRINT);
-    }
-
-    /**
      * Update json contents from array data.
      *
      * @param  array $data
@@ -162,11 +141,29 @@ class Json implements Arrayable
      */
     public function update(array $data)
     {
-        $data = array_merge($this->attributes->toArray(), $data);
-
-        $this->attributes = new Collection($data);
+        $this->attributes = new Collection(array_merge(
+            $this->attributes->toArray(),
+            $data
+        ));
 
         return $this->save();
+    }
+
+    /**
+     * Handle call to __call method.
+     *
+     * @param  string $method
+     * @param  array  $arguments
+     *
+     * @return mixed
+     */
+    public function __call($method, $arguments = [])
+    {
+        if (method_exists($this, $method)) {
+            return call_user_func_array([$this, $method], $arguments);
+        }
+
+        return call_user_func_array([$this->attributes, $method], $arguments);
     }
 
     /**
@@ -220,20 +217,25 @@ class Json implements Arrayable
     }
 
     /**
-     * Handle call to __call method.
+     * Get file contents as array.
      *
-     * @param  string $method
-     * @param  array  $arguments
-     *
-     * @return mixed
+     * @return array
      */
-    public function __call($method, $arguments = [])
+    public function getAttributes()
     {
-        if (method_exists($this, $method)) {
-            return call_user_func_array([$this, $method], $arguments);
-        }
+        return json_decode($this->getContents(), true);
+    }
 
-        return call_user_func_array([$this->attributes, $method], $arguments);
+    /**
+     * Convert the given array data to pretty json.
+     *
+     * @param  array $data
+     *
+     * @return string
+     */
+    public function toJsonPretty(array $data = null)
+    {
+        return json_encode($data ?: $this->attributes, JSON_PRETTY_PRINT);
     }
 
     /**
