@@ -85,7 +85,7 @@ class JsonTest extends TestCase
             $this->json->getFilesystem()
         );
 
-        $mock       = 'Arcanedev\\Support\\Contracts\\FilesystemInterface';
+        $mock       = 'Illuminate\\Filesystem\\Filesystem';
         $filesystem = $this->prophesize($mock);
         $this->json->setFilesystem($filesystem->reveal());
 

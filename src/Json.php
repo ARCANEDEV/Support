@@ -1,7 +1,6 @@
 <?php namespace Arcanedev\Support;
 
 use Arcanedev\Support\Contracts\Arrayable;
-use Arcanedev\Support\Contracts\FilesystemInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 
@@ -25,7 +24,7 @@ class Json implements Arrayable
     /**
      * The laravel filesystem instance.
      *
-     * @var FilesystemInterface
+     * @var Filesystem
      */
     protected $filesystem;
 
@@ -44,9 +43,9 @@ class Json implements Arrayable
      * The constructor.
      *
      * @param mixed               $path
-     * @param FilesystemInterface $filesystem
+     * @param Filesystem $filesystem
      */
-    public function __construct($path, FilesystemInterface $filesystem = null)
+    public function __construct($path, Filesystem $filesystem = null)
     {
         $this->path         = (string) $path;
         $this->filesystem   = $filesystem ?: new Filesystem;
@@ -60,7 +59,7 @@ class Json implements Arrayable
     /**
      * Get filesystem.
      *
-     * @return FilesystemInterface
+     * @return Filesystem
      */
     public function getFilesystem()
     {
@@ -70,11 +69,11 @@ class Json implements Arrayable
     /**
      * Set filesystem.
      *
-     * @param  FilesystemInterface $filesystem
+     * @param  Filesystem $filesystem
      *
      * @return self
      */
-    public function setFilesystem(FilesystemInterface $filesystem)
+    public function setFilesystem(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
 
@@ -113,11 +112,11 @@ class Json implements Arrayable
      * Make new instance.
      *
      * @param  string              $path
-     * @param  FilesystemInterface $filesystem
+     * @param  Filesystem $filesystem
      *
      * @return static
      */
-    public static function make($path, FilesystemInterface $filesystem = null)
+    public static function make($path, Filesystem $filesystem = null)
     {
         return new static($path, $filesystem);
     }
