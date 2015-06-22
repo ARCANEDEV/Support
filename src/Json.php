@@ -234,7 +234,7 @@ class Json implements Arrayable
      */
     public function toJsonPretty(array $data = null)
     {
-        return json_encode($data ?: $this->attributes, JSON_PRETTY_PRINT);
+        return json_encode($data ?: $this->attributes, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     }
 
     /**
