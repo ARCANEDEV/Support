@@ -2,7 +2,6 @@
 
 use Arcanedev\Support\Contracts\Arrayable;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Collection;
 
 /**
  * Class Json
@@ -31,7 +30,7 @@ class Json implements Arrayable
     /**
      * The attributes collection.
      *
-     * @var \Illuminate\Support\Collection
+     * @var Collection
      */
     protected $attributes;
 
@@ -42,7 +41,7 @@ class Json implements Arrayable
     /**
      * The constructor.
      *
-     * @param mixed               $path
+     * @param mixed      $path
      * @param Filesystem $filesystem
      */
     public function __construct($path, Filesystem $filesystem = null)
@@ -111,7 +110,7 @@ class Json implements Arrayable
     /**
      * Make new instance.
      *
-     * @param  string              $path
+     * @param  string     $path
      * @param  Filesystem $filesystem
      *
      * @return static
@@ -158,11 +157,9 @@ class Json implements Arrayable
      */
     public function __call($method, $arguments = [])
     {
-        if (method_exists($this, $method)) {
-            return call_user_func_array([$this, $method], $arguments);
-        }
-
-        return call_user_func_array([$this->attributes, $method], $arguments);
+        return method_exists($this, $method)
+            ? call_user_func_array([$this, $method], $arguments)
+            : $this->attributes->get($method);
     }
 
     /**

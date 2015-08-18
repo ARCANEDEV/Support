@@ -2,6 +2,10 @@
 
 use Arcanedev\Support\Json;
 
+/**
+ * Class JsonTest
+ * @package Arcanedev\Support\Tests
+ */
 class JsonTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
@@ -99,18 +103,22 @@ class JsonTest extends TestCase
 
         $this->assertEquals($fixture['name'], $this->json->get('name'));
         $this->assertEquals($fixture['name'], $this->json->name);
+        $this->assertEquals($fixture['name'], $this->json->name());
 
         $this->assertEquals($fixture['description'], $this->json->get('description'));
         $this->assertEquals($fixture['description'], $this->json->description);
+        $this->assertEquals($fixture['description'], $this->json->description());
 
         $this->assertNull($this->json->get('url', null));
         $this->assertNull($this->json->url);
+        $this->assertNull($this->json->url());
 
         $url = 'https://www.github.com';
         $this->json->set('url', $url);
 
         $this->assertEquals($url, $this->json->get('url'));
         $this->assertEquals($url, $this->json->url);
+        $this->assertEquals($url, $this->json->url());
     }
 
     /** @test */
