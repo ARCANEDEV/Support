@@ -2,6 +2,10 @@
 
 use Arcanedev\Support\Stub;
 
+/**
+ * Class StubTest
+ * @package Arcanedev\Support\Tests
+ */
 class StubTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
