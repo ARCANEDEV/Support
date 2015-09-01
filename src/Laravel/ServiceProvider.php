@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\Support\Laravel;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
@@ -10,26 +11,60 @@ use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 abstract class ServiceProvider extends IlluminateServiceProvider
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Properties
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Alias loader
+     *
+     * @var AliasLoader
+     */
+    private $aliasLoader;
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Constructor
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Create a new service provider instance.
+     *
+     * @param  Application  $app
+     */
+    public function __construct(Application $app)
+    {
+        parent::__construct($app);
+
+        $this->aliasLoader = AliasLoader::getInstance();
+    }
+
+    /* ------------------------------------------------------------------------------------------------
      |  Other Functions
      | ------------------------------------------------------------------------------------------------
      */
     /**
      * Add Aliases into the app
      *
-     * @param  array $aliases
+     * @param  array  $aliases
      *
      * @return self
      */
     protected function addAliases(array $aliases)
     {
-        if (count($aliases)) {
-            $loader = AliasLoader::getInstance();
-
-            foreach ($aliases as $alias => $class) {
-                $loader->alias($alias, $class);
-            }
+        foreach ($aliases as $alias => $facade) {
+            $this->addAlias($alias, $facade);
         }
 
         return $this;
+    }
+
+    /**
+     * Add Alias (Facade)
+     *
+     * @param  string  $alias
+     * @param  string  $facade
+     */
+    protected function addAlias($alias, $facade)
+    {
+        $this->aliasLoader->alias($alias, $facade);
     }
 }
