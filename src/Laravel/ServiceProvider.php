@@ -15,6 +15,13 @@ abstract class ServiceProvider extends IlluminateServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * The application instance.
+     *
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
+
+    /**
      * Alias loader
      *
      * @var AliasLoader
