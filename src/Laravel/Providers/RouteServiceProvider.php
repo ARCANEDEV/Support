@@ -1,7 +1,7 @@
 <?php namespace Arcanedev\Support\Laravel\Providers;
 
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as IlluminateRouteServiceProvider;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -10,7 +10,7 @@ use SplFileInfo;
  * Class RouteServiceProvider
  * @package Arcanedev\Foundation\Bases
  */
-abstract class RouteServiceProvider extends IlluminateRouteServiceProvider
+abstract class RouteServiceProvider extends ServiceProvider
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
