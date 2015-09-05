@@ -1,13 +1,15 @@
 <?php namespace Arcanedev\Support;
 
-use Arcanedev\Support\Contracts\Arrayable;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Filesystem\Filesystem;
+use JsonSerializable;
 
 /**
  * Class Json
  * @package Arcanedev\Workbench\Helpers
  */
-class Json implements Arrayable
+class Json implements Arrayable, Jsonable, JsonSerializable
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -39,10 +41,10 @@ class Json implements Arrayable
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * The constructor.
+     * Construct the Json instance.
      *
-     * @param mixed      $path
-     * @param Filesystem $filesystem
+     * @param  mixed       $path
+     * @param  Filesystem  $filesystem
      */
     public function __construct($path, Filesystem $filesystem = null)
     {
@@ -56,7 +58,7 @@ class Json implements Arrayable
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Get filesystem.
+     * Get the filesystem instance.
      *
      * @return Filesystem
      */
@@ -66,9 +68,9 @@ class Json implements Arrayable
     }
 
     /**
-     * Set filesystem.
+     * Set the filesystem instance.
      *
-     * @param  Filesystem $filesystem
+     * @param  Filesystem  $filesystem
      *
      * @return self
      */
@@ -92,7 +94,7 @@ class Json implements Arrayable
     /**
      * Set path.
      *
-     * @param  mixed $path
+     * @param  mixed  $path
      *
      * @return self
      */
@@ -110,8 +112,8 @@ class Json implements Arrayable
     /**
      * Make new instance.
      *
-     * @param  string     $path
-     * @param  Filesystem $filesystem
+     * @param  string      $path
+     * @param  Filesystem  $filesystem
      *
      * @return static
      */
@@ -133,7 +135,7 @@ class Json implements Arrayable
     /**
      * Update json contents from array data.
      *
-     * @param  array $data
+     * @param  array  $data
      *
      * @return bool
      */
@@ -150,8 +152,8 @@ class Json implements Arrayable
     /**
      * Handle call to __call method.
      *
-     * @param  string $method
-     * @param  array  $arguments
+     * @param  string  $method
+     * @param  array   $arguments
      *
      * @return mixed
      */
@@ -165,7 +167,7 @@ class Json implements Arrayable
     /**
      * Handle magic method __get.
      *
-     * @param  string $key
+     * @param  string  $key
      *
      * @return mixed
      */
@@ -177,8 +179,8 @@ class Json implements Arrayable
     /**
      * Get the specified attribute from json file.
      *
-     * @param  string     $key
-     * @param  mixed|null $default
+     * @param  string      $key
+     * @param  mixed|null  $default
      *
      * @return mixed
      */
@@ -190,8 +192,8 @@ class Json implements Arrayable
     /**
      * Set a specific key & value.
      *
-     * @param  string $key
-     * @param  mixed  $value
+     * @param  string  $key
+     * @param  mixed   $value
      *
      * @return self
      */
@@ -225,7 +227,7 @@ class Json implements Arrayable
     /**
      * Convert the given array data to pretty json.
      *
-     * @param  array $data
+     * @param  array  $data
      *
      * @return string
      */
@@ -245,12 +247,34 @@ class Json implements Arrayable
     }
 
     /**
-     * Convert to array
+     * Convert to array.
      *
      * @return array
      */
     public function toArray()
     {
         return $this->getAttributes();
+    }
+
+    /**
+     * Convert the object to its JSON representation.
+     *
+     * @param  int  $options
+     *
+     * @return string
+     */
+    public function toJson($options = 0)
+    {
+        return json_encode($this->toArray(), $options);
+    }
+
+    /**
+     * Allow to encode the json object to json file.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 }
