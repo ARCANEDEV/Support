@@ -45,7 +45,7 @@ abstract class ServiceProvider extends IlluminateServiceProvider
     }
 
     /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
+     |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
     /**
@@ -55,10 +55,10 @@ abstract class ServiceProvider extends IlluminateServiceProvider
      *
      * @return self
      */
-    protected function addAliases(array $aliases)
+    protected function addFacades(array $aliases)
     {
         foreach ($aliases as $alias => $facade) {
-            $this->addAlias($alias, $facade);
+            $this->addFacade($alias, $facade);
         }
 
         return $this;
@@ -70,7 +70,7 @@ abstract class ServiceProvider extends IlluminateServiceProvider
      * @param  string  $alias
      * @param  string  $facade
      */
-    protected function addAlias($alias, $facade)
+    protected function addFacade($alias, $facade)
     {
         $this->aliasLoader->alias($alias, $facade);
     }
