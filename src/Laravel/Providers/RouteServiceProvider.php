@@ -2,6 +2,7 @@
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Routing\Router;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -16,6 +17,9 @@ abstract class RouteServiceProvider extends ServiceProvider
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    /** @var Router */
+    protected $router;
+
     /**
      * Route namespace.
      *
@@ -54,28 +58,79 @@ abstract class RouteServiceProvider extends ServiceProvider
     }
 
     /* ------------------------------------------------------------------------------------------------
+     |  Getters & Setters
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Set the Router
+     *
+     * @param  Router  $router
+     *
+     * @return self
+     */
+    private function setRouter($router)
+    {
+        $this->router = $router;
+
+        return $this;
+    }
+
+    /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Boot the route service provider
+     *
+     * @param  Router  $router
+     */
+    public function boot(Router $router)
+    {
+        $this->setRouter($router);
+
+        parent::boot($router);
+    }
+
+    /**
+     * Define the routes for the application.
+     *
+     * @param  Router  $router
+     */
+    abstract public function map(Router $router = null);
+
+    /**
+     * Map routes
+     *
+     * @param  string  $directory
+     * @param  array   $attributes
+     */
+    protected function mapRoutes($directory, array $attributes = [])
+    {
+        $this->registerRoutes($directory);
+
+        $this->router->group($attributes, function () {
+            foreach ($this->routes as $route) {
+                $this->app->make($route)->map($this->router);
+            }
+        });
+    }
+
+    /**
      * Register Routes.
      *
      * @param  string  $directory
-     *
-     * @return array
      */
     protected function registerRoutes($directory)
     {
-        $di     = new RecursiveDirectoryIterator(
+        $di = new RecursiveDirectoryIterator(
             $directory,
             RecursiveDirectoryIterator::SKIP_DOTS
         );
 
         foreach(new RecursiveIteratorIterator($di) as $file) {
+            /** @var SplFileInfo $file */
             $this->addRouteFromFile($file);
         }
-
-        return $this->routes;
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -90,17 +145,30 @@ abstract class RouteServiceProvider extends ServiceProvider
      */
     private function addRouteFromFile(SplFileInfo $file, $needle = 'Routes\\')
     {
-        if (
-            $file->isFile() &&
-            pathinfo($file, PATHINFO_EXTENSION) === 'php'
-        ) {
+        if ($file->isFile() && pathinfo($file, PATHINFO_EXTENSION) === 'php') {
             $pos = strpos($file->getRealPath(), $needle);
 
             if ($pos !== false) {
-                $path           = str_replace('.php', '', $file->getRealPath());
-                $route          = substr($path, $pos + strlen($needle));
-                $this->routes[] = $this->namespace . '\\' . $route;
+                $route  = substr(
+                    str_replace('.php', '', $file->getRealPath()),
+                    $pos + strlen($needle)
+                );
+                $this->addRoute($route);
             }
         }
+    }
+
+    /**
+     * Add route to collection
+     *
+     * @param  string  $route
+     *
+     * @return self
+     */
+    private function addRoute($route)
+    {
+        $this->routes[] = $this->namespace . '\\' . $route;
+
+        return $this;
     }
 }
