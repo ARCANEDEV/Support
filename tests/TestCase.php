@@ -1,12 +1,12 @@
 <?php namespace Arcanedev\Support\Tests;
 
-use PHPUnit_Framework_TestCase;
+use Orchestra\Testbench\TestCase as BaseTestCase;
 
 /**
  * Class TestCase
  * @package Arcanedev\Support\Tests
  */
-abstract class TestCase extends PHPUnit_Framework_TestCase
+abstract class TestCase extends BaseTestCase
 {
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
