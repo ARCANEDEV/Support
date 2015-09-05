@@ -1,5 +1,7 @@
 <?php namespace Arcanedev\Support\Laravel;
 
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
 use ReflectionClass;
 
 /**
@@ -13,14 +15,21 @@ abstract class PackageServiceProvider extends ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Package name
+     * Package name.
      *
      * @var string
      */
     protected $package = '';
 
     /**
-     * Paths collection
+     * Package path.
+     *
+     * @var string
+     */
+    protected $packagePath = '';
+
+    /**
+     * Paths collection.
      *
      * @var array
      */
@@ -31,31 +40,71 @@ abstract class PackageServiceProvider extends ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Get package base path
+     * Get package base path.
      *
      * @return string
      */
     protected function getPackagePath()
     {
+        return $this->packagePath;
+    }
+
+    /**
+     * Set package path.
+     *
+     * @return self
+     */
+    private function setPackagePath()
+    {
         $path = (new ReflectionClass(get_class($this)))
             ->getFileName();
 
-        return dirname(dirname($path));
+        $this->packagePath = dirname(dirname($path));
+
+        return $this;
+    }
+
+    /**
+     * Get config path.
+     *
+     * @return string
+     */
+    public function getConfigPath()
+    {
+        return $this->getPackagePath() . '/config';
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Constructor
+     | ------------------------------------------------------------------------------------------------
+     */
+    public function __construct(Application $app)
+    {
+        parent::__construct($app);
+
+        $this->setPackagePath();
     }
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Boot the package.
+     *
+     * @throws Exception
+     */
     public function boot()
     {
         if (empty($this->package) ) {
-            throw new \Exception('You must specify the name of the package');
+            throw new Exception(
+                'You must specify the name of the package'
+            );
         }
     }
 
     /**
-     * Setup package
+     * Setup package path and stuff.
      *
      * @param  string $path
      *
@@ -73,39 +122,26 @@ abstract class PackageServiceProvider extends ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Register all package configs
+     * Register all package configs.
      *
      * @return self
      */
     protected function registerConfigs()
     {
-        array_map(function ($path) {
-            $this->mergeConfig($path);
-        }, glob($this->getPackagePath() . '/config/*.php'));
+        $paths = glob($this->packagePath . '/config/*.php');
+
+        foreach ($paths as $path) {
+            $key = $this->package . '.' . basename($path, '.php');
+            $this->mergeConfigFrom($path, $key);
+        }
 
         return $this;
     }
 
     /**
-     * Merge config files
+     * Setup paths.
      *
-     * @param  string $path
-     *
-     * @return self
-     */
-    private function mergeConfig($path)
-    {
-        $this->mergeConfigFrom($path,
-            $this->package . '.' . basename($path, '.php')
-        );
-
-        return $this;
-    }
-
-    /**
-     * Setup paths
-     *
-     * @param  string $path
+     * @param  string  $path
      *
      * @return self
      */
