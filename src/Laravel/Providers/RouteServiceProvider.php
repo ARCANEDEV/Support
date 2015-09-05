@@ -18,14 +18,14 @@ abstract class RouteServiceProvider extends ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /** @var Router */
-    protected $router;
+    private $router;
 
     /**
      * Route collection.
      *
      * @var array
      */
-    protected $routes    = [];
+    private $routes = [];
 
     /**
      * Routes path.
@@ -98,7 +98,7 @@ abstract class RouteServiceProvider extends ServiceProvider
     protected function registerRoutes($directory)
     {
         $di = new RecursiveDirectoryIterator(
-            $directory,
+            $directory . '/' . $this->routesPath,
             RecursiveDirectoryIterator::SKIP_DOTS
         );
 
