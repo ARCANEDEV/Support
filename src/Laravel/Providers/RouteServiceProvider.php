@@ -1,6 +1,6 @@
 <?php namespace Arcanedev\Support\Laravel\Providers;
 
-use Illuminate\Contracts\Foundation\Application;
+use Exception;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
 use RecursiveDirectoryIterator;
@@ -21,13 +21,6 @@ abstract class RouteServiceProvider extends ServiceProvider
     protected $router;
 
     /**
-     * Route namespace.
-     *
-     * @var string
-     */
-    protected $namespace = '';
-
-    /**
      * Route collection.
      *
      * @var array
@@ -42,25 +35,16 @@ abstract class RouteServiceProvider extends ServiceProvider
     protected $routesPath  = '../Http/Routes';
 
     /* ------------------------------------------------------------------------------------------------
-     |  Constructor
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Create a new service provider instance.
-     *
-     * @param  Application  $app
-     */
-    public function __construct($app)
-    {
-        parent::__construct($app);
-
-        $this->routes = [];
-    }
-
-    /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Get the routes namespace
+     *
+     * @return string
+     */
+    abstract protected function getRouteNamespace();
+
     /**
      * Set the Router
      *
@@ -80,32 +64,23 @@ abstract class RouteServiceProvider extends ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Boot the route service provider
-     *
-     * @param  Router  $router
-     */
-    public function boot(Router $router)
-    {
-        $this->setRouter($router);
-
-        parent::boot($router);
-    }
-
-    /**
      * Define the routes for the application.
      *
      * @param  Router  $router
      */
-    abstract public function map(Router $router = null);
+    abstract public function map(Router $router);
 
     /**
      * Map routes
      *
+     * @param  Router  $router
      * @param  string  $directory
      * @param  array   $attributes
      */
-    protected function mapRoutes($directory, array $attributes = [])
+    protected function mapRoutes(Router $router, $directory, array $attributes = [])
     {
+        $this->checkRouteNamespace();
+        $this->setRouter($router);
         $this->registerRoutes($directory);
 
         $this->router->group($attributes, function () {
@@ -130,6 +105,22 @@ abstract class RouteServiceProvider extends ServiceProvider
         foreach(new RecursiveIteratorIterator($di) as $file) {
             /** @var SplFileInfo $file */
             $this->addRouteFromFile($file);
+        }
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Check Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Check the route namespace
+     *
+     * @throws Exception
+     */
+    private function checkRouteNamespace()
+    {
+        if (empty($this->getRouteNamespace())) {
+            throw new Exception('The routes namespace is empty.');
         }
     }
 
@@ -167,7 +158,7 @@ abstract class RouteServiceProvider extends ServiceProvider
      */
     private function addRoute($route)
     {
-        $this->routes[] = $this->namespace . '\\' . $route;
+        $this->routes[] = $this->getRouteNamespace() . '\\' . $route;
 
         return $this;
     }
