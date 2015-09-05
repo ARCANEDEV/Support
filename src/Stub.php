@@ -20,7 +20,7 @@ class Stub
     /**
      * The base path of stub file.
      *
-     * @var null|string
+     * @var string|null
      */
     protected static $basePath = null;
 
@@ -36,10 +36,10 @@ class Stub
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * The constructor.
+     * Create a new instance.
      *
-     * @param string $path
-     * @param array  $replaces
+     * @param  string  $path
+     * @param  array   $replaces
      */
     public function __construct($path, array $replaces = [])
     {
@@ -64,7 +64,7 @@ class Stub
     /**
      * Set stub path.
      *
-     * @param  string $path
+     * @param  string  $path
      *
      * @return self
      */
@@ -88,7 +88,7 @@ class Stub
     /**
      * Set base path.
      *
-     * @param string $path
+     * @param  string  $path
      */
     public static function setBasePath($path)
     {
@@ -108,7 +108,7 @@ class Stub
     /**
      * Set replacements array.
      *
-     * @param  array $replaces
+     * @param  array  $replaces
      *
      * @return self
      */
@@ -122,7 +122,7 @@ class Stub
     /**
      * Set replacements array.
      *
-     * @param  array $replaces
+     * @param  array  $replaces
      *
      * @return self
      */
@@ -138,8 +138,8 @@ class Stub
     /**
      * Create new self instance.
      *
-     * @param  string $path
-     * @param  array  $replaces
+     * @param  string  $path
+     * @param  array   $replaces
      *
      * @return self
      */
@@ -151,8 +151,8 @@ class Stub
     /**
      * Create new self instance from full path.
      *
-     * @param  string $path
-     * @param  array  $replaces
+     * @param  string  $path
+     * @param  array   $replaces
      *
      * @return self
      */
@@ -177,8 +177,8 @@ class Stub
     /**
      * Save stub to specific path.
      *
-     * @param  string $path
-     * @param  string $filename
+     * @param  string  $path
+     * @param  string  $filename
      *
      * @return bool
      */
@@ -190,7 +190,7 @@ class Stub
     /**
      * Get stub contents.
      *
-     * @return mixed|string
+     * @return string|mixed
      */
     public function getContents()
     {
