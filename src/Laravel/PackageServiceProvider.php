@@ -5,8 +5,10 @@ use Illuminate\Contracts\Foundation\Application;
 use ReflectionClass;
 
 /**
- * Class PackageServiceProvider
- * @package Arcanedev\Moduly\Bases
+ * Class     PackageServiceProvider
+ *
+ * @package  Arcanedev\Support\Laravel
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 abstract class PackageServiceProvider extends ServiceProvider
 {

@@ -6,8 +6,10 @@ use Illuminate\Filesystem\Filesystem;
 use JsonSerializable;
 
 /**
- * Class Json
- * @package Arcanedev\Workbench\Helpers
+ * Class     Json
+ *
+ * @package  Arcanedev\Support
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class Json implements Arrayable, Jsonable, JsonSerializable
 {

@@ -3,8 +3,10 @@
 use Arcanedev\Support\Json;
 
 /**
- * Class JsonTest
- * @package Arcanedev\Support\Tests
+ * Class     JsonTest
+ *
+ * @package  Arcanedev\Support\Tests
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class JsonTest extends TestCase
 {

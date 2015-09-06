@@ -5,8 +5,10 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 /**
- * Class ServiceProvider
- * @package Arcanedev\Foundation\Bases
+ * Class     ServiceProvider
+ *
+ * @package  Arcanedev\Support\Laravel
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 abstract class ServiceProvider extends IlluminateServiceProvider
 {

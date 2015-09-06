@@ -4,8 +4,10 @@ use Closure;
 use Illuminate\Contracts\Routing\Registrar;
 
 /**
- * Class RouteRegister
- * @package Arcanedev\Support\Laravel
+ * Class     RouteRegister
+ *
+ * @package  Arcanedev\Support\Laravel
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 abstract class RouteRegister
 {

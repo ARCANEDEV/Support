@@ -1,8 +1,10 @@
 <?php namespace Arcanedev\Support;
 
 /**
- * Class Stub
- * @package Arcanedev\Support
+ * Class     Stub
+ *
+ * @package  Arcanedev\Support
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class Stub
 {

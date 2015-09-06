@@ -8,8 +8,12 @@ use RecursiveIteratorIterator;
 use SplFileInfo;
 
 /**
- * Class RouteServiceProvider
- * @package Arcanedev\Foundation\Bases
+ * Class     RouteServiceProvider
+ *
+ * @package  Arcanedev\Support\Laravel\Providers
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ *
+ * @method   Router  middleware(string $name, string $class)  Register a short-hand name for a middleware.
  */
 abstract class RouteServiceProvider extends ServiceProvider
 {
