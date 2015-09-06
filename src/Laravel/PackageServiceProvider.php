@@ -1,14 +1,14 @@
 <?php namespace Arcanedev\Support\Laravel;
 
 use Exception;
-use Illuminate\Contracts\Foundation\Application;
-use ReflectionClass;
 
 /**
  * Class     PackageServiceProvider
  *
  * @package  Arcanedev\Support\Laravel
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ *
+ * @todo     Redo the PackageServiceProvider
  */
 abstract class PackageServiceProvider extends ServiceProvider
 {
@@ -24,11 +24,11 @@ abstract class PackageServiceProvider extends ServiceProvider
     protected $package = '';
 
     /**
-     * Package path.
+     * Vendor name.
      *
      * @var string
      */
-    protected $packagePath = '';
+    protected $vendor  = 'vendor';
 
     /**
      * Paths collection.
@@ -42,50 +42,21 @@ abstract class PackageServiceProvider extends ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Get package base path.
+     * Get config folder.
      *
      * @return string
      */
-    protected function getPackagePath()
+    public function getConfigFolder()
     {
-        return $this->packagePath;
+        return realpath($this->getBasePath() . '/config');
     }
 
     /**
-     * Set package path.
-     *
-     * @return self
-     */
-    private function setPackagePath()
-    {
-        $path = (new ReflectionClass(get_class($this)))
-            ->getFileName();
-
-        $this->packagePath = dirname(dirname($path));
-
-        return $this;
-    }
-
-    /**
-     * Get config path.
+     * Get the base path of the package.
      *
      * @return string
      */
-    public function getConfigPath()
-    {
-        return $this->getPackagePath() . '/config';
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Constructor
-     | ------------------------------------------------------------------------------------------------
-     */
-    public function __construct(Application $app)
-    {
-        parent::__construct($app);
-
-        $this->setPackagePath();
-    }
+    abstract public function getBasePath();
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -99,22 +70,18 @@ abstract class PackageServiceProvider extends ServiceProvider
     public function boot()
     {
         if (empty($this->package) ) {
-            throw new Exception(
-                'You must specify the name of the package'
-            );
+            throw new Exception('You must specify the name of the package');
         }
     }
 
     /**
      * Setup package path and stuff.
      *
-     * @param  string $path
-     *
      * @return self
      */
-    public function setup($path)
+    public function setup()
     {
-        $this->setupPaths($path);
+        $this->setupPaths();
 
         return $this;
     }
@@ -130,7 +97,7 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function registerConfigs()
     {
-        $paths = glob($this->packagePath . '/config/*.php');
+        $paths = glob($this->getConfigFolder() . '/*.php');
 
         foreach ($paths as $path) {
             $key = $this->package . '.' . basename($path, '.php');
@@ -143,39 +110,39 @@ abstract class PackageServiceProvider extends ServiceProvider
     /**
      * Setup paths.
      *
-     * @param  string  $path
-     *
      * @return self
      */
-    private function setupPaths($path)
+    private function setupPaths()
     {
+        $path = $this->getBasePath();
+
         $this->paths = [
             'migrations' => [
-                'src'       => $path . '/../database/migrations',
+                'src'       => $path . '/database/migrations',
                 'dest'      => database_path('/migrations/%s_%s'),
             ],
             'seeds'     => [
-                'src'       => $path . '/Seeds',
+                'src'       => $path . '/src/Seeds',
                 'dest'      => database_path('/seeds/%s'),
             ],
             'config'    => [
-                'src'       => $path . '/../config',
+                'src'       => $path . '/config',
                 'dest'      => config_path('%s'),
             ],
             'views'     => [
-                'src'       => $path . '/../resources/views',
-                'dest'      => base_path('resources/views/vendor/%s'),
+                'src'       => $path . '/resources/views',
+                'dest'      => base_path('resources/views/' . $this->vendor . '/%s'),
             ],
             'trans'     => [
-                'src'       => $path . '/../resources/lang',
+                'src'       => $path . '/resources/lang',
                 'dest'      => base_path('resources/lang/%s'),
             ],
             'assets'    => [
-                'src'       => $path . '/../resources/assets',
+                'src'       => $path . '/resources/assets',
                 'dest'      => public_path('vendor/%s'),
             ],
             'routes' => [
-                'src'       => $path . '/../start/routes.php',
+                'src'       => $path . '/start/routes.php',
                 'dest'      => null,
             ],
         ];
