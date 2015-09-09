@@ -11,13 +11,13 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
-        "illuminate/filesystem": "~5.1.0",
-        "illuminate/support": "~5.1.0",
+        "php": ">=5.4.0",
+        "illuminate/filesystem": "~5.0.0",
+        "illuminate/support": "~5.0.0",
         "patchwork/utf8": "~1.1"
     },
     "require-dev": {
-        "orchestra/testbench": "~3.1.0",
+        "orchestra/testbench": "~3.0",
         "phpunit/phpunit": "~4.0",
         "phpunit/phpcov": "~2.0"
     },
@@ -25,9 +25,7 @@
         "psr-4": {
             "Arcanedev\\Support\\": "src/"
         },
-        "files": [
-            "helpers.php"
-        ]
+        "files": ["helpers.php"]
     },
     "autoload-dev": {
         "psr-4": {

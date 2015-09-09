@@ -123,7 +123,9 @@ abstract class RouteServiceProvider extends ServiceProvider
      */
     private function checkRouteNamespace()
     {
-        if (empty($this->getRouteNamespace())) {
+        $namespace = $this->getRouteNamespace();
+
+        if (empty($namespace)) {
             throw new Exception('The routes namespace is empty.');
         }
     }
