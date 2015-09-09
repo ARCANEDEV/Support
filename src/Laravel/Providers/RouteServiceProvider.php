@@ -138,20 +138,23 @@ abstract class RouteServiceProvider extends ServiceProvider
      * Add route from file.
      *
      * @param  SplFileInfo  $file
-     * @param  string       $needle
      */
-    private function addRouteFromFile(SplFileInfo $file, $needle = 'Routes\\')
+    private function addRouteFromFile(SplFileInfo $file)
     {
-        if ($file->isFile() && pathinfo($file, PATHINFO_EXTENSION) === 'php') {
-            $pos = strpos($file->getRealPath(), $needle);
+        if (
+            ! $file->isFile() ||
+            pathinfo($file, PATHINFO_EXTENSION) !== 'php'
+        ) return;
 
-            if ($pos !== false) {
-                $route  = substr(
-                    str_replace('.php', '', $file->getRealPath()),
-                    $pos + strlen($needle)
-                );
-                $this->addRoute($route);
-            }
+        $routeFolder = 'Routes' . DS;
+        $pos         = strpos($file->getRealPath(), $routeFolder);
+
+        if ($pos !== false) {
+            $route  = substr(
+                str_replace('.php', '', $file->getRealPath()),
+                $pos + strlen($routeFolder)
+            );
+            $this->addRoute($route);
         }
     }
 
