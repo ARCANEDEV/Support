@@ -21,14 +21,21 @@ abstract class PackageServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $package = '';
+    protected $package      = '';
 
     /**
      * Vendor name.
      *
      * @var string
      */
-    protected $vendor  = 'vendor';
+    protected $vendor       = 'vendor';
+
+    /**
+     * Merge multiple config files into one instance (package name as root key)
+     *
+     * @var bool
+     */
+    protected $multiConfigs = false;
 
     /**
      * Paths collection.
@@ -58,6 +65,16 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     abstract public function getBasePath();
 
+    /**
+     * Get config file path
+     *
+     * @return string
+     */
+    protected function getConfigFile()
+    {
+        return realpath($this->getBasePath() . "/config/{$this->package}.php");
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
@@ -79,11 +96,23 @@ abstract class PackageServiceProvider extends ServiceProvider
      *
      * @return self
      */
-    public function setup()
+    protected function setup()
     {
         $this->setupPaths();
 
+        if ($this->multiConfigs) {
+            $this->registerMultipleConfigs();
+        }
+
         return $this;
+    }
+
+    /**
+     * Register configs.
+     */
+    protected function registerConfig()
+    {
+        $this->mergeConfigFrom($this->getConfigFile(), $this->package);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -93,18 +122,17 @@ abstract class PackageServiceProvider extends ServiceProvider
     /**
      * Register all package configs.
      *
-     * @return self
+     * @param  string  $separator
      */
-    protected function registerConfigs()
+    private function registerMultipleConfigs($separator = '.')
     {
-        $paths = glob($this->getConfigFolder() . '/*.php');
+        array_map(function ($configPath) use ($separator) {
+            $this->mergeConfigFrom(
+                $configPath,
+                $this->package . $separator . basename($configPath, '.php')
+            );
 
-        foreach ($paths as $path) {
-            $key = $this->package . '.' . basename($path, '.php');
-            $this->mergeConfigFrom($path, $key);
-        }
-
-        return $this;
+        }, glob($this->getConfigFolder() . '/*.php'));
     }
 
     /**
