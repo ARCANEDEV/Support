@@ -1,6 +1,6 @@
-<?php namespace Arcanedev\Support\Laravel;
+<?php namespace Arcanedev\Support;
 
-use Exception;
+use Arcanedev\Support\Exceptions\PackageException;
 
 /**
  * Class     PackageServiceProvider
@@ -81,14 +81,10 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     /**
      * Boot the package.
-     *
-     * @throws Exception
      */
     public function boot()
     {
-        if (empty($this->package) ) {
-            throw new Exception('You must specify the name of the package');
-        }
+        $this->checkPackageName();
     }
 
     /**
@@ -113,6 +109,24 @@ abstract class PackageServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->mergeConfigFrom($this->getConfigFile(), $this->package);
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Check Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Check package name
+     *
+     * @throws PackageException
+     */
+    private function checkPackageName()
+    {
+        if (empty($this->package) ) {
+            throw new PackageException(
+                'You must specify the name of the package'
+            );
+        }
     }
 
     /* ------------------------------------------------------------------------------------------------

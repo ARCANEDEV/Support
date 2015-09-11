@@ -1,4 +1,4 @@
-<?php namespace Arcanedev\Support\Laravel\Providers;
+<?php namespace Arcanedev\Support\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 

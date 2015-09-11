@@ -1,4 +1,4 @@
-<?php namespace Arcanedev\Support\Laravel;
+<?php namespace Arcanedev\Support;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\AliasLoader;
@@ -41,7 +41,7 @@ abstract class ServiceProvider extends IlluminateServiceProvider
      */
     public function __construct(Application $app)
     {
-        parent::__construct($app);
+        IlluminateServiceProvider::__construct($app);
 
         $this->aliasLoader = AliasLoader::getInstance();
     }

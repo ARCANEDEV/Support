@@ -1,4 +1,4 @@
-<?php namespace Arcanedev\Support\Laravel\Providers;
+<?php namespace Arcanedev\Support\Providers;
 
 use Exception;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -13,7 +13,7 @@ use SplFileInfo;
  * @package  Arcanedev\Support\Laravel\Providers
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  *
- * @method   Router  middleware(string $name, string $class)  Register a short-hand name for a middleware.
+ * @method   Router  middleware(\string $name, \string $class)  Register a short-hand name for a middleware.
  */
 abstract class RouteServiceProvider extends ServiceProvider
 {
