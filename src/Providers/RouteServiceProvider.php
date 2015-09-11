@@ -102,7 +102,7 @@ abstract class RouteServiceProvider extends ServiceProvider
     protected function registerRoutes($directory)
     {
         $di = new RecursiveDirectoryIterator(
-            $directory . '/' . $this->routesPath,
+            $directory . DS . $this->routesPath,
             RecursiveDirectoryIterator::SKIP_DOTS
         );
 
