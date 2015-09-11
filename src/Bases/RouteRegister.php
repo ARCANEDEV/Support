@@ -1,4 +1,4 @@
-<?php namespace Arcanedev\Support\Laravel;
+<?php namespace Arcanedev\Support\Bases;
 
 use Closure;
 use Illuminate\Contracts\Routing\Registrar;

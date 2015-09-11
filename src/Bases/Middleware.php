@@ -1,4 +1,4 @@
-<?php namespace Arcanedev\Support\Laravel;
+<?php namespace Arcanedev\Support\Bases;
 
 /**
  * Class     Middleware
@@ -8,5 +8,5 @@
  */
 abstract class Middleware
 {
-
+    //
 }

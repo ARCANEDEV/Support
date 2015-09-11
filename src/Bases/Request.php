@@ -1,4 +1,4 @@
-<?php namespace Arcanedev\Support\Laravel;
+<?php namespace Arcanedev\Support\Bases;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -10,4 +10,5 @@ use Illuminate\Foundation\Http\FormRequest;
  */
 abstract class Request extends FormRequest
 {
+    //
 }
