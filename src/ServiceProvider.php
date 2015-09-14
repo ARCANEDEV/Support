@@ -24,7 +24,7 @@ abstract class ServiceProvider extends IlluminateServiceProvider
     protected $app;
 
     /**
-     * Alias loader
+     * Alias loader.
      *
      * @var AliasLoader
      */
@@ -51,7 +51,30 @@ abstract class ServiceProvider extends IlluminateServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Add Aliases into the app
+     * Register a binding with the container.
+     *
+     * @param  string|array          $abstract
+     * @param  \Closure|string|null  $concrete
+     * @param  bool                  $shared
+     */
+    public function bind($abstract, $concrete = null, $shared = false)
+    {
+        $this->app->bind($abstract, $concrete, $shared);
+    }
+
+    /**
+     * Register a shared binding in the container.
+     *
+     * @param  string|array          $abstract
+     * @param  \Closure|string|null  $concrete
+     */
+    protected function singleton($abstract, $concrete = null)
+    {
+        $this->app->singleton($abstract, $concrete);
+    }
+
+    /**
+     * Add Aliases into the app.
      *
      * @param  array  $aliases
      *
@@ -67,7 +90,7 @@ abstract class ServiceProvider extends IlluminateServiceProvider
     }
 
     /**
-     * Add Alias (Facade)
+     * Add Alias. (Facade)
      *
      * @param  string  $alias
      * @param  string  $facade
