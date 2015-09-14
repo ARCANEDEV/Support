@@ -31,18 +31,20 @@ abstract class PackageServiceProvider extends ServiceProvider
     protected $vendor       = 'vendor';
 
     /**
-     * Merge multiple config files into one instance (package name as root key)
-     *
-     * @var bool
-     */
-    protected $multiConfigs = false;
-
-    /**
      * Paths collection.
      *
      * @var array
      */
-    protected $paths = [];
+    protected $paths        = [];
+
+    /**
+     * Merge multiple config files into one instance (package name as root key)
+     *
+     * @var bool
+     *
+     * @todo: complete the implementation.
+     */
+    protected $multiConfigs = false;
 
     /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
@@ -89,8 +91,6 @@ abstract class PackageServiceProvider extends ServiceProvider
 
     /**
      * Setup package path and stuff.
-     *
-     * @return self
      */
     protected function setup()
     {
@@ -99,8 +99,6 @@ abstract class PackageServiceProvider extends ServiceProvider
         if ($this->multiConfigs) {
             $this->registerMultipleConfigs();
         }
-
-        return $this;
     }
 
     /**
@@ -129,6 +127,16 @@ abstract class PackageServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * Check if has the base config.
+     *
+     * @return bool
+     */
+    protected function hasPackageConfig()
+    {
+        return $this->getConfigFile() !== false;
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Other Functions
      | ------------------------------------------------------------------------------------------------
@@ -145,7 +153,6 @@ abstract class PackageServiceProvider extends ServiceProvider
                 $configPath,
                 $this->package . $separator . basename($configPath, '.php')
             );
-
         }, glob($this->getConfigFolder() . '/*.php'));
     }
 
