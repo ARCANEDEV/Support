@@ -31,6 +31,13 @@ abstract class PackageServiceProvider extends ServiceProvider
     protected $vendor       = 'vendor';
 
     /**
+     * Package base path.
+     *
+     * @var string
+     */
+    protected $basePath     = '';
+
+    /**
      * Paths collection.
      *
      * @var array
@@ -55,9 +62,9 @@ abstract class PackageServiceProvider extends ServiceProvider
      *
      * @return string
      */
-    public function getConfigFolder()
+    protected function getConfigFolder()
     {
-        return realpath($this->getBasePath() . '/config');
+        return realpath($this->getBasePath() . DS .'config');
     }
 
     /**
@@ -74,7 +81,7 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function getConfigFile()
     {
-        return realpath($this->getBasePath() . "/config/{$this->package}.php");
+        return $this->getConfigFolder() . DS . $this->package . '.php';
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -94,6 +101,7 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function setup()
     {
+        $this->checkPackageName();
         $this->setupPaths();
 
         if ($this->multiConfigs) {
@@ -163,39 +171,51 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     private function setupPaths()
     {
-        $path = $this->getBasePath();
+        $this->basePath = $this->getBasePath();
 
         $this->paths = [
             'migrations' => [
-                'src'       => $path . '/database/migrations',
-                'dest'      => database_path('/migrations/%s_%s'),
+                'src'       => $this->getSourcePath('database/migrations'),
+                'dest'      => database_path('migrations/%s_%s'),
             ],
             'seeds'     => [
-                'src'       => $path . '/src/Seeds',
-                'dest'      => database_path('/seeds/%s'),
+                'src'       => $this->getSourcePath('src/Seeds'),
+                'dest'      => database_path('seeds/%s'),
             ],
             'config'    => [
-                'src'       => $path . '/config',
+                'src'       => $this->getSourcePath('config'),
                 'dest'      => config_path('%s'),
             ],
             'views'     => [
-                'src'       => $path . '/resources/views',
+                'src'       => $this->getSourcePath('resources/views'),
                 'dest'      => base_path('resources/views/' . $this->vendor . '/%s'),
             ],
             'trans'     => [
-                'src'       => $path . '/resources/lang',
+                'src'       => $this->getSourcePath('resources/lang'),
                 'dest'      => base_path('resources/lang/%s'),
             ],
             'assets'    => [
-                'src'       => $path . '/resources/assets',
+                'src'       => $this->getSourcePath('resources/assets'),
                 'dest'      => public_path('vendor/%s'),
             ],
             'routes' => [
-                'src'       => $path . '/start/routes.php',
+                'src'       => $this->getSourcePath('start/routes.php'),
                 'dest'      => null,
             ],
         ];
 
         return $this;
+    }
+
+    /**
+     * Get source path.
+     *
+     * @param  string  $path
+     *
+     * @return string
+     */
+    private function getSourcePath($path)
+    {
+        return str_replace('/', DS, $this->basePath . DS . $path);
     }
 }
