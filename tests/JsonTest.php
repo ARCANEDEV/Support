@@ -81,6 +81,9 @@ class JsonTest extends TestCase
             $this->convertFixture($this->fixturePath),
             $this->json->toArray()
         );
+
+        $this->assertJson($this->json->toJson());
+        $this->assertJson(json_encode($this->json));
     }
 
     /** @test */
@@ -91,11 +94,16 @@ class JsonTest extends TestCase
             $this->json->getFilesystem()
         );
 
-        $mock       = 'Illuminate\\Filesystem\\Filesystem';
-        $filesystem = $this->prophesize($mock);
-        $this->json->setFilesystem($filesystem->reveal());
+        $mock = $this->prophesize('Illuminate\\Filesystem\\Filesystem');
 
-        $this->assertInstanceOf($mock, $this->json->getFilesystem());
+        /** @var \Illuminate\Filesystem\Filesystem $filesystem */
+        $filesystem = $mock->reveal();
+        $this->json->setFilesystem($filesystem);
+
+        $this->assertInstanceOf(
+            'Illuminate\\Filesystem\\Filesystem',
+            $this->json->getFilesystem()
+        );
     }
 
     /** @test */
@@ -195,6 +203,8 @@ class JsonTest extends TestCase
 
     /**
      * Convert fixture file to array
+     *
+     * @param  string  $path
      *
      * @return array
      */
