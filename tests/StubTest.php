@@ -40,7 +40,7 @@ class StubTest extends TestCase
     /** @test */
     public function it_can_be_instantiated()
     {
-        $file = __DIR__ . '/stubs/composer.stub';
+        $file = $this->getFixturesPath('stubs/composer.stub');
         $this->stub = new Stub($file);
 
         $this->assertInstanceOf('Arcanedev\\Support\\Stub', $this->stub);
@@ -52,7 +52,7 @@ class StubTest extends TestCase
     /** @test */
     public function it_can_create()
     {
-        $basePath   = __DIR__ . '/stubs';
+        $basePath   = $this->getFixturesPath('stubs');
         Stub::setBasePath($basePath);
 
         $this->stub = Stub::create('composer.stub');
@@ -67,23 +67,20 @@ class StubTest extends TestCase
         ]);
 
         $this->stub->save('composer.json');
-        $this->assertEquals(
-            file_get_contents(__DIR__ . '/stubs/composer.json'),
-            $this->stub->render()
-        );
+
+        $fixture = $this->getFixturesPath('stubs/composer.json');
+
+        $this->assertEquals(file_get_contents($fixture),$this->stub->render());
 
         $this->stub->saveTo($basePath, 'composer.json');
-        $this->assertEquals(
-            file_get_contents(__DIR__ . '/stubs/composer.json'),
-            $this->stub->render()
-        );
+
+        $this->assertEquals(file_get_contents($fixture), $this->stub->render());
     }
 
     /** @test */
     public function it_can_set_and_get_base_path()
     {
-        $basePath = __DIR__ . '/stubs';
-
+        $basePath = $this->getFixturesPath('stubs');
         Stub::setBasePath($basePath);
 
         $this->assertEquals($basePath, Stub::getBasePath());

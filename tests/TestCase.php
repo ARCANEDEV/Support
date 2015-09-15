@@ -23,4 +23,20 @@ abstract class TestCase extends BaseTestCase
     {
         parent::tearDown();
     }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Other Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Get fixture path
+     *
+     * @param  string  $path
+     *
+     * @return string
+     */
+    protected function getFixturesPath($path)
+    {
+        return __DIR__ . '/fixtures/' . $path;
+    }
 }

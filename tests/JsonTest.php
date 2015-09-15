@@ -28,8 +28,8 @@ class JsonTest extends TestCase
     {
         parent::setUp();
 
-        $this->fixturePath = $this->getFixturePath('file-1.json');
-        $this->json     = new Json($this->fixturePath);
+        $this->fixturePath = $this->getFixturesPath('json/file-1.json');
+        $this->json        = new Json($this->fixturePath);
     }
 
     public function tearDown()
@@ -136,7 +136,7 @@ class JsonTest extends TestCase
     {
         $this->assertEquals($this->fixturePath, $this->json->getPath());
 
-        $this->fixturePath = $this->getFixturePath('file-2.json');
+        $this->fixturePath = $this->getFixturesPath('json/file-2.json');
         $this->json->setPath($this->fixturePath);
 
         $this->assertEquals($this->fixturePath, $this->json->getPath());
@@ -145,7 +145,7 @@ class JsonTest extends TestCase
     /** @test */
     public function it_can_save()
     {
-        $path = $this->getFixturePath('saved.json');
+        $path = $this->getFixturesPath('json/saved.json');
 
         $this->assertNotFalse($this->json->setPath($path)->save());
 
@@ -160,7 +160,7 @@ class JsonTest extends TestCase
     /** @test */
     public function it_can_update()
     {
-        $path = $this->getFixturePath('saved.json');
+        $path = $this->getFixturesPath('json/saved.json');
 
         $this->assertEquals(5, count($this->json->getAttributes()));
         $this->assertNotFalse($this->json->setPath($path)->save());
@@ -179,18 +179,6 @@ class JsonTest extends TestCase
      |  Other Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * Get fixture path
-     *
-     * @param  string $filename
-     *
-     * @return string
-     */
-    private function getFixturePath($filename)
-    {
-        return __DIR__ . "/fixtures/$filename";
-    }
-
     /**
      * @param  string $path
      *
