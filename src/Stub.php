@@ -60,7 +60,13 @@ class Stub
      */
     public function getPath()
     {
-        return static::$basePath . $this->path;
+        $path = $this->path;
+
+        if ( ! empty(static::$basePath)) {
+            $path = static::$basePath . DS . ltrim($path, DS);
+        }
+
+        return $path;
     }
 
     /**
@@ -177,6 +183,18 @@ class Stub
     }
 
     /**
+     * Save stub to base path.
+     *
+     * @param  string  $filename
+     *
+     * @return bool
+     */
+    public function save($filename)
+    {
+        return $this->saveTo(self::getBasePath(), $filename);
+    }
+
+    /**
      * Save stub to specific path.
      *
      * @param  string  $path
@@ -186,7 +204,7 @@ class Stub
      */
     public function saveTo($path, $filename)
     {
-        return file_put_contents($path . '/' . $filename, $this->render());
+        return file_put_contents($path . DS . $filename, $this->render());
     }
 
     /**

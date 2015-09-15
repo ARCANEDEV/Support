@@ -40,23 +40,22 @@ class StubTest extends TestCase
     /** @test */
     public function it_can_be_instantiated()
     {
-        $this->stub = new Stub(__DIR__ . '/stubs/composer.stub');
-        $this->assertInstanceOf('Arcanedev\\Support\\Stub', $this->stub);
-        $this->assertEquals(
-            file_get_contents(__DIR__ . '/stubs/composer.stub'),
-            $this->stub->render()
-        );
+        $file = __DIR__ . '/stubs/composer.stub';
+        $this->stub = new Stub($file);
 
-        $this->assertEquals(
-            file_get_contents(__DIR__ . '/stubs/composer.stub'),
-            (string) $this->stub
-        );
+        $this->assertInstanceOf('Arcanedev\\Support\\Stub', $this->stub);
+        $fileContent = file_get_contents($file);
+        $this->assertEquals($fileContent, $this->stub->render());
+        $this->assertEquals($fileContent, (string) $this->stub);
     }
 
     /** @test */
     public function it_can_create()
     {
-        $this->stub = Stub::create(__DIR__ . '/stubs/composer.stub');
+        $basePath   = __DIR__ . '/stubs';
+        Stub::setBasePath($basePath);
+
+        $this->stub = Stub::create('composer.stub');
 
         $this->stub->replaces([
             'VENDOR'            => 'arcanedev',
@@ -67,7 +66,26 @@ class StubTest extends TestCase
             'STUDLY_NAME'       => str_studly('package'),
         ]);
 
-        $this->stub->saveTo(__DIR__ . '/stubs', 'composer.json');
-        $this->assertEquals(file_get_contents(__DIR__ . '/stubs/composer.json'), $this->stub->render());
+        $this->stub->save('composer.json');
+        $this->assertEquals(
+            file_get_contents(__DIR__ . '/stubs/composer.json'),
+            $this->stub->render()
+        );
+
+        $this->stub->saveTo($basePath, 'composer.json');
+        $this->assertEquals(
+            file_get_contents(__DIR__ . '/stubs/composer.json'),
+            $this->stub->render()
+        );
+    }
+
+    /** @test */
+    public function it_can_set_and_get_base_path()
+    {
+        $basePath = __DIR__ . '/stubs';
+
+        Stub::setBasePath($basePath);
+
+        $this->assertEquals($basePath, Stub::getBasePath());
     }
 }
