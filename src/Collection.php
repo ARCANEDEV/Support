@@ -8,4 +8,21 @@ use Illuminate\Support\Collection as IlluminateCollection;
  * @package  Arcanedev\Support
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class Collection extends IlluminateCollection {}
+class Collection extends IlluminateCollection
+{
+    /* ------------------------------------------------------------------------------------------------
+     |  Main Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Reset the collection.
+     *
+     * @return self
+     */
+    public function reset()
+    {
+        $this->items = [];
+
+        return $this;
+    }
+}
