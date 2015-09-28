@@ -48,8 +48,6 @@ abstract class PackageServiceProvider extends ServiceProvider
      * Merge multiple config files into one instance (package name as root key)
      *
      * @var bool
-     *
-     * @todo: complete the implementation.
      */
     protected $multiConfigs = false;
 
@@ -103,10 +101,7 @@ abstract class PackageServiceProvider extends ServiceProvider
     {
         $this->checkPackageName();
         $this->setupPaths();
-
-        if ($this->multiConfigs) {
-            $this->registerMultipleConfigs();
-        }
+        $this->registerConfig();
     }
 
     /**
@@ -114,7 +109,12 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function registerConfig()
     {
-        $this->mergeConfigFrom($this->getConfigFile(), $this->package);
+        if ($this->multiConfigs) {
+            $this->registerMultipleConfigs();
+        }
+        else {
+            $this->mergeConfigFrom($this->getConfigFile(), $this->package);
+        }
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -149,21 +149,6 @@ abstract class PackageServiceProvider extends ServiceProvider
      |  Other Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * Register all package configs.
-     *
-     * @param  string  $separator
-     */
-    private function registerMultipleConfigs($separator = '.')
-    {
-        array_map(function ($configPath) use ($separator) {
-            $this->mergeConfigFrom(
-                $configPath,
-                $this->package . $separator . basename($configPath, '.php')
-            );
-        }, glob($this->getConfigFolder() . '/*.php'));
-    }
-
     /**
      * Setup paths.
      *
@@ -205,6 +190,21 @@ abstract class PackageServiceProvider extends ServiceProvider
         ];
 
         return $this;
+    }
+
+    /**
+     * Register all package configs.
+     *
+     * @param  string  $separator
+     */
+    private function registerMultipleConfigs($separator = '.')
+    {
+        array_map(function ($configPath) use ($separator) {
+            $this->mergeConfigFrom(
+                $configPath,
+                $this->package . $separator . basename($configPath, '.php')
+            );
+        }, glob($this->getConfigFolder() . '/*.php'));
     }
 
     /**
