@@ -16,7 +16,7 @@ class TestPackageServiceProvider extends PackageServiceProvider
      */
     protected $vendor  = 'arcanedev';
 
-    protected $package = 'name';
+    protected $package = 'package';
 
     /**
      * Get the base path of the package.
@@ -25,7 +25,7 @@ class TestPackageServiceProvider extends PackageServiceProvider
      */
     public function getBasePath()
     {
-        return dirname(__DIR__);
+        return dirname(__DIR__) . '/fixtures';
     }
 
     /**

@@ -13,17 +13,32 @@ use Arcanedev\Support\Tests\TestCase;
 class PackageServiceProviderTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Properties
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * @var TestPackageServiceProvider
+     */
+    private $provider;
+
+    /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
     public function setUp()
     {
         parent::setUp();
+
+        $this->provider = new TestPackageServiceProvider($this->app);
+
+        $this->provider->register();
     }
 
     public function tearDown()
     {
         parent::tearDown();
+
+        unset($this->provider);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -33,9 +48,34 @@ class PackageServiceProviderTest extends TestCase
     /** @test */
     public function it_can_be_instantiated()
     {
-        $provider = new TestPackageServiceProvider($this->app);
+        $this->assertInstanceOf(
+            'Arcanedev\\Support\\Tests\\Stubs\\TestPackageServiceProvider',
+            $this->provider
+        );
 
-        $provider->register();
+        $this->assertInstanceOf(
+            'Arcanedev\\Support\\PackageServiceProvider',
+            $this->provider
+        );
+
+        $this->assertInstanceOf(
+            'Arcanedev\\Support\\ServiceProvider',
+            $this->provider
+        );
+
+        $this->assertInstanceOf(
+            '\Illuminate\\Support\\ServiceProvider',
+            $this->provider
+        );
+    }
+
+    /** @test */
+    public function it_can_register_config()
+    {
+        $config = config('package');
+
+        $this->assertArrayHasKey('foo', $config);
+        $this->assertEquals($config['foo'], 'bar');
     }
 
     /**
