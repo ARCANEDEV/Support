@@ -17,18 +17,18 @@ abstract class PackageServiceProvider extends ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Package name.
-     *
-     * @var string
-     */
-    protected $package      = '';
-
-    /**
      * Vendor name.
      *
      * @var string
      */
     protected $vendor       = 'vendor';
+
+    /**
+     * Package name.
+     *
+     * @var string
+     */
+    protected $package      = '';
 
     /**
      * Package base path.
@@ -73,6 +73,16 @@ abstract class PackageServiceProvider extends ServiceProvider
     abstract public function getBasePath();
 
     /**
+     * Get config key.
+     *
+     * @return string
+     */
+    protected function getConfigKey()
+    {
+        return str_slug($this->package);
+    }
+
+    /**
      * Get config file path
      *
      * @return string
@@ -106,14 +116,31 @@ abstract class PackageServiceProvider extends ServiceProvider
 
     /**
      * Register configs.
+     *
+     * @param  string  $separator
      */
-    protected function registerConfig()
+    protected function registerConfig($separator = '.')
     {
         if ($this->multiConfigs) {
-            $this->registerMultipleConfigs();
+            $this->registerMultipleConfigs($separator);
+
+            return;
         }
-        else {
-            $this->mergeConfigFrom($this->getConfigFile(), $this->package);
+
+        $this->mergeConfigFrom($this->getConfigFile(), $this->getConfigKey());
+    }
+
+    /**
+     * Register all package configs.
+     *
+     * @param  string  $separator
+     */
+    private function registerMultipleConfigs($separator = '.')
+    {
+        foreach (glob($this->getConfigFolder() . '/*.php') as $configPath) {
+            $key = $this->getConfigKey() . $separator . basename($configPath, '.php');
+
+            $this->mergeConfigFrom($configPath, $key);
         }
     }
 
@@ -128,11 +155,11 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     private function checkPackageName()
     {
-        if (empty($this->package) ) {
-            throw new PackageException(
-                'You must specify the name of the package'
-            );
+        if ( ! empty($this->package) ) {
+            return;
         }
+
+        throw new PackageException('You must specify the name of the package');
     }
 
     /**
@@ -190,21 +217,6 @@ abstract class PackageServiceProvider extends ServiceProvider
         ];
 
         return $this;
-    }
-
-    /**
-     * Register all package configs.
-     *
-     * @param  string  $separator
-     */
-    private function registerMultipleConfigs($separator = '.')
-    {
-        array_map(function ($configPath) use ($separator) {
-            $this->mergeConfigFrom(
-                $configPath,
-                $this->package . $separator . basename($configPath, '.php')
-            );
-        }, glob($this->getConfigFolder() . '/*.php'));
     }
 
     /**
