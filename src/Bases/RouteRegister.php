@@ -15,8 +15,40 @@ abstract class RouteRegister
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    /** @var Registrar */
+    /**
+     * The router instance.
+     *
+     * @var Registrar
+     */
     protected $router;
+
+    /**
+     * Base route prefix.
+     *
+     * @var string
+     */
+    private $prefix    = '';
+
+    /**
+     * Route name.
+     *
+     * @var string
+     */
+    private $routeName = '';
+
+    /**
+     * Route middlewares.
+     *
+     * @var array|string
+     */
+    private $middlewares = null;
+
+    /**
+     * Route namespace.
+     *
+     * @var string
+     */
+    private $namespace = '';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -46,6 +78,127 @@ abstract class RouteRegister
         $this->router = $router;
 
         return $this;
+    }
+
+    /**
+     * Set prefix.
+     *
+     * @param  string  $prefix
+     *
+     * @return self
+     */
+    protected function setPrefix($prefix)
+    {
+        $this->prefix = $prefix;
+
+        return $this;
+    }
+    /**
+     * Add prefix.
+     *
+     * @param  string  $prefix
+     *
+     * @return self
+     */
+    protected function addPrefix($prefix)
+    {
+        if ( ! empty($this->prefix)) {
+            $prefix = $this->prefix . '/' . $prefix;
+        }
+
+        return $this->setPrefix($prefix);
+    }
+
+    /**
+     * Set route namespace.
+     *
+     * @param  string  $namespace
+     *
+     * @return self
+     */
+    protected function setNamespace($namespace)
+    {
+        $this->namespace = $namespace;
+
+        return $this;
+    }
+
+    /**
+     * Set route name.
+     *
+     * @param  string  $routeName
+     *
+     * @return self
+     */
+    protected function setRouteName($routeName)
+    {
+        $this->routeName = $routeName;
+
+        return $this;
+    }
+
+    /**
+     * Set route middlewares.
+     *
+     * @param  array|string  $middleware
+     *
+     * @return self
+     */
+    protected function setMiddlewares($middleware)
+    {
+        $this->middlewares = $middleware;
+
+        return $this;
+    }
+
+    /**
+     * Get route attributes.
+     *
+     * @param  array  $merge
+     *
+     * @return array
+     */
+    protected function getAttributes(array $merge = [])
+    {
+        $attributes = [
+            'prefix'     => $this->prefix,
+            'as'         => $this->routeName,
+            'middleware' => $this->middlewares,
+            'namespace'  => $this->namespace,
+        ];
+
+        return array_merge($attributes, $merge);
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Main Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Load attributes from config file.
+     *
+     * @param  string  $key
+     * @param  array   $default
+     */
+    protected function loadAttributes($key, array $default = [])
+    {
+        $attributes = config($key, $default);
+
+        if (isset($attributes['prefix'])) {
+            $this->addPrefix($attributes['prefix']);
+        }
+
+        if (isset($attributes['namespace'])) {
+            $this->setNamespace($attributes['namespace']);
+        }
+
+        if (isset($attributes['as'])) {
+            $this->setRouteName($attributes['as']);
+        }
+
+        if (isset($attributes['middleware'])) {
+            $this->setMiddlewares($attributes['middleware']);
+        }
     }
 
     /* ------------------------------------------------------------------------------------------------
