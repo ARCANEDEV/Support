@@ -51,6 +51,14 @@ abstract class ServiceProvider extends IlluminateServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Boot the service provider.
+     */
+    public function boot()
+    {
+        //
+    }
+
+    /**
      * Register a binding with the container.
      *
      * @param  string|array          $abstract
