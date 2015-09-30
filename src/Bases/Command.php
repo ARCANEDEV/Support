@@ -35,15 +35,27 @@ abstract class Command extends IlluminateCommand
     }
 
     /**
-     * Display header
+     * Display header.
      *
-     * @param  string  $header
+     * @param  string  $text
+     *
+     * @deprecated Use the frame($text) method instead.
      */
-    protected function header($header)
+    protected function header($text)
     {
-        $line   = '+' . str_repeat('-', strlen($header) + 4) . '+';
+        $this->frame($text);
+    }
+
+    /**
+     * Display frame the text info.
+     *
+     * @param  string  $text
+     */
+    protected function frame($text)
+    {
+        $line   = '+' . str_repeat('-', strlen($text) + 4) . '+';
         $this->info($line);
-        $this->info("|  $header  |");
+        $this->info("|  $text  |");
         $this->info($line);
     }
 }
