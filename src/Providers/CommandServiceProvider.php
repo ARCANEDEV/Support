@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\Support\Providers;
 
+use Arcanedev\Support\Exceptions\PackageException;
 use Arcanedev\Support\ServiceProvider;
 use Closure;
 
@@ -44,6 +45,42 @@ abstract class CommandServiceProvider extends ServiceProvider
     protected $defer = true;
 
     /* ------------------------------------------------------------------------------------------------
+     |  Getters & Setters
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Get command prefix name.
+     *
+     * @return string
+     */
+    protected function getCommandPrefix()
+    {
+        $this->checkPackageName();
+
+        $prefix = $this->package;
+
+        if ( ! empty($this->vendor)) {
+            $prefix = "{$this->vendor}.$prefix";
+        }
+
+        return $prefix;
+    }
+
+    /**
+     * Get abstract command name.
+     *
+     * @param  string  $name
+     *
+     * @return string
+     */
+    protected function getAbstractCommandName($name)
+    {
+        $prefix = $this->getCommandPrefix();
+
+        return  "$prefix.commands.$name";
+    }
+
+    /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
@@ -65,22 +102,6 @@ abstract class CommandServiceProvider extends ServiceProvider
         return $this->commands;
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Get abstract command name.
-     *
-     * @param  string  $name
-     *
-     * @return string
-     */
-    protected function getAbstractCommandName($name)
-    {
-        return "{$this->vendor}.{$this->package}.commands.$name";
-    }
-
     /**
      * Register a command.
      *
@@ -94,5 +115,23 @@ abstract class CommandServiceProvider extends ServiceProvider
         $this->singleton($command, $callback);
 
         $this->commands[] = $command;
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Check Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Check the package name.
+     *
+     * @throws PackageException
+     */
+    private function checkPackageName()
+    {
+        if ( ! empty($this->package)) {
+            return;
+        }
+
+        throw new PackageException('You must specify the package name.');
     }
 }
