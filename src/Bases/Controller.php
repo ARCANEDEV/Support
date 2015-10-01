@@ -14,10 +14,7 @@ abstract class Controller extends IlluminateController
      |  Traits
      | ------------------------------------------------------------------------------------------------
      */
-    use \Arcanedev\Support\Traits\AbortTrait,
-        \Illuminate\Foundation\Auth\Access\AuthorizesRequests,
-        \Illuminate\Foundation\Bus\DispatchesJobs,
-        \Illuminate\Foundation\Validation\ValidatesRequests;
+    use \Arcanedev\Support\Traits\AbortTrait;
 
     /* ------------------------------------------------------------------------------------------------
      |  Properties
