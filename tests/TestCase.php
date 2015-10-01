@@ -71,6 +71,17 @@ abstract class TestCase extends BaseTestCase
         $router = $app['router'];
 
         $router->middleware('json', 'Arcanedev\\Support\\Middleware\\VerifyJsonRequest');
+
+        $router->get('dummy', [
+            'as'    => 'dummy::index',
+            'uses'  => 'Arcanedev\\Support\\Tests\\Stubs\\DummyController@index'
+        ]);
+
+        $router->get('dummy/{slug}', [
+            'as'    => 'dummy::get',
+            'uses'  => 'Arcanedev\\Support\\Tests\\Stubs\\DummyController@getOne'
+        ]);
+
         $router->group([
             'as'    => 'middleware::'
         ], function(Router $router) {
