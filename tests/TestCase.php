@@ -72,18 +72,23 @@ abstract class TestCase extends BaseTestCase
 
         $router->middleware('json', 'Arcanedev\\Support\\Middleware\\VerifyJsonRequest');
 
-        $router->get('dummy', [
-            'as'    => 'dummy::index',
-            'uses'  => 'Arcanedev\\Support\\Tests\\Stubs\\DummyController@index'
-        ]);
+        $router->group([
+            'prefix'    => 'dummy',
+            'namespace' => 'Arcanedev\\Support\\Tests\\Stubs',
+        ], function (Router $router) {
+            $router->get('/', [
+                'as'    => 'dummy::index',
+                'uses'  => 'DummyController@index'
+            ]);
 
-        $router->get('dummy/{slug}', [
-            'as'    => 'dummy::get',
-            'uses'  => 'Arcanedev\\Support\\Tests\\Stubs\\DummyController@getOne'
-        ]);
+            $router->get('{slug}', [
+                'as'    => 'dummy::get',
+                'uses'  => 'DummyController@getOne'
+            ]);
+        });
 
         $router->group([
-            'as'    => 'middleware::'
+            'as'    => 'middleware::',
         ], function(Router $router) {
             $router->group([
                 'prefix' => 'json',
@@ -92,7 +97,7 @@ abstract class TestCase extends BaseTestCase
                 $router->get('/', [
                     'as'         => 'empty',
                     'middleware' => 'json',
-                    function () {
+                    'uses'       => function () {
                         return response()->json(['status' => 'success']);
                     }
                 ]);
@@ -100,7 +105,7 @@ abstract class TestCase extends BaseTestCase
                 $router->get('param', [
                     'as'         => 'param',
                     'middleware' => 'json:get',
-                    function () {
+                    'uses'       => function () {
                         return response()->json(['status' => 'success']);
                     }
                 ]);
@@ -108,7 +113,7 @@ abstract class TestCase extends BaseTestCase
                 $router->post('param', [
                     'as'         => 'param',
                     'middleware' => 'json:post',
-                    function () {
+                    'uses'       => function () {
                         return response()->json(['status' => 'success']);
                     }
                 ]);
@@ -116,7 +121,7 @@ abstract class TestCase extends BaseTestCase
                 $router->put('param', [
                     'as'         => 'param',
                     'middleware' => 'json:put',
-                    function () {
+                    'uses'       => function () {
                         return response()->json(['status' => 'success']);
                     }
                 ]);
@@ -124,7 +129,7 @@ abstract class TestCase extends BaseTestCase
                 $router->delete('param', [
                     'as'         => 'param',
                     'middleware' => 'json:delete',
-                    function () {
+                    'uses'       => function () {
                         return response()->json(['status' => 'success']);
                     }
                 ]);
@@ -132,7 +137,7 @@ abstract class TestCase extends BaseTestCase
                 $router->get('params', [
                     'as'         => 'params',
                     'middleware' => 'json:get',
-                    function () {
+                    'uses'       => function () {
                         return response()->json(['status' => 'success']);
                     }
                 ]);
