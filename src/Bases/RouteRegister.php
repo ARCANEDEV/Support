@@ -259,4 +259,16 @@ abstract class RouteRegister
     {
         $this->router->group($attributes, $callback);
     }
+
+    /**
+     * Route a resource to a controller.
+     *
+     * @param  string  $name
+     * @param  string  $controller
+     * @param  array   $options
+     */
+    protected function resource($name, $controller, array $options = [])
+    {
+        $this->router->resource($name, $controller, $options);
+    }
 }
