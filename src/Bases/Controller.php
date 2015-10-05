@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\Support\Bases;
 
+use Arcanedev\Support\Traits\Abortable;
 use Illuminate\Routing\Controller as IlluminateController;
 
 /**
@@ -14,26 +15,12 @@ abstract class Controller extends IlluminateController
      |  Traits
      | ------------------------------------------------------------------------------------------------
      */
-    use \Arcanedev\Support\Traits\AbortTrait;
+    use Abortable;
 
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * The view template - master, layout (... whatever).
-     *
-     * @var string
-     */
-    protected $template     = '_templates.default.master';
-
-    /**
-     * The layout view.
-     *
-     * @var \Illuminate\View\View
-     */
-    private $layout;
-
     /**
      * The view data.
      *
@@ -54,44 +41,19 @@ abstract class Controller extends IlluminateController
     }
 
     /* ------------------------------------------------------------------------------------------------
-     |  Illuminate Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Execute an action on the controller.
-     *
-     * @param  string  $method
-     * @param  array   $parameters
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function callAction($method, $parameters)
-    {
-        $this->setupLayout();
-
-        return parent::callAction($method, $parameters);
-    }
-
-    /**
-     * Setup the template/layout.
-     */
-    protected function setupLayout()
-    {
-        if (is_null($this->template)) {
-            abort(500, 'The layout is not set');
-        }
-
-        if ( ! $this->checkViewExists($this->template)) {
-            abort(500, 'The layout [' . $this->template . '] not found');
-        }
-
-        $this->layout = view($this->template);
-    }
-
-    /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Get data.
+     *
+     * @return array
+     */
+    protected function getData()
+    {
+        return $this->data;
+    }
+
     /**
      * Set view data.
      *
@@ -113,44 +75,9 @@ abstract class Controller extends IlluminateController
     }
 
     /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Display the view.
-     *
-     * @param  string  $view
-     *
-     * @return \Illuminate\View\View
-     */
-    protected function view($view)
-    {
-        if ( ! $this->checkViewExists($view)) {
-            abort(500, 'The view [' . $view . '] not found');
-        }
-
-        return $this->layout->with($this->data)->nest('content', $view, $this->data);
-    }
-
-    /* ------------------------------------------------------------------------------------------------
      |  Check Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * Check if view exists.
-     *
-     * @param  string  $view
-     *
-     * @return bool
-     */
-    protected function checkViewExists($view)
-    {
-        /** @var \Illuminate\View\Factory $viewFactory */
-        $viewFactory = view();
-
-        return $viewFactory->exists($view);
-    }
-
     /**
      * Check if the Request is an ajax Request.
      *

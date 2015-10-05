@@ -1,12 +1,12 @@
 <?php namespace Arcanedev\Support\Traits;
 
 /**
- * Trait     AbortTrait
+ * Trait     Abortable
  *
  * @package  Arcanedev\Support\Traits
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-trait AbortTrait
+trait Abortable
 {
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
