@@ -2,7 +2,6 @@
 
 use Arcanedev\Support\Exceptions\PackageException;
 use Arcanedev\Support\ServiceProvider;
-use Closure;
 
 /**
  * Class     CommandServiceProvider
@@ -105,10 +104,10 @@ abstract class CommandServiceProvider extends ServiceProvider
     /**
      * Register a command.
      *
-     * @param  string   $name
-     * @param  Closure  $callback
+     * @param  string                $name
+     * @param  \Closure|string|null  $callback
      */
-    protected function registerCommand($name, Closure $callback)
+    protected function registerCommand($name, $callback)
     {
         $command = $this->getAbstractCommandName($name);
 
@@ -128,10 +127,8 @@ abstract class CommandServiceProvider extends ServiceProvider
      */
     private function checkPackageName()
     {
-        if ( ! empty($this->package)) {
-            return;
+        if (empty($this->package)) {
+            throw new PackageException('You must specify the package name.');
         }
-
-        throw new PackageException('You must specify the package name.');
     }
 }
