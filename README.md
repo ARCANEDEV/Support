@@ -1,4 +1,4 @@
-ARCANEDEV Support Library [![Packagist License][badge_license]](https://github.com/ARCANEDEV/Support/blob/master/LICENSE.md)
+Support [![Packagist License][badge_license]](https://github.com/ARCANEDEV/Support/blob/master/LICENSE.md)
 ==============
 [![Travis Status][badge_build]](https://travis-ci.org/ARCANEDEV/Support)
 [![Coverage Status][badge_coverage]](https://scrutinizer-ci.com/g/ARCANEDEV/Support/?branch=master)
@@ -16,3 +16,5 @@ ARCANEDEV Support Library [![Packagist License][badge_license]](https://github.c
 [badge_downloads]: https://img.shields.io/packagist/dt/arcanedev/support.svg?style=flat-square
 
 *By [ARCANEDEV&copy;](http://www.arcanedev.net/)*
+
+Support package is a collection of helpers and tools for ARCANEDEV + Laravel projects.
