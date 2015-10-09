@@ -19,7 +19,7 @@ trait Templatable
      *
      * @var string
      */
-    protected $template     = '_templates.default.master';
+    protected $template = '_templates.default.master';
 
     /**
      * The layout view.
@@ -63,17 +63,52 @@ trait Templatable
     /**
      * Display the view.
      *
-     * @param  string  $view
+     * @param  string  $name
+     * @param  array   $data
      *
      * @return \Illuminate\View\View
      */
-    protected function view($view)
+    protected function view($name, array $data = [])
     {
-        if ( ! $this->isViewExists($view)) {
-            abort(500, 'The view [' . $view . '] not found');
-        }
+        $this->viewExistsOrFail($name);
 
-        return $this->layout->with($this->data)->nest('content', $view, $this->data);
+        $this->data = array_merge($this->data, $data);
+
+        $this->beforeViewRender();
+        $view = $this->renderView($name);
+        $this->afterViewRender();
+
+        return $view;
+    }
+
+    /**
+     * Do random stuff before rendering view.
+     */
+    protected function beforeViewRender()
+    {
+        //
+    }
+
+    /**
+     * Render the view.
+     *
+     * @param  string  $name
+     *
+     * @return \Illuminate\View\View
+     */
+    private function renderView($name)
+    {
+        return $this->layout
+            ->with($this->data)
+            ->nest('content', $name, $this->data);
+    }
+
+    /**
+     * Do random stuff before rendering view.
+     */
+    protected function afterViewRender()
+    {
+        //
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -93,6 +128,19 @@ trait Templatable
         $viewFactory = view();
 
         return $viewFactory->exists($view);
+    }
+
+    /**
+     * Check if view exists or fail.
+     *
+     * @param  string  $view
+     * @param  string  $message
+     */
+    protected function viewExistsOrFail($view, $message = 'The view [:view] not found')
+    {
+        if ( ! $this->isViewExists($view)) {
+            abort(500, str_replace(':view', $view, $message));
+        }
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -117,15 +165,16 @@ trait Templatable
     /**
      * Setup the template/layout.
      */
-    private function setupLayout()
+    protected function setupLayout()
     {
         if (is_null($this->template)) {
             abort(500, 'The layout is not set');
         }
 
-        if ( ! $this->isViewExists($this->template)) {
-            abort(500, 'The layout [' . $this->template . '] not found');
-        }
+        $this->viewExistsOrFail(
+            $this->template,
+            "The layout [$this->template] not found"
+        );
 
         $this->layout = view($this->template);
     }
