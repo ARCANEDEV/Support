@@ -1,24 +1,26 @@
 {
-    "name": "arcanedev/support",
+    "name":        "arcanedev/support",
     "description": "ARCANEDEV Support Helpers",
-    "keywords": ["arcanedev", "support"],
-    "license": "MIT",
+    "keywords":    ["arcanedev", "arcanesoft", "support", "laravel"],
+    "homepage":    "https://github.com/ARCANEDEV/Support",
     "authors": [
         {
-            "name": "ARCANEDEV",
-            "email": "arcanedev.maroc@gmail.com",
+            "name":     "ARCANEDEV",
+            "email":    "arcanedev.maroc@gmail.com",
             "homepage": "https://github.com/ARCANEDEV"
         }
     ],
+    "type":    "library",
+    "license": "MIT",
     "require": {
-        "php": ">=5.5.9",
+        "php":                   ">=5.5.9",
         "illuminate/filesystem": "~5.0",
-        "illuminate/support": "~5.0"
+        "illuminate/support":    "~5.0"
     },
     "require-dev": {
-        "orchestra/testbench": "~3.0",
-        "phpunit/phpunit": "~4.0",
-        "phpunit/phpcov": "~2.0"
+        "orchestra/testbench":   "~3.0",
+        "phpunit/phpcov":        "~2.0",
+        "phpunit/phpunit":       "~4.0|~5.0"
     },
     "autoload": {
         "psr-4": {
@@ -29,6 +31,11 @@
     "autoload-dev": {
         "psr-4": {
             "Arcanedev\\Support\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0-dev"
         }
     }
 }
