@@ -1,4 +1,4 @@
-Support [![Packagist License][badge_license]](https://github.com/ARCANEDEV/Support/blob/master/LICENSE.md)
+Support [![Packagist License][badge_license]](LICENSE.md)
 ==============
 [![Travis Status][badge_build]](https://travis-ci.org/ARCANEDEV/Support)
 [![HHVM Status][badge_hhvm]](http://hhvm.h4cc.de/package/arcanedev/support)
