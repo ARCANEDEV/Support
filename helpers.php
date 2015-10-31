@@ -39,6 +39,27 @@ if ( ! function_exists('request')) {
     }
 }
 
+if ( ! function_exists('route_is')) {
+    /**
+     * Check if route(s) is the current route.
+     *
+     * @param  array|string  $routes
+     *
+     * @return bool
+     */
+    function route_is($routes)
+    {
+        /** @var Illuminate\Routing\Router $router */
+        $router = app('router');
+
+        if ( ! is_array($routes)) {
+            $routes = (array) $routes;
+        }
+
+        return $router->is($routes);
+    }
+}
+
 if ( ! function_exists('str_studly')) {
     /**
      * Convert a value to studly caps case.
