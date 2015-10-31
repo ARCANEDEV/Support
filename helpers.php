@@ -49,14 +49,14 @@ if ( ! function_exists('route_is')) {
      */
     function route_is($routes)
     {
+        if ( ! is_array($routes)) {
+            $routes = [$routes];
+        }
+
         /** @var Illuminate\Routing\Router $router */
         $router = app('router');
 
-        if ( ! is_array($routes)) {
-            $routes = (array) $routes;
-        }
-
-        return $router->is($routes);
+        return call_user_func_array([$router, 'is'], $routes);
     }
 }
 
