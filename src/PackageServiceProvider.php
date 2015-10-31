@@ -97,13 +97,19 @@ abstract class PackageServiceProvider extends ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Boot the package.
+     * Boot the service provider.
      */
     public function boot()
     {
+        parent::boot();
+
         $this->checkPackageName();
     }
 
+    /* ------------------------------------------------------------------------------------------------
+     |  Package Functions
+     | ------------------------------------------------------------------------------------------------
+     */
     /**
      * Setup package path and stuff.
      */
