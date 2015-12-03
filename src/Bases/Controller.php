@@ -37,7 +37,7 @@ abstract class Controller extends IlluminateController
      */
     public function __construct()
     {
-        $this->setData('page', '');
+        $this->setCurrentPage();
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -72,6 +72,18 @@ abstract class Controller extends IlluminateController
         }
 
         return $this;
+    }
+
+    /**
+     * Set the current page.
+     *
+     * @param  string  $page
+     *
+     * @return self
+     */
+    private function setCurrentPage($page = '')
+    {
+        return $this->setData('current_page', $page);
     }
 
     /* ------------------------------------------------------------------------------------------------
