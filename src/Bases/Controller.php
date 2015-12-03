@@ -81,7 +81,7 @@ abstract class Controller extends IlluminateController
      *
      * @return self
      */
-    private function setCurrentPage($page = '')
+    protected function setCurrentPage($page = '')
     {
         return $this->setData('current_page', $page);
     }
