@@ -1,7 +1,6 @@
 <?php namespace Arcanedev\Support;
 
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 /**
@@ -24,9 +23,16 @@ abstract class ServiceProvider extends IlluminateServiceProvider
     protected $app;
 
     /**
+     * The aliases collection.
+     *
+     * @var array
+     */
+    protected $aliases = [];
+
+    /**
      * Alias loader.
      *
-     * @var AliasLoader
+     * @var \Illuminate\Foundation\AliasLoader
      */
     private $aliasLoader;
 
@@ -41,9 +47,9 @@ abstract class ServiceProvider extends IlluminateServiceProvider
      */
     public function __construct(Application $app)
     {
-        IlluminateServiceProvider::__construct($app);
+        parent::__construct($app);
 
-        $this->aliasLoader = AliasLoader::getInstance();
+        $this->aliasLoader = \Illuminate\Foundation\AliasLoader::getInstance();
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -82,7 +88,54 @@ abstract class ServiceProvider extends IlluminateServiceProvider
     }
 
     /**
+     * Register aliases (Facades).
+     */
+    protected function registerAliases()
+    {
+        $loader = $this->aliasLoader;
+
+        $this->app->booting(function() use ($loader) {
+            foreach ($this->aliases as $class => $alias) {
+                $loader->alias($class, $alias);
+            }
+        });
+    }
+
+    /**
+     * Add an aliases to the loader.
+     *
+     * @param  array  $aliases
+     *
+     * @return self
+     */
+    protected function aliases(array $aliases)
+    {
+        foreach ($aliases as $class => $alias) {
+            $this->alias($class, $alias);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add an alias to the loader.
+     *
+     * @param  string  $class
+     * @param  string  $alias
+     *
+     * @return self
+     */
+    protected function alias($class, $alias)
+    {
+        $this->aliases[$class] = $alias;
+
+        return $this;
+    }
+
+    /**
      * Add Aliases into the app.
+     *
+     * @deprecated 3.7.0 Use the aliases() method instead and don't forget to add the registerAliases() inside register() method.
      *
      * @param  array  $aliases
      *
@@ -99,6 +152,8 @@ abstract class ServiceProvider extends IlluminateServiceProvider
 
     /**
      * Add Alias. (Facade)
+     *
+     * @deprecated 3.7.0 Use the alias() method instead and don't forget to add the registerAliases() inside register() method.
      *
      * @param  string  $alias
      * @param  string  $facade
