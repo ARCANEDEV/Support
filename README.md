@@ -12,7 +12,7 @@
 [![Packagist Downloads][badge_downloads]](https://packagist.org/packages/arcanedev/support)
 
 [badge_license]:   http://img.shields.io/packagist/l/arcanedev/support.svg?style=flat-square
-[badge_laravel]:   https://img.shields.io/badge/For-Laravel%205.x-orange.svg?style=flat-square
+[badge_laravel]:   https://img.shields.io/badge/For-Laravel%205.1|5.2-orange.svg?style=flat-square
 
 [badge_build]:     http://img.shields.io/travis/ARCANEDEV/Support.svg?style=flat-square
 [badge_hhvm]:      https://img.shields.io/hhvm/arcanedev/support.svg?style=flat-square
