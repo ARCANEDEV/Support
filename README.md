@@ -1,4 +1,4 @@
-# Support [![Packagist License][badge_license]](LICENSE.md)
+# Support [![Packagist License][badge_license]](LICENSE.md) [![For Laravel 5][badge_laravel]](https://github.com/ARCANEDEV/Support#support)
 
 [![Travis Status][badge_build]](https://travis-ci.org/ARCANEDEV/Support)
 [![HHVM Status][badge_hhvm]](http://hhvm.h4cc.de/package/arcanedev/support)
@@ -12,6 +12,8 @@
 [![Packagist Downloads][badge_downloads]](https://packagist.org/packages/arcanedev/support)
 
 [badge_license]:   http://img.shields.io/packagist/l/arcanedev/support.svg?style=flat-square
+[badge_laravel]:   https://img.shields.io/badge/For-Laravel%205.x-orange.svg?style=flat-square
+
 [badge_build]:     http://img.shields.io/travis/ARCANEDEV/Support.svg?style=flat-square
 [badge_hhvm]:      https://img.shields.io/hhvm/arcanedev/support.svg?style=flat-square
 [badge_coverage]:  https://img.shields.io/scrutinizer/coverage/g/ARCANEDEV/Support.svg?style=flat-square
