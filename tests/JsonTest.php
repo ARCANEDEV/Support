@@ -34,9 +34,9 @@ class JsonTest extends TestCase
 
     public function tearDown()
     {
-        parent::tearDown();
-
         unset($this->json);
+
+        parent::tearDown();
     }
 
     /* ------------------------------------------------------------------------------------------------

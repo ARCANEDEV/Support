@@ -1,4 +1,5 @@
 <?php namespace Arcanedev\Support\Tests\Stubs;
+
 use Arcanedev\Support\Bases\Controller;
 
 /**

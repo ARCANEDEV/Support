@@ -18,6 +18,10 @@ class TestPackageServiceProvider extends PackageServiceProvider
 
     protected $package = 'package';
 
+    /* ------------------------------------------------------------------------------------------------
+     |  Main Functions
+     | ------------------------------------------------------------------------------------------------
+     */
     /**
      * Get the base path of the package.
      *

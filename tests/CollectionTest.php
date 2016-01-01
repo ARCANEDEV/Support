@@ -1,4 +1,5 @@
 <?php namespace Arcanedev\Support\Tests;
+
 use Arcanedev\Support\Collection;
 
 /**
@@ -9,20 +10,6 @@ use Arcanedev\Support\Collection;
  */
 class CollectionTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
