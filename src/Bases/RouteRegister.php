@@ -55,9 +55,19 @@ abstract class RouteRegister
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Register and map routes.
+     *
+     * @param  \Illuminate\Contracts\Routing\Registrar  $router
+     */
+    public static function register(Registrar $router)
+    {
+        (new static)->setRegister($router)->map($router);
+    }
+
+    /**
      * Map routes.
      *
-     * @param  Registrar  $router
+     * @param  \Illuminate\Contracts\Routing\Registrar  $router
      */
     public function map(Registrar $router)
     {
@@ -160,14 +170,12 @@ abstract class RouteRegister
      */
     protected function getAttributes(array $merge = [])
     {
-        $attributes = [
+        return array_merge([
             'prefix'     => $this->prefix,
             'as'         => $this->routeName,
             'middleware' => $this->middlewares,
             'namespace'  => $this->namespace,
-        ];
-
-        return array_merge($attributes, $merge);
+        ], $merge);
     }
 
     /* ------------------------------------------------------------------------------------------------
