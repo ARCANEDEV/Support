@@ -1,8 +1,8 @@
 <?php namespace Arcanedev\Support\Providers;
 
 use Exception;
+use Illuminate\Contracts\Routing\Registrar as Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Routing\Router;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -21,7 +21,11 @@ abstract class RouteServiceProvider extends ServiceProvider
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    /** @var Router */
+    /**
+     * The Route Registrar instance.
+     *
+     * @var \Illuminate\Contracts\Routing\Registrar
+     */
     private $router;
 
     /**
@@ -43,16 +47,16 @@ abstract class RouteServiceProvider extends ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Get the routes namespace
+     * Get the routes namespace.
      *
      * @return string
      */
     abstract protected function getRouteNamespace();
 
     /**
-     * Set the Router
+     * Set the Router.
      *
-     * @param  Router  $router
+     * @param  \Illuminate\Contracts\Routing\Registrar  $router
      *
      * @return self
      */
@@ -70,16 +74,16 @@ abstract class RouteServiceProvider extends ServiceProvider
     /**
      * Define the routes for the application.
      *
-     * @param  Router  $router
+     * @param  \Illuminate\Contracts\Routing\Registrar  $router
      */
     abstract public function map(Router $router);
 
     /**
-     * Map routes
+     * Map routes.
      *
-     * @param  Router  $router
-     * @param  string  $directory
-     * @param  array   $attributes
+     * @param  \Illuminate\Contracts\Routing\Registrar  $router
+     * @param  string                                   $directory
+     * @param  array                                    $attributes
      */
     protected function mapRoutes(Router $router, $directory, array $attributes = [])
     {
@@ -117,7 +121,7 @@ abstract class RouteServiceProvider extends ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Check the route namespace
+     * Check the route namespace.
      *
      * @throws Exception
      */
@@ -159,7 +163,7 @@ abstract class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Add route to collection
+     * Add route to collection.
      *
      * @param  string  $route
      *
