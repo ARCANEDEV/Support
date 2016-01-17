@@ -1,6 +1,6 @@
 <?php namespace Arcanedev\Support\Providers;
 
-use Exception;
+use Arcanedev\Support\Exceptions\RouteNamespaceUndefinedException;
 use Illuminate\Contracts\Routing\Registrar as Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use RecursiveDirectoryIterator;
@@ -47,13 +47,6 @@ abstract class RouteServiceProvider extends ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Get the routes namespace.
-     *
-     * @return string
-     */
-    abstract protected function getRouteNamespace();
-
-    /**
      * Set the Router.
      *
      * @param  \Illuminate\Contracts\Routing\Registrar  $router
@@ -65,6 +58,20 @@ abstract class RouteServiceProvider extends ServiceProvider
         $this->router = $router;
 
         return $this;
+    }
+
+    /**
+     * Get the routes namespace.
+     *
+     * @return string
+     *
+     * @throws \Arcanedev\Support\Exceptions\RouteNamespaceUndefinedException
+     */
+    protected function getRouteNamespace()
+    {
+        throw new RouteNamespaceUndefinedException(
+            'The routes namespace is undefined.'
+        );
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -87,7 +94,6 @@ abstract class RouteServiceProvider extends ServiceProvider
      */
     protected function mapRoutes(Router $router, $directory, array $attributes = [])
     {
-        $this->checkRouteNamespace();
         $this->setRouter($router);
         $this->registerRoutes($directory);
 
@@ -113,24 +119,6 @@ abstract class RouteServiceProvider extends ServiceProvider
         foreach(new RecursiveIteratorIterator($di) as $file) {
             /** @var SplFileInfo $file */
             $this->addRouteFromFile($file);
-        }
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Check Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Check the route namespace.
-     *
-     * @throws Exception
-     */
-    private function checkRouteNamespace()
-    {
-        $namespace = $this->getRouteNamespace();
-
-        if (empty($namespace)) {
-            throw new Exception('The routes namespace is empty.');
         }
     }
 
