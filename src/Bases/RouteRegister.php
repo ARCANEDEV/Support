@@ -18,7 +18,7 @@ abstract class RouteRegister
     /**
      * The router instance.
      *
-     * @var Registrar
+     * @var \Illuminate\Contracts\Routing\Registrar|\Illuminate\Routing\Router
      */
     protected $router;
 
@@ -79,7 +79,7 @@ abstract class RouteRegister
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * @param  Registrar  $router
+     * @param  \Illuminate\Contracts\Routing\Registrar  $router
      *
      * @return self
      */
@@ -278,5 +278,16 @@ abstract class RouteRegister
     protected function resource($name, $controller, array $options = [])
     {
         $this->router->resource($name, $controller, $options);
+    }
+
+    /**
+     * Add a new route parameter binder.
+     *
+     * @param  string           $key
+     * @param  string|callable  $binder
+     */
+    protected function bind($key, $binder)
+    {
+        $this->router->bind($key, $binder);
     }
 }
