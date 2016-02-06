@@ -17,13 +17,6 @@ abstract class Migration extends IlluminateMigration
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * The name of the database connection to use.
-     *
-     * @var string|null
-     */
-    protected $connection;
-
-    /**
      * The table name.
      *
      * @var string|null
@@ -42,19 +35,77 @@ abstract class Migration extends IlluminateMigration
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Set the migration connection name.
+     *
+     * @param  string  $connection
+     *
+     * @return self
+     */
+    public function setConnection($connection)
+    {
+        $this->connection = $connection;
+
+        return $this;
+    }
+
+    /**
      * Get the table name.
+     *
+     * @return null|string
+     */
+    public function getTable()
+    {
+        return $this->table;
+    }
+
+    /**
+     * Get the prefixed table name.
      *
      * @return string
      */
     public function getTableName()
     {
-        $table = $this->table;
+        return $this->hasPrefix()
+            ? $this->getPrefix() . $this->getTable()
+            : $this->getTable();
+    }
 
-        if ($this->isPrefixed()) {
-            $table = $this->prefix . $table;
-        }
+    /**
+     * Set the table name.
+     *
+     * @param  string  $table
+     *
+     * @return self
+     */
+    public function setTable($table)
+    {
+        $this->table = $table;
 
-        return $table;
+        return $this;
+    }
+
+    /**
+     * Get the prefix name.
+     *
+     * @return null|string
+     */
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
+
+    /**
+     * Set the prefix name.
+     *
+     * @param  string  $prefix
+     *
+     * @return self
+     */
+    public function setPrefix($prefix)
+    {
+        $this->prefix = $prefix;
+
+        return $this;
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -77,7 +128,7 @@ abstract class Migration extends IlluminateMigration
             return;
         }
 
-        Schema::connection($this->connection)->dropIfExists($this->getTableName());
+        Schema::connection($this->getConnection())->dropIfExists($this->getTableName());
     }
 
     /**
@@ -87,13 +138,13 @@ abstract class Migration extends IlluminateMigration
      */
     protected function createSchema(Closure $blueprint)
     {
-        if ( ! $this->hasConnection()) {
-            Schema::create($this->getTableName(), $blueprint);
-
-            return;
+        if ($this->hasConnection()) {
+            Schema::connection($this->getConnection())
+                  ->create($this->getTableName(), $blueprint);
         }
-
-        Schema::connection($this->connection)->create($this->getTableName(), $blueprint);
+        else {
+            Schema::create($this->getTableName(), $blueprint);
+        }
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -107,7 +158,7 @@ abstract class Migration extends IlluminateMigration
      */
     protected function hasConnection()
     {
-        return ! (is_null($this->connection) || empty($this->connection));
+        return $this->isNotEmpty($this->getConnection());
     }
 
     /**
@@ -115,8 +166,20 @@ abstract class Migration extends IlluminateMigration
      *
      * @return bool
      */
-    protected function isPrefixed()
+    protected function hasPrefix()
     {
-        return ! (is_null($this->prefix) || empty($this->prefix));
+        return $this->isNotEmpty($this->getPrefix());
+    }
+
+    /**
+     * Check if the value is not empty.
+     *
+     * @param  string  $value
+     *
+     * @return bool
+     */
+    private function isNotEmpty($value)
+    {
+        return ! (is_null($value) || empty($value));
     }
 }
