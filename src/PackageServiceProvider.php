@@ -190,19 +190,14 @@ abstract class PackageServiceProvider extends ServiceProvider
     private function setupPaths()
     {
         $this->basePath = $this->getBasePath();
-
-        $this->paths = [
-            'migrations' => [
-                'src'       => $this->getSourcePath('database/migrations'),
-                'dest'      => database_path('migrations/%s_%s'),
-            ],
-            'seeds'     => [
-                'src'       => $this->getSourcePath('src/Seeds'),
-                'dest'      => database_path('seeds/%s'),
-            ],
+        $this->paths    = [
             'config'    => [
                 'src'       => $this->getSourcePath('config'),
                 'dest'      => config_path('%s'),
+            ],
+            'migrations' => [
+                'src'       => $this->getSourcePath('database/migrations'),
+                'dest'      => database_path('migrations/%s_%s'),
             ],
             'views'     => [
                 'src'       => $this->getSourcePath('resources/views'),
@@ -216,9 +211,9 @@ abstract class PackageServiceProvider extends ServiceProvider
                 'src'       => $this->getSourcePath('resources/assets'),
                 'dest'      => public_path('vendor/%s'),
             ],
-            'routes' => [
-                'src'       => $this->getSourcePath('start/routes.php'),
-                'dest'      => null,
+            'seeds'     => [
+                'src'       => $this->getSourcePath('src/Seeds'),
+                'dest'      => database_path('seeds/%s'),
             ],
         ];
 

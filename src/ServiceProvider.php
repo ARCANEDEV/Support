@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\Support;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 /**
@@ -43,13 +44,13 @@ abstract class ServiceProvider extends IlluminateServiceProvider
     /**
      * Create a new service provider instance.
      *
-     * @param  Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      */
     public function __construct(Application $app)
     {
         parent::__construct($app);
 
-        $this->aliasLoader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $this->aliasLoader = AliasLoader::getInstance();
     }
 
     /* ------------------------------------------------------------------------------------------------
