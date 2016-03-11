@@ -85,4 +85,16 @@ class StubTest extends TestCase
 
         $this->assertEquals($basePath, Stub::getBasePath());
     }
+
+    /** @test */
+    public function it_can_create_from_path()
+    {
+        $path = $this->getFixturesPath('stubs') . '/composer.stub';
+
+        $this->stub = Stub::createFromPath($path);
+
+        $this->assertEmpty($this->stub->getBasePath());
+        $this->assertEquals($path, $this->stub->getPath());
+        $this->assertEmpty($this->stub->getReplaces());
+    }
 }
