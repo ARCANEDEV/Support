@@ -8,7 +8,7 @@ use Arcanedev\Support\Exceptions\PackageException;
  * @package  Arcanedev\Support\Laravel
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  *
- * @todo     Redo the PackageServiceProvider
+ * @todo     Clean/Redo the PackageServiceProvider
  */
 abstract class PackageServiceProvider extends ServiceProvider
 {
@@ -56,6 +56,13 @@ abstract class PackageServiceProvider extends ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Get the base path of the package.
+     *
+     * @return string
+     */
+    abstract public function getBasePath();
+
+    /**
      * Get config folder.
      *
      * @return string
@@ -64,13 +71,6 @@ abstract class PackageServiceProvider extends ServiceProvider
     {
         return realpath($this->getBasePath() . DS .'config');
     }
-
-    /**
-     * Get the base path of the package.
-     *
-     * @return string
-     */
-    abstract public function getBasePath();
 
     /**
      * Get config key.
@@ -89,7 +89,7 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function getConfigFile()
     {
-        return $this->getConfigFolder() . DS . $this->package . '.php';
+        return $this->getConfigFolder() . DS . "{$this->package}.php";
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -127,13 +127,10 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function registerConfig($separator = '.')
     {
-        if ($this->multiConfigs) {
+        if ($this->multiConfigs)
             $this->registerMultipleConfigs($separator);
-
-            return;
-        }
-
-        $this->mergeConfigFrom($this->getConfigFile(), $this->getConfigKey());
+        else
+            $this->mergeConfigFrom($this->getConfigFile(), $this->getConfigKey());
     }
 
     /**
@@ -144,10 +141,88 @@ abstract class PackageServiceProvider extends ServiceProvider
     private function registerMultipleConfigs($separator = '.')
     {
         foreach (glob($this->getConfigFolder() . '/*.php') as $configPath) {
-            $key = $this->getConfigKey() . $separator . basename($configPath, '.php');
-
-            $this->mergeConfigFrom($configPath, $key);
+            $this->mergeConfigFrom(
+                $configPath,
+                $this->getConfigKey() . $separator . basename($configPath, '.php')
+            );
         }
+    }
+
+    /**
+     * Publish the config file.
+     */
+    protected function publishConfig()
+    {
+        $this->publishes([
+            $this->getConfigFile() => config_path("{$this->package}.php"),
+        ], 'config');
+    }
+
+    /**
+     * Publish the migration files.
+     */
+    protected function publishMigrations()
+    {
+        $this->publishes([
+            $this->getBasePath() . '/database/migrations/' => database_path('migrations'),
+        ], 'migrations');
+    }
+
+    /**
+     * Publish and load the views if $load argument is true.
+     *
+     * @param  bool  $load
+     */
+    protected function publishViews($load = true)
+    {
+        $this->publishes([
+            $this->getBasePath() . '/resources/views' => base_path("resources/views/vendor/{$this->package}"),
+        ], 'views');
+
+        if ($load) $this->loadViews();
+    }
+
+    /**
+     * Publish and load the translations if $load argument is true.
+     *
+     * @param  bool  $load
+     */
+    protected function publishTranslations($load = true)
+    {
+        $this->publishes([
+            $this->getBasePath() . '/resources/lang' => base_path("resources/lang/vendor/{$this->package}"),
+        ], 'lang');
+
+        if ($load) $this->loadTranslations();
+    }
+
+    /**
+     * Publish all the package files.
+     *
+     * @param  bool  $load
+     */
+    protected function publishAll($load = true)
+    {
+        $this->publishConfig();
+        $this->publishMigrations();
+        $this->publishViews($load);
+        $this->publishTranslations($load);
+    }
+
+    /**
+     * Load the views files.
+     */
+    protected function loadViews()
+    {
+        $this->loadViewsFrom($this->getBasePath() . '/resources/views', $this->package);
+    }
+
+    /**
+     * Load the translations files.
+     */
+    protected function loadTranslations()
+    {
+        $this->loadTranslationsFrom($this->getBasePath() . '/resources/lang', $this->package);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -161,11 +236,9 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     private function checkPackageName()
     {
-        if ( ! empty($this->package) ) {
-            return;
+        if (empty($this->package) || empty($this->package)) {
+            throw new PackageException('You must specify the vendor/package name.');
         }
-
-        throw new PackageException('You must specify the name of the package');
     }
 
     /**

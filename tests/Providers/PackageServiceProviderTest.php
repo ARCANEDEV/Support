@@ -82,7 +82,7 @@ class PackageServiceProviderTest extends TestCase
      * @test
      *
      * @expectedException         \Arcanedev\Support\Exceptions\PackageException
-     * @expectedExceptionMessage  You must specify the name of the package
+     * @expectedExceptionMessage  You must specify the vendor/package name.
      */
     public function it_must_throw_a_package_exception()
     {
