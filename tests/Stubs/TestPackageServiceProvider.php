@@ -14,8 +14,6 @@ class TestPackageServiceProvider extends PackageServiceProvider
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    protected $vendor  = 'arcanedev';
-
     protected $package = 'package';
 
     /* ------------------------------------------------------------------------------------------------

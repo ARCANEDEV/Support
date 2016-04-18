@@ -21,7 +21,7 @@ abstract class PackageServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $vendor       = 'vendor';
+    protected $vendor       = 'arcanedev';
 
     /**
      * Package name.
@@ -146,6 +146,17 @@ abstract class PackageServiceProvider extends ServiceProvider
                 $this->getConfigKey() . $separator . basename($configPath, '.php')
             );
         }
+    }
+
+    /**
+     * Register commands service provider.
+     *
+     * @param  \Illuminate\Support\ServiceProvider|string  $provider
+     */
+    protected function registerCommands($provider)
+    {
+        if ($this->app->runningInConsole())
+            $this->app->register($provider);
     }
 
     /**

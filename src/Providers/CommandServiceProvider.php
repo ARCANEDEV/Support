@@ -20,7 +20,7 @@ abstract class CommandServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $vendor   = '';
+    protected $vendor   = 'arcanedev';
 
     /**
      * Package name.
@@ -56,13 +56,9 @@ abstract class CommandServiceProvider extends ServiceProvider
     {
         $this->checkPackageName();
 
-        $prefix = $this->package;
-
-        if ( ! empty($this->vendor)) {
-            $prefix = "{$this->vendor}.$prefix";
-        }
-
-        return $prefix;
+        return empty($this->vendor)
+            ? $this->package
+            : "{$this->vendor}.{$this->package}";
     }
 
     /**
@@ -74,9 +70,7 @@ abstract class CommandServiceProvider extends ServiceProvider
      */
     protected function getAbstractCommandName($name)
     {
-        $prefix = $this->getCommandPrefix();
-
-        return  "$prefix.commands.$name";
+        return  $this->getCommandPrefix() . ".commands.$name";
     }
 
     /* ------------------------------------------------------------------------------------------------
