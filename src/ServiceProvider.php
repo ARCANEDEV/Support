@@ -133,6 +133,34 @@ abstract class ServiceProvider extends IlluminateServiceProvider
         return $this;
     }
 
+    /* ------------------------------------------------------------------------------------------------
+     |  Services
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Get the config repository instance.
+     *
+     * @return \Illuminate\Config\Repository
+     */
+    protected function config()
+    {
+        return $this->app['config'];
+    }
+
+    /**
+     * Get the filesystem instance.
+     *
+     * @return \Illuminate\Filesystem\Filesystem
+     */
+    protected function filesystem()
+    {
+        return $this->app['files'];
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Deprecated Methods
+     | ------------------------------------------------------------------------------------------------
+     */
     /**
      * Add Aliases into the app.
      *
