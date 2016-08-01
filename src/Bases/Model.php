@@ -17,26 +17,46 @@ abstract class Model extends Eloquent
     /**
      * The table prefix.
      *
-     * @var string
+     * @var string|null
      */
-    protected $prefix       = '';
+    protected $prefix;
 
     /* ------------------------------------------------------------------------------------------------
-     |  Constructor
+     |  Getters & Setters
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Create a new Eloquent model instance.
+     * Get the table associated with the model.
      *
-     * @param  array  $attributes
+     * @return string
      */
-    public function __construct($attributes = [])
+    public function getTable()
     {
-        if ($this->isPrefixed()) {
-            $this->table = $this->prefix . $this->table;
-        }
+        return $this->getPrefix() . parent::getTable();
+    }
 
-        parent::__construct($attributes);
+    /**
+     * Get the prefix table associated with the model.
+     *
+     * @return null|string
+     */
+    public function getPrefix()
+    {
+        return $this->isPrefixed() ? $this->prefix : '';
+    }
+
+    /**
+     * Set the prefix table associated with the model.
+     *
+     * @param  string  $prefix
+     *
+     * @return self
+     */
+    public function setPrefix($prefix)
+    {
+        $this->prefix = $prefix;
+
+        return $this;
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -48,8 +68,8 @@ abstract class Model extends Eloquent
      *
      * @return bool
      */
-    protected function isPrefixed()
+    public function isPrefixed()
     {
-        return ! empty($this->prefix);
+        return ! is_null($this->prefix);
     }
 }
