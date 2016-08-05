@@ -56,8 +56,6 @@ abstract class TestCase extends BaseTestCase
         /** @var Router $router */
         $router = $app['router'];
 
-        $router->middleware('json', 'Arcanedev\\Support\\Middleware\\VerifyJsonRequest');
-
         $router->group([
             'prefix'    => 'dummy',
             'namespace' => 'Arcanedev\\Support\\Tests\\Stubs',
@@ -72,6 +70,9 @@ abstract class TestCase extends BaseTestCase
                 'uses'  => 'DummyController@getOne'
             ]);
         });
+
+        $router->middleware('json',      \Arcanedev\Support\Middleware\VerifyJsonRequest::class);
+        $router->middleware('only-ajax', \Arcanedev\Support\Middleware\OnlyAjaxMiddleware::class);
 
         $router->group([
             'as'    => 'middleware::',
@@ -124,6 +125,19 @@ abstract class TestCase extends BaseTestCase
                     'as'         => 'params',
                     'middleware' => 'json:get',
                     'uses'       => function () {
+                        return response()->json(['status' => 'success']);
+                    }
+                ]);
+            });
+
+            $router->group([
+                'prefix'     => 'ajax',
+                'as'         => 'ajax.',
+                'middleware' => 'only-ajax',
+            ], function (Router $router) {
+                $router->get('/', [
+                    'as'   => 'get',
+                    'uses' => function () {
                         return response()->json(['status' => 'success']);
                     }
                 ]);
