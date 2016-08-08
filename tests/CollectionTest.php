@@ -15,6 +15,14 @@ class CollectionTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
+    public function it_can_use_where_in()
+    {
+        $c = new Collection([['v' => 1], ['v' => 2], ['v' => 3], ['v' => '3'], ['v' => 4]]);
+
+        $this->assertEquals([['v' => 1], ['v' => 3]], $c->whereIn('v', [1, 3])->values()->all());
+    }
+
+    /** @test */
     public function it_can_reset()
     {
         $items  = [

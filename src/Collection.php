@@ -11,7 +11,27 @@ use Illuminate\Support\Collection as IlluminateCollection;
 class Collection extends IlluminateCollection
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
+     |  Illuminate Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Filter items by the given key value pair.
+     *
+     * @param  string  $key
+     * @param  array   $values
+     * @param  bool    $strict
+     *
+     * @return static
+     */
+    public function whereIn($key, array $values, $strict = true)
+    {
+        return $this->filter(function ($item) use ($key, $values, $strict) {
+            return in_array(data_get($item, $key), $values, $strict);
+        });
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Custom Functions
      | ------------------------------------------------------------------------------------------------
      */
     /**
