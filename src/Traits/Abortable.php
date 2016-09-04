@@ -20,7 +20,7 @@ trait Abortable
      */
     protected static function pageNotFound($message = 'Page not Found', array $headers = [])
     {
-        abort(404, $message, $headers);
+        return abort(404, $message, $headers);
     }
 
     /**
@@ -31,6 +31,6 @@ trait Abortable
      */
     protected static function accessNotAllowed($message = 'Access denied !', array $headers = [])
     {
-        abort(403, $message, $headers);
+        return abort(403, $message, $headers);
     }
 }
