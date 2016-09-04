@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\Support\Tests\Bases;
 
 use Arcanedev\Support\Tests\TestCase;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class     ControllerTest
@@ -28,14 +29,25 @@ class ControllerTest extends TestCase
         $this->assertEquals('Super dummy', $response->getContent());
     }
 
-    /**
-     * @test
-     *
-     * @expectedException        \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @expectedExceptionMessage Super dummy not found !
-     */
+    /** @test */
     public function it_can_throw_four_o_four_exception()
     {
-        $this->route('GET', 'dummy::get', ['not-super']);
+        try {
+            $response   = $this->route('GET', 'dummy::get', ['not-super']);
+            $statusCode = $response->getStatusCode();
+            $message    = $response->exception->getMessage();
+
+            $this->assertInstanceOf(
+                NotFoundHttpException::class,
+                $response->exception
+            );
+        }
+        catch(NotFoundHttpException $e) {
+            $statusCode = $e->getStatusCode();
+            $message    = $e->getMessage();
+        }
+
+        $this->assertSame(404, $statusCode);
+        $this->assertSame('Super dummy not found !', $message);
     }
 }
