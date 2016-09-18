@@ -7,8 +7,6 @@ use Arcanedev\Support\Exceptions\PackageException;
  *
  * @package  Arcanedev\Support\Laravel
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
- *
- * @todo     Clean/Redo the PackageServiceProvider
  */
 abstract class PackageServiceProvider extends ServiceProvider
 {
@@ -36,13 +34,6 @@ abstract class PackageServiceProvider extends ServiceProvider
      * @var string
      */
     protected $basePath     = '';
-
-    /**
-     * Paths collection.
-     *
-     * @var array
-     */
-    protected $paths        = [];
 
     /**
      * Merge multiple config files into one instance (package name as root key)
@@ -83,7 +74,7 @@ abstract class PackageServiceProvider extends ServiceProvider
     }
 
     /**
-     * Get config file path
+     * Get config file path.
      *
      * @return string
      */
@@ -116,7 +107,6 @@ abstract class PackageServiceProvider extends ServiceProvider
     protected function setup()
     {
         $this->checkPackageName();
-        $this->setupPaths();
         $this->registerConfig();
     }
 
@@ -174,9 +164,11 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function publishMigrations()
     {
-        $this->publishes([
-            $this->getBasePath() . '/database/migrations/' => database_path('migrations'),
-        ], 'migrations');
+        if (is_dir($path = ($this->getBasePath() . '/database/migrations/'))) {
+            $this->publishes([
+                $path => database_path('migrations'),
+            ], 'migrations');
+        }
     }
 
     /**
@@ -186,11 +178,13 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function publishViews($load = true)
     {
-        $this->publishes([
-            $this->getBasePath() . '/resources/views' => base_path("resources/views/vendor/{$this->package}"),
-        ], 'views');
+        if (is_dir($path = ($this->getBasePath() . '/resources/views'))) {
+            $this->publishes([
+                $path => base_path("resources/views/vendor/{$this->package}"),
+            ], 'views');
 
-        if ($load) $this->loadViews();
+            if ($load) $this->loadViews();
+        }
     }
 
     /**
@@ -200,11 +194,25 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function publishTranslations($load = true)
     {
-        $this->publishes([
-            $this->getBasePath() . '/resources/lang' => base_path("resources/lang/vendor/{$this->package}"),
-        ], 'lang');
+        if (is_dir($path = ($this->getBasePath() . '/resources/lang'))) {
+            $this->publishes([
+                $path => base_path("resources/lang/vendor/{$this->package}"),
+            ], 'lang');
 
-        if ($load) $this->loadTranslations();
+            if ($load) $this->loadTranslations();
+        }
+    }
+
+    /**
+     * Publish the factories.
+     */
+    protected function publishFactories()
+    {
+        if (is_dir($path = ($this->getBasePath() . '/database/factories'))) {
+            $this->publishes([
+                $path => database_path('factories'),
+            ], 'factories');
+        }
     }
 
     /**
@@ -218,6 +226,7 @@ abstract class PackageServiceProvider extends ServiceProvider
         $this->publishMigrations();
         $this->publishViews($load);
         $this->publishTranslations($load);
+        $this->publishFactories();
     }
 
     /**
@@ -241,7 +250,7 @@ abstract class PackageServiceProvider extends ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Check package name
+     * Check package name.
      *
      * @throws PackageException
      */
@@ -260,59 +269,5 @@ abstract class PackageServiceProvider extends ServiceProvider
     protected function hasPackageConfig()
     {
         return $this->getConfigFile() !== false;
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Setup paths.
-     *
-     * @return self
-     */
-    private function setupPaths()
-    {
-        $this->basePath = $this->getBasePath();
-        $this->paths    = [
-            'config'    => [
-                'src'       => $this->getSourcePath('config'),
-                'dest'      => config_path('%s'),
-            ],
-            'migrations' => [
-                'src'       => $this->getSourcePath('database/migrations'),
-                'dest'      => database_path('migrations/%s_%s'),
-            ],
-            'views'     => [
-                'src'       => $this->getSourcePath('resources/views'),
-                'dest'      => base_path('resources/views/' . $this->vendor . '/%s'),
-            ],
-            'trans'     => [
-                'src'       => $this->getSourcePath('resources/lang'),
-                'dest'      => base_path('resources/lang/%s'),
-            ],
-            'assets'    => [
-                'src'       => $this->getSourcePath('resources/assets'),
-                'dest'      => public_path('vendor/%s'),
-            ],
-            'seeds'     => [
-                'src'       => $this->getSourcePath('src/Seeds'),
-                'dest'      => database_path('seeds/%s'),
-            ],
-        ];
-
-        return $this;
-    }
-
-    /**
-     * Get source path.
-     *
-     * @param  string  $path
-     *
-     * @return string
-     */
-    private function getSourcePath($path)
-    {
-        return str_replace('/', DS, $this->basePath . DS . $path);
     }
 }
