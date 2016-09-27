@@ -1,6 +1,6 @@
 <?php namespace Arcanedev\Support\Providers;
 
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
 
 /**
  * Class     AuthorizationServiceProvider
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
  * @package  Arcanedev\Support\Providers
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class AuthorizationServiceProvider extends ServiceProvider
+class AuthorizationServiceProvider extends AuthServiceProvider
 {
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
