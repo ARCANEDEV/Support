@@ -51,6 +51,20 @@ abstract class RouteRegister
     private $namespace = '';
 
     /* ------------------------------------------------------------------------------------------------
+     |  Constructor
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * RouteRegister constructor.
+     *
+     * @param  \Illuminate\Contracts\Routing\Registrar  $router
+     */
+    public function __construct(Registrar $router)
+    {
+        $this->setRegister($router);
+    }
+
+    /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
@@ -61,7 +75,7 @@ abstract class RouteRegister
      */
     public static function register(Registrar $router)
     {
-        (new static)->setRegister($router)->map($router);
+        (new static($router))->map($router);
     }
 
     /**
@@ -69,10 +83,7 @@ abstract class RouteRegister
      *
      * @param  \Illuminate\Contracts\Routing\Registrar  $router
      */
-    public function map(Registrar $router)
-    {
-        $this->setRegister($router);
-    }
+    abstract public function map(Registrar $router);
 
     /* ------------------------------------------------------------------------------------------------
      |  Getter & Setters
@@ -113,7 +124,7 @@ abstract class RouteRegister
     protected function addPrefix($prefix)
     {
         if ( ! empty($this->prefix)) {
-            $prefix = $this->prefix . '/' . $prefix;
+            $prefix = "{$this->prefix}/{$prefix}";
         }
 
         return $this->setPrefix($prefix);
@@ -178,6 +189,27 @@ abstract class RouteRegister
         ], $merge);
     }
 
+    /**
+     * Set a global where pattern on all routes.
+     *
+     * @param  string  $key
+     * @param  string  $pattern
+     */
+    public function pattern($key, $pattern)
+    {
+        $this->router->pattern($key, $pattern);
+    }
+
+    /**
+     * Set a group of global where patterns on all routes.
+     *
+     * @param  array  $patterns
+     */
+    public function patterns($patterns)
+    {
+        $this->router->patterns($patterns);
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
@@ -192,21 +224,17 @@ abstract class RouteRegister
     {
         $attributes = config($key, $default);
 
-        if (isset($attributes['prefix'])) {
+        if (isset($attributes['prefix']))
             $this->addPrefix($attributes['prefix']);
-        }
 
-        if (isset($attributes['namespace'])) {
+        if (isset($attributes['namespace']))
             $this->setNamespace($attributes['namespace']);
-        }
 
-        if (isset($attributes['as'])) {
+        if (isset($attributes['as']))
             $this->setRouteName($attributes['as']);
-        }
 
-        if (isset($attributes['middleware'])) {
+        if (isset($attributes['middleware']))
             $this->setMiddlewares($attributes['middleware']);
-        }
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -218,10 +246,12 @@ abstract class RouteRegister
      *
      * @param  string                $uri
      * @param  Closure|array|string  $action
+     *
+     * @return \Illuminate\Routing\Route|void
      */
     public function get($uri, $action)
     {
-        $this->router->get($uri, $action);
+        return $this->router->get($uri, $action);
     }
 
     /**
@@ -229,10 +259,12 @@ abstract class RouteRegister
      *
      * @param  string                $uri
      * @param  Closure|array|string  $action
+     *
+     * @return \Illuminate\Routing\Route|void
      */
     public function post($uri, $action)
     {
-        $this->router->post($uri, $action);
+        return $this->router->post($uri, $action);
     }
 
     /**
@@ -240,10 +272,25 @@ abstract class RouteRegister
      *
      * @param  string                $uri
      * @param  Closure|array|string  $action
+     *
+     * @return \Illuminate\Routing\Route|void
      */
     public function put($uri, $action)
     {
-        $this->router->put($uri, $action);
+        return $this->router->put($uri, $action);
+    }
+
+    /**
+     * Register a new PATCH route with the router.
+     *
+     * @param  string                 $uri
+     * @param  \Closure|array|string  $action
+     *
+     * @return \Illuminate\Routing\Route|void
+     */
+    public function patch($uri, $action)
+    {
+        return $this->router->patch($uri, $action);
     }
 
     /**
@@ -251,10 +298,52 @@ abstract class RouteRegister
      *
      * @param  string                $uri
      * @param  Closure|array|string  $action
+     *
+     * @return \Illuminate\Routing\Route|void
      */
     public function delete($uri, $action)
     {
-        $this->router->delete($uri, $action);
+        return $this->router->delete($uri, $action);
+    }
+
+    /**
+     * Register a new OPTIONS route with the router.
+     *
+     * @param  string                 $uri
+     * @param  \Closure|array|string  $action
+     *
+     * @return \Illuminate\Routing\Route|void
+     */
+    public function options($uri, $action)
+    {
+        return $this->router->options($uri, $action);
+    }
+
+    /**
+     * Register a new route responding to all verbs.
+     *
+     * @param  string                 $uri
+     * @param  \Closure|array|string  $action
+     *
+     * @return \Illuminate\Routing\Route|void
+     */
+    public function any($uri, $action)
+    {
+        return $this->router->any($uri, $action);
+    }
+
+    /**
+     * Register a new route with the given verbs.
+     *
+     * @param  array|string           $methods
+     * @param  string                 $uri
+     * @param  \Closure|array|string  $action
+     *
+     * @return \Illuminate\Routing\Route|void
+     */
+    public function match($methods, $uri, $action)
+    {
+        return $this->router->match($methods, $uri, $action);
     }
 
     /**
@@ -289,5 +378,17 @@ abstract class RouteRegister
     protected function bind($key, $binder)
     {
         $this->router->bind($key, $binder);
+    }
+
+    /**
+     * Register a model binder for a wildcard.
+     *
+     * @param  string         $key
+     * @param  string         $class
+     * @param  \Closure|null  $callback
+     */
+    public function model($key, $class, Closure $callback = null)
+    {
+        $this->router->model($key, $class, $callback);
     }
 }
