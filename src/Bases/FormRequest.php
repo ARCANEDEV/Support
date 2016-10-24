@@ -3,6 +3,7 @@
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest as BaseFormRequest;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class     FormRequest
@@ -16,6 +17,13 @@ abstract class FormRequest extends BaseFormRequest
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Specify if the form request is an ajax request.
+     *
+     * @var bool
+     */
+    protected $ajaxRequest = false;
+
     /**
      * The errors format.
      *
@@ -61,6 +69,21 @@ abstract class FormRequest extends BaseFormRequest
         );
     }
 
+    /**
+     * Get the proper failed validation response for the request.
+     *
+     * @param  array  $errors
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function response(array $errors)
+    {
+        if ($this->ajaxRequest && $this->expectsJson())
+            return $this->formatJsonErrorsResponse($errors);
+
+        return parent::response($errors);
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Other Functions
      | ------------------------------------------------------------------------------------------------
@@ -81,6 +104,22 @@ abstract class FormRequest extends BaseFormRequest
         }
 
         return $inputs;
+    }
+
+    /**
+     * Format the json response.
+     *
+     * @param  array  $errors
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function formatJsonErrorsResponse(array $errors)
+    {
+        return new JsonResponse([
+            'status' => 'error',
+            'code'   => 422,
+            'errors' => array_map('reset', $errors)
+        ], 422);
     }
 
     /**
