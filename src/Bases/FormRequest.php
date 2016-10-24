@@ -78,10 +78,9 @@ abstract class FormRequest extends BaseFormRequest
      */
     public function response(array $errors)
     {
-        if ($this->ajaxRequest && $this->expectsJson())
-            return $this->formatJsonErrorsResponse($errors);
-
-        return parent::response($errors);
+        return $this->ajaxRequest
+            ? $this->formatJsonErrorsResponse($errors)
+            : parent::response($errors);
     }
 
     /* ------------------------------------------------------------------------------------------------
