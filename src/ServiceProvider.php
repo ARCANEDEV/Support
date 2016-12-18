@@ -89,6 +89,48 @@ abstract class ServiceProvider extends IlluminateServiceProvider
     }
 
     /**
+     * Register a service provider.
+     *
+     * @param  \Illuminate\Support\ServiceProvider|string  $provider
+     * @param  array                                       $options
+     * @param  bool                                        $force
+     *
+     * @return \Illuminate\Support\ServiceProvider
+     */
+    protected function registerProvider($provider, array $options = [], $force = false)
+    {
+        return $this->app->register($provider, $options, $force);
+    }
+
+    /**
+     * Register multiple service providers.
+     *
+     * @param  array  $providers
+     */
+    protected function registerProviders(array $providers)
+    {
+        foreach ($providers as $provider) {
+            $this->registerProvider($provider);
+        }
+    }
+
+    /**
+     * Register a console service provider.
+     *
+     * @param  \Illuminate\Support\ServiceProvider|string  $provider
+     * @param  array                                       $options
+     * @param  bool                                        $force
+     *
+     * @return \Illuminate\Support\ServiceProvider|null
+     */
+    protected function registerConsoleServiceProvider($provider, array $options = [], $force = false)
+    {
+        return $this->app->runningInConsole()
+            ? $this->registerProvider($provider, $options, $force)
+            : null;
+    }
+
+    /**
      * Register aliases (Facades).
      */
     protected function registerAliases()
@@ -155,40 +197,5 @@ abstract class ServiceProvider extends IlluminateServiceProvider
     protected function filesystem()
     {
         return $this->app['files'];
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Deprecated Methods
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Add Aliases into the app.
-     *
-     * @deprecated 3.7.0 Use the aliases() method instead and don't forget to add the registerAliases() inside register() method.
-     *
-     * @param  array  $aliases
-     *
-     * @return self
-     */
-    protected function addFacades(array $aliases)
-    {
-        foreach ($aliases as $alias => $facade) {
-            $this->addFacade($alias, $facade);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Add Alias. (Facade)
-     *
-     * @deprecated 3.7.0 Use the alias() method instead and don't forget to add the registerAliases() inside register() method.
-     *
-     * @param  string  $alias
-     * @param  string  $facade
-     */
-    protected function addFacade($alias, $facade)
-    {
-        $this->aliasLoader->alias($alias, $facade);
     }
 }
