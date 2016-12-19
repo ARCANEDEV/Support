@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\Support;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Manager as IlluminateManager;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -12,6 +13,24 @@ use InvalidArgumentException;
  */
 abstract class Manager extends IlluminateManager
 {
+    /* ------------------------------------------------------------------------------------------------
+     |  Constructor
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Manager constructor.
+     *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     */
+    public function __construct(Application $app)
+    {
+        parent::__construct($app);
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Main Functions
+     | ------------------------------------------------------------------------------------------------
+     */
     /**
      * Create a new driver instance.
      *
