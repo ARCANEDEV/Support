@@ -58,6 +58,14 @@ abstract class ServiceProvider extends IlluminateServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Register the service provider.
+     */
+    public function register()
+    {
+        //
+    }
+
+    /**
      * Boot the service provider.
      */
     public function boot()
