@@ -1,6 +1,5 @@
 <?php namespace Arcanedev\Support\Bases;
 
-use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest as BaseFormRequest;
 use Illuminate\Http\JsonResponse;
@@ -53,20 +52,19 @@ abstract class FormRequest extends BaseFormRequest
     abstract public function rules();
 
     /**
-     * Get the validator instance for the request.
+     * Get data to be validated from the request.
      *
-     * @param  \Illuminate\Contracts\Validation\Factory  $factory
-     *
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return array
      */
-    public function validator(ValidationFactory $factory)
+    protected function validationData()
     {
-        return $factory->make(
-            $this->sanitizedInputs(),
-            $this->container->call([$this, 'rules']),
-            $this->messages(),
-            $this->attributes()
-        );
+        if (method_exists($this, 'sanitize')) {
+            $this->merge(
+                $this->container->call([$this, 'sanitize'])
+            );
+        }
+
+        return $this->all();
     }
 
     /**
@@ -87,24 +85,6 @@ abstract class FormRequest extends BaseFormRequest
      |  Other Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * Sanitize the inputs.
-     *
-     * @return array
-     */
-    protected function sanitizedInputs()
-    {
-        $inputs = $this->all();
-
-        if (method_exists($this, 'sanitize')) {
-            $this->replace(
-                $inputs = $this->container->call([$this, 'sanitize'], [$inputs])
-            );
-        }
-
-        return $inputs;
-    }
-
     /**
      * Format the json response.
      *
