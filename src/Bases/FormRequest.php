@@ -57,9 +57,7 @@ abstract class FormRequest extends BaseFormRequest
     protected function prepareForValidation()
     {
         if (method_exists($this, 'sanitize')) {
-            $this->merge(
-                $this->container->call([$this, 'sanitize'])
-            );
+            $this->merge($this->sanitize());
         }
     }
 
