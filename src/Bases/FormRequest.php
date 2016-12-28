@@ -52,19 +52,15 @@ abstract class FormRequest extends BaseFormRequest
     abstract public function rules();
 
     /**
-     * Get data to be validated from the request.
-     *
-     * @return array
+     * Prepare the data for validation.
      */
-    protected function validationData()
+    protected function prepareForValidation()
     {
         if (method_exists($this, 'sanitize')) {
             $this->merge(
                 $this->container->call([$this, 'sanitize'])
             );
         }
-
-        return $this->all();
     }
 
     /**
