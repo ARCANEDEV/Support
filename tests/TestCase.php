@@ -1,7 +1,7 @@
 <?php namespace Arcanedev\Support\Tests;
 
 use Illuminate\Routing\Router;
-use Orchestra\Testbench\TestCase as BaseTestCase;
+use Orchestra\Testbench\BrowserKit\TestCase as BaseTestCase;
 
 /**
  * Class     TestCase
@@ -71,8 +71,8 @@ abstract class TestCase extends BaseTestCase
             ]);
         });
 
-        $router->middleware('json',      \Arcanedev\Support\Middleware\VerifyJsonRequest::class);
-        $router->middleware('only-ajax', \Arcanedev\Support\Middleware\OnlyAjaxMiddleware::class);
+        $router->aliasMiddleware('json',      \Arcanedev\Support\Middleware\VerifyJsonRequest::class);
+        $router->aliasMiddleware('only-ajax', \Arcanedev\Support\Middleware\OnlyAjaxMiddleware::class);
 
         $router->group([
             'as'    => 'middleware::',
