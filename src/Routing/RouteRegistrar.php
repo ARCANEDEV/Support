@@ -191,4 +191,16 @@ abstract class RouteRegistrar extends IlluminateRouteRegistrar
     {
         $this->router->model($key, $class, $callback);
     }
+
+    /**
+     * Clear the attributes.
+     *
+     * @return self
+     */
+    public function clear()
+    {
+        $this->attributes = [];
+
+        return $this;
+    }
 }

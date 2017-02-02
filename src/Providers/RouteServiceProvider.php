@@ -9,7 +9,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
  * @package  Arcanedev\Support\Laravel\Providers
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  *
- * @method   \Illuminate\Contracts\Routing\Registrar  middleware(\string $name, \string $class)
+ * @method   \Illuminate\Contracts\Routing\Registrar  aliasMiddleware(\string $name, \string $class)
  */
 abstract class RouteServiceProvider extends ServiceProvider
 {
