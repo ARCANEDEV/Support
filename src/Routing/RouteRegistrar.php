@@ -14,23 +14,25 @@
  * @method  \Arcanedev\Support\Routing\RouteRegistrar  prefix(string $prefix)
  * @method  void                                       group(...$mixed)
  *
- * @method  \Illuminate\Routing\Route  get($uri, $action = null)
- * @method  \Illuminate\Routing\Route  post($uri, $action = null)
- * @method  \Illuminate\Routing\Route  put($uri, $action = null)
- * @method  \Illuminate\Routing\Route  patch($uri, $action = null)
- * @method  \Illuminate\Routing\Route  delete($uri, $action = null)
- * @method  \Illuminate\Routing\Route  options($uri, $action = null)
- * @method  \Illuminate\Routing\Route  any($uri, $action = null)
- * @method  \Illuminate\Routing\Route  match($methods, $uri, $action = null)
+ * @method  \Illuminate\Routing\Route  get(string $uri, \Closure|array|string|null $action = null)
+ * @method  \Illuminate\Routing\Route  post(string $uri, \Closure|array|string|null $action = null)
+ * @method  \Illuminate\Routing\Route  put(string $uri, \Closure|array|string|null $action = null)
+ * @method  \Illuminate\Routing\Route  patch(string $uri, \Closure|array|string|null $action = null)
+ * @method  \Illuminate\Routing\Route  delete(string $uri, \Closure|array|string|null $action = null)
+ * @method  \Illuminate\Routing\Route  options(string $uri, \Closure|array|string|null $action = null)
+ * @method  \Illuminate\Routing\Route  any(string $uri, \Closure|array|string|null $action = null)
+ * @method  \Illuminate\Routing\Route  match(array|string $methods, string $uri, \Closure|array|string|null $action = null)
  *
- * @method  void                       resource($name, $controller, array $options = [])
- * @method  void                       resources(array $resources)
+ * @method  void  resource(string $name, string $controller, array $options = [])
+ * @method  void  resources(array $resources)
  *
- * @method  void                       pattern($key, $pattern)
- * @method  void                       patterns($patterns)
+ * @method  void  pattern(string $key, string $pattern)
+ * @method  void  patterns(array $patterns)
  *
- * @method  void                       model($key, $class, \Closure $callback = null)
- * @method  void                       bind($key, $binder)
+ * @method  void  model(string $key, string $class, \Closure|null $callback = null)
+ * @method  void  bind(string $key, string|\Closure $binder)
+ *
+ * @method  void  aliasMiddleware(string $name, string $class)
  */
 abstract class RouteRegistrar
 {
@@ -51,7 +53,7 @@ abstract class RouteRegistrar
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Map routes.
+     * Define the routes for the application.
      */
     abstract public function map();
 
