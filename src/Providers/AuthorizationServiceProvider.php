@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\Support\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class     AuthorizationServiceProvider
@@ -17,14 +18,13 @@ class AuthorizationServiceProvider extends AuthServiceProvider
     /**
      * Define policies.
      *
-     * @param  \Illuminate\Contracts\Auth\Access\Gate  $gate
-     * @param  string                                  $class
-     * @param  array                                   $policies
+     * @param  string  $class
+     * @param  array   $policies
      */
-    protected function defineMany($gate, $class, array $policies)
+    protected function defineMany($class, array $policies)
     {
         foreach ($policies as $method => $ability) {
-            $gate->define($ability, "$class@$method");
+            Gate::define($ability, "$class@$method");
         }
     }
 }
