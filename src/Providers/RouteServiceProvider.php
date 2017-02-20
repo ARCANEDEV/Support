@@ -1,6 +1,5 @@
 <?php namespace Arcanedev\Support\Providers;
 
-use Illuminate\Contracts\Routing\Registrar as Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 /**
@@ -39,16 +38,44 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
  */
 abstract class RouteServiceProvider extends ServiceProvider
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Properties
+     | -----------------------------------------------------------------
      */
     /**
-     * Define the routes for the application.
+     * The application's route middleware.
      *
-     * @param  \Illuminate\Contracts\Routing\Registrar  $router
+     * These middleware may be assigned to groups or used individually.
      *
-     * @todo: Remove the router argument in future release.
+     * @var array
      */
-//    abstract public function map(Router $router);
+    protected $routeMiddleware = [
+        //
+    ];
+
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
+     */
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        parent::register();
+
+        $this->registerRouteMiddleware();
+    }
+
+    /**
+     * Register the route middleware.
+     */
+    protected function registerRouteMiddleware()
+    {
+        foreach ($this->routeMiddleware as $name => $class) {
+            $this->aliasMiddleware($name, $class);
+        }
+    }
 }
