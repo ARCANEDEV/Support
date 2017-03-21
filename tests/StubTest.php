@@ -62,8 +62,8 @@ class StubTest extends TestCase
             'PACKAGE'           => 'package',
             'AUTHOR_NAME'       => 'ARCANEDEV',
             'AUTHOR_EMAIL'      => 'arcanedev.maroc@gmail.com',
-            'MODULE_NAMESPACE'  => str_studly('arcanedev'),
-            'STUDLY_NAME'       => str_studly('package'),
+            'MODULE_NAMESPACE'  => studly_case('arcanedev'),
+            'STUDLY_NAME'       => studly_case('package'),
         ]);
 
         $this->stub->save('composer.json');

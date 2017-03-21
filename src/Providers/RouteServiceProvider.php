@@ -34,7 +34,11 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
  * @method  void  model(string $key, string $class, \Closure|null $callback = null)
  * @method  void  bind(string $key, string|\Closure $binder)
  *
- * @method  void  aliasMiddleware(string $name, string $class)
+ * @method  \Illuminate\Routing\Router  aliasMiddleware(string $name, string $class)
+ * @method  \Illuminate\Routing\Router  hasMiddlewareGroup(string $name)
+ * @method  \Illuminate\Routing\Router  middlewareGroup(string $name, array $middleware)
+ * @method  \Illuminate\Routing\Router  prependMiddlewareToGroup(string $group, string $middleware)
+ * @method  \Illuminate\Routing\Router  pushMiddlewareToGroup(string $group, string $middleware)
  */
 abstract class RouteServiceProvider extends ServiceProvider
 {

@@ -18,27 +18,6 @@ if ( ! function_exists('laravel_version')) {
     }
 }
 
-if ( ! function_exists('request')) {
-    /**
-     * Get an instance of the current request or an input item from the request.
-     *
-     * @param  string  $key
-     * @param  mixed   $default
-     *
-     * @return \Illuminate\Http\Request|string|array
-     */
-    function request($key = null, $default = null)
-    {
-        /** @var Illuminate\Http\Request $request */
-        $request = app('request');
-        if (is_null($key)) {
-            return $request;
-        }
-
-        return $request->input($key, $default);
-    }
-}
-
 if ( ! function_exists('route_is')) {
     /**
      * Check if route(s) is the current route.
@@ -57,19 +36,5 @@ if ( ! function_exists('route_is')) {
         $router = app('router');
 
         return call_user_func_array([$router, 'is'], $routes);
-    }
-}
-
-if ( ! function_exists('str_studly')) {
-    /**
-     * Convert a value to studly caps case.
-     *
-     * @param  string  $value
-     *
-     * @return string
-     */
-    function str_studly($value)
-    {
-        return Illuminate\Support\Str::studly($value);
     }
 }
