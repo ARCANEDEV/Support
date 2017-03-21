@@ -22,20 +22,22 @@ if ( ! function_exists('request')) {
     /**
      * Get an instance of the current request or an input item from the request.
      *
-     * @param  string  $key
-     * @param  mixed   $default
+     * @param  array|string  $key
+     * @param  mixed         $default
      *
      * @return \Illuminate\Http\Request|string|array
      */
     function request($key = null, $default = null)
     {
-        /** @var Illuminate\Http\Request $request */
-        $request = app('request');
         if (is_null($key)) {
-            return $request;
+            return app('request');
         }
 
-        return $request->input($key, $default);
+        if (is_array($key)) {
+            return app('request')->only($key);
+        }
+
+        return data_get(app('request')->all(), $key, $default);
     }
 }
 
