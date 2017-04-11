@@ -74,6 +74,20 @@ abstract class RouteServiceProvider extends ServiceProvider
     }
 
     /**
+     * Bootstrap any application services.
+     */
+    public function boot()
+    {
+        parent::boot();
+
+        $this->registerRouteBindings();
+    }
+
+    /* -----------------------------------------------------------------
+     |  Other Methods
+     | -----------------------------------------------------------------
+     */
+    /**
      * Register the route middleware.
      */
     protected function registerRouteMiddleware()
@@ -81,5 +95,13 @@ abstract class RouteServiceProvider extends ServiceProvider
         foreach ($this->routeMiddleware as $name => $class) {
             $this->aliasMiddleware($name, $class);
         }
+    }
+
+    /**
+     * Register the route bindings.
+     */
+    protected function registerRouteBindings()
+    {
+        //
     }
 }
