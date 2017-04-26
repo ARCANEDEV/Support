@@ -1,6 +1,6 @@
 <?php namespace Arcanedev\Support\Tests\Stubs;
 
-use Arcanedev\Support\Bases\Controller;
+use Arcanedev\Support\Http\Controller;
 
 /**
  * Class     DummyController

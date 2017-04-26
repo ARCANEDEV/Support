@@ -1,4 +1,4 @@
-<?php namespace Arcanedev\Support\Tests\Bases;
+<?php namespace Arcanedev\Support\Tests\Http;
 
 use Arcanedev\Support\Tests\TestCase;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * Class     ControllerTest
  *
- * @package  Arcanedev\Support\Tests\Bases
+ * @package  Arcanedev\Support\Tests\Http
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ControllerTest extends TestCase

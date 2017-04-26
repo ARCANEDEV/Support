@@ -1,7 +1,7 @@
 <?php namespace Arcanedev\Support\Bases;
 
+use Arcanedev\Support\Http\FormRequest as BaseFormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Http\FormRequest as BaseFormRequest;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -9,6 +9,8 @@ use Illuminate\Http\JsonResponse;
  *
  * @package  Arcanedev\Support\Laravel
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ *
+ * @deprecated: Use `Arcanesoft\Support\Http\FormRequest` or `Arcanedev\LaravelApiHelper\Http\FormRequest` instead.
  */
 abstract class FormRequest extends BaseFormRequest
 {
@@ -30,36 +32,10 @@ abstract class FormRequest extends BaseFormRequest
      */
     protected $errorsFormat = null;
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    abstract public function rules();
-
-    /**
-     * Prepare the data for validation.
-     */
-    protected function prepareForValidation()
-    {
-        if (method_exists($this, 'sanitize')) {
-            $this->merge($this->sanitize());
-        }
-    }
 
     /**
      * Get the proper failed validation response for the request.

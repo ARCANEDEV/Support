@@ -74,9 +74,12 @@ abstract class TestCase extends BaseTestCase
         $router->aliasMiddleware('json',      \Arcanedev\Support\Middleware\VerifyJsonRequest::class);
         $router->aliasMiddleware('only-ajax', \Arcanedev\Support\Middleware\OnlyAjaxMiddleware::class);
 
-        $router->group([
-            'as'    => 'middleware::',
-        ], function(Router $router) {
+        $router->group(['as'    => 'middleware::'], function(Router $router) {
+            $router->post('form-request', [
+                'as'   => 'form-request',
+                'uses' => 'Arcanedev\Support\Tests\Stubs\FormRequestController@form'
+            ]);
+
             $router->group([
                 'prefix' => 'json',
                 'as'     => 'json.'
