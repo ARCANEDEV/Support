@@ -15,6 +15,7 @@ abstract class Policy
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Get the policies.
      *

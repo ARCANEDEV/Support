@@ -10,33 +10,45 @@ use Arcanedev\Support\PackageServiceProvider;
  */
 class TestPackageServiceProvider extends PackageServiceProvider
 {
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Properties
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
+     */
+
+    /**
+     * Package name.
+     *
+     * @var string
      */
     protected $package = 'package';
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
-    /**
-     * Get the base path of the package.
-     *
-     * @return string
-     */
-    public function getBasePath()
-    {
-        return dirname(__DIR__) . '/fixtures';
-    }
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
-        $this->setup();
+        parent::register();
+
+        $this->registerConfig();
+    }
+
+    /* -----------------------------------------------------------------
+     |  Getters & Setters
+     | -----------------------------------------------------------------
+     */
+
+    /**
+     * Get config folder.
+     *
+     * @return string
+     */
+    protected function getConfigFolder()
+    {
+        return realpath($this->getBasePath().DS.'fixtures'.DS.'config');
     }
 }
