@@ -1,6 +1,6 @@
 <?php namespace Arcanedev\Support\Middleware;
 
-use Arcanedev\Support\Bases\Middleware;
+use Arcanedev\Support\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 

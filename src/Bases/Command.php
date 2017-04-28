@@ -11,23 +11,25 @@ use Symfony\Component\Console\Helper\TableSeparator;
  */
 abstract class Command extends IlluminateCommand
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
+
     /**
      * Execute the console command.
      */
     abstract public function handle();
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Other Methods
+     | -----------------------------------------------------------------
      */
+
     /**
-     * Get table separator
+     * Create table separator
      *
-     * @return TableSeparator
+     * @return \Symfony\Component\Console\Helper\TableSeparator
      */
     protected function tableSeparator()
     {

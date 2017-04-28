@@ -12,19 +12,19 @@ use Arcanedev\Support\Tests\TestCase;
  */
 class PackageServiceProviderTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Properties
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
-    /**
-     * @var TestPackageServiceProvider
-     */
+
+    /** @var \Arcanedev\Support\Tests\Stubs\TestPackageServiceProvider */
     private $provider;
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
+
     public function setUp()
     {
         parent::setUp();
@@ -41,32 +41,24 @@ class PackageServiceProviderTest extends TestCase
         parent::tearDown();
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Test Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Tests
+     | -----------------------------------------------------------------
      */
+
     /** @test */
     public function it_can_be_instantiated()
     {
-        $this->assertInstanceOf(
-            'Arcanedev\\Support\\Tests\\Stubs\\TestPackageServiceProvider',
-            $this->provider
-        );
+        $expectations = [
+            \Illuminate\Support\ServiceProvider::class,
+            \Arcanedev\Support\ServiceProvider::class,
+            \Arcanedev\Support\PackageServiceProvider::class,
+            \Arcanedev\Support\Tests\Stubs\TestPackageServiceProvider::class,
+        ];
 
-        $this->assertInstanceOf(
-            'Arcanedev\\Support\\PackageServiceProvider',
-            $this->provider
-        );
-
-        $this->assertInstanceOf(
-            'Arcanedev\\Support\\ServiceProvider',
-            $this->provider
-        );
-
-        $this->assertInstanceOf(
-            '\Illuminate\\Support\\ServiceProvider',
-            $this->provider
-        );
+        foreach ($expectations as $expected) {
+            $this->assertInstanceOf($expected, $this->provider);
+        }
     }
 
     /** @test */

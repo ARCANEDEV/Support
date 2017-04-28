@@ -10,15 +10,18 @@ use Illuminate\Support\Collection as IlluminateCollection;
  */
 class Collection extends IlluminateCollection
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Custom Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
+
     /**
      * Return only unique items from the collection array.
      *
      * @param  string|callable|null  $key
      * @param  bool                  $strict
+     *
+     * @deprecated Since Laravel 5.4.
      *
      * @return static
      */
@@ -43,12 +46,19 @@ class Collection extends IlluminateCollection
      *
      * @param  string|callable|null  $key
      *
+     * @deprecated Since Laravel 5.4.
+     *
      * @return static
      */
     public function uniqueStrict($key = null)
     {
         return $this->unique($key, true);
     }
+
+    /* -----------------------------------------------------------------
+     |  Custom Methods
+     | -----------------------------------------------------------------
+     */
 
     /**
      * Reset the collection.

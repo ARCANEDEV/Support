@@ -1,97 +1,24 @@
 <?php namespace Arcanedev\Support\Bases;
 
-use Arcanedev\Support\Traits\Abortable;
-use Illuminate\Routing\Controller as IlluminateController;
-
 /**
  * Class     Controller
  *
  * @package  Arcanedev\Support\Bases
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ *
+ * @deprecated Use `Arcanedev\Support\Http\Controller` instead.
  */
-abstract class Controller extends IlluminateController
+abstract class Controller extends \Arcanedev\Support\Http\Controller
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Traits
-     | ------------------------------------------------------------------------------------------------
-     */
-    use Abortable;
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Properties
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * The view data.
-     *
-     * @var array
-     */
-    protected $data         = [];
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Constructor
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Instantiate the controller.
-     */
-    public function __construct()
-    {
-        $this->setCurrentPage();
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Getters & Setters
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Get data.
-     *
-     * @return array
-     */
-    protected function getData()
-    {
-        return $this->data;
-    }
-
-    /**
-     * Set view data.
-     *
-     * @param  string|array  $name
-     * @param  mixed         $value
-     *
-     * @return self
-     */
-    protected function setData($name, $value = null)
-    {
-        if (is_array($name)) {
-            $this->data = array_merge($this->data, $name);
-        }
-        elseif (is_string($name)) {
-            $this->data[$name]  = $value;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set the current page.
-     *
-     * @param  string  $page
-     *
-     * @return self
-     */
-    protected function setCurrentPage($page = '')
-    {
-        return $this->setData('current_page', $page);
-    }
-
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Check Functions
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /**
      * Check if the Request is an ajax Request.
+     *
+     * @deprecated
      *
      * @return bool
      */
@@ -102,6 +29,8 @@ abstract class Controller extends IlluminateController
 
     /**
      * Accepts only ajax request.
+     *
+     * @deprecated Use the `ajax` middleware instead.
      *
      * @param  string  $message
      * @param  array   $headers
