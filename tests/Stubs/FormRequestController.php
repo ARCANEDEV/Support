@@ -46,6 +46,11 @@ class DummyFormRequest extends FormRequest
         ];
     }
 
+    /**
+     * Sanitize the inputs after the validation.
+     *
+     * @return array
+     */
     public function sanitize()
     {
         return [

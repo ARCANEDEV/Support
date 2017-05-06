@@ -7,8 +7,6 @@ use Illuminate\Foundation\Http\FormRequest as BaseFormRequest;
  *
  * @package  Arcanedev\Support
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
- *
- * @method  array  sanitize()
  */
 abstract class FormRequest extends BaseFormRequest
 {
@@ -39,8 +37,18 @@ abstract class FormRequest extends BaseFormRequest
      */
     protected function prepareForValidation()
     {
-        if (method_exists($this, 'sanitize')) {
-            $this->merge($this->sanitize());
-        }
+        $this->merge($this->sanitize());
+    }
+
+    /**
+     * Sanitize the inputs after the validation.
+     *
+     * @return array
+     */
+    protected function sanitize()
+    {
+        return [
+            //
+        ];
     }
 }

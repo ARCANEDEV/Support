@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
  * @package  Arcanedev\Support\Laravel
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  *
- * @deprecated: Use `Arcanesoft\Support\Http\FormRequest` or `Arcanedev\LaravelApiHelper\Http\FormRequest` instead.
+ * @deprecated: Use `Arcanedev\Support\Http\FormRequest` or `Arcanedev\LaravelApiHelper\Http\FormRequest` instead.
  */
 abstract class FormRequest extends BaseFormRequest
 {
