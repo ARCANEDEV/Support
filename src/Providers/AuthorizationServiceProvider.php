@@ -15,6 +15,7 @@ class AuthorizationServiceProvider extends AuthServiceProvider
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
+
     /**
      * Define policies.
      *
@@ -23,7 +24,7 @@ class AuthorizationServiceProvider extends AuthServiceProvider
      */
     protected function defineMany($class, array $policies)
     {
-        foreach ($policies as $method => $ability) {
+        foreach ($policies as $ability => $method) {
             Gate::define($ability, "$class@$method");
         }
     }

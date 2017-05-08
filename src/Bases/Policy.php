@@ -23,7 +23,7 @@ abstract class Policy
      */
     public static function policies()
     {
-        $values = array_values(
+        $abilities = array_values(
             (new \ReflectionClass($instance = new static))->getConstants()
         );
 
@@ -34,6 +34,6 @@ abstract class Policy
                 throw new MissingPolicyException("Missing policy [$method] method in ".get_class($instance).".");
 
             return $method;
-        }, array_combine($values, $values));
+        }, array_combine($abilities, $abilities));
     }
 }
