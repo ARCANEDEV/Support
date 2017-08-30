@@ -75,13 +75,10 @@ class VerifyJsonRequest extends Middleware
      */
     private function getMethods($methods)
     {
-        if (is_null($methods)) {
-            $methods = $this->methods;
-        }
+        $methods = $methods ?? $this->methods;
 
-        if (is_string($methods)) {
+        if (is_string($methods))
             $methods = (array) $methods;
-        }
 
         return is_array($methods) ? array_map('strtoupper', $methods) : [];
     }

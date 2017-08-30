@@ -12,10 +12,11 @@ use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
  */
 abstract class ServiceProvider extends IlluminateServiceProvider
 {
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Properties
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /**
      * The application instance.
      *
@@ -37,10 +38,11 @@ abstract class ServiceProvider extends IlluminateServiceProvider
      */
     private $aliasLoader;
 
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Constructor
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /**
      * Create a new service provider instance.
      *
@@ -53,10 +55,11 @@ abstract class ServiceProvider extends IlluminateServiceProvider
         $this->aliasLoader = AliasLoader::getInstance();
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
+
     /**
      * Register the service provider.
      */
@@ -133,9 +136,10 @@ abstract class ServiceProvider extends IlluminateServiceProvider
      */
     protected function registerConsoleServiceProvider($provider, array $options = [], $force = false)
     {
-        return $this->app->runningInConsole()
-            ? $this->registerProvider($provider, $options, $force)
-            : null;
+        if ($this->app->runningInConsole())
+            return $this->registerProvider($provider, $options, $force);
+
+        return null;
     }
 
     /**
@@ -183,10 +187,11 @@ abstract class ServiceProvider extends IlluminateServiceProvider
         return $this;
     }
 
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Services
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /**
      * Get the config repository instance.
      *
