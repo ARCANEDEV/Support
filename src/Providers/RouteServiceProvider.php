@@ -10,7 +10,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
  *
  * @method  \Arcanedev\Support\Routing\RouteRegistrar  as(string $name)
  * @method  \Arcanedev\Support\Routing\RouteRegistrar  domain(string $domain)
- * @method  \Arcanedev\Support\Routing\RouteRegistrar  middleware(string $middleware)
+ * @method  \Arcanedev\Support\Routing\RouteRegistrar  middleware(array|string $middleware)
  * @method  \Arcanedev\Support\Routing\RouteRegistrar  name(string $name)
  * @method  \Arcanedev\Support\Routing\RouteRegistrar  namespace(string $namespace)
  * @method  \Arcanedev\Support\Routing\RouteRegistrar  prefix(string $prefix)

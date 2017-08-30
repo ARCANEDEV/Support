@@ -68,8 +68,8 @@ abstract class Migration extends IlluminateMigration
     public function getTableName()
     {
         return $this->hasPrefix()
-            ? $this->getPrefix().$this->getTable()
-            : $this->getTable();
+             ? $this->getPrefix().$this->getTable()
+             : $this->getTable();
     }
 
     /**

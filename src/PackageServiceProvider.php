@@ -17,6 +17,7 @@ abstract class PackageServiceProvider extends ServiceProvider
      |  Properties
      | -----------------------------------------------------------------
      */
+
     /**
      * Vendor name.
      *
@@ -49,6 +50,7 @@ abstract class PackageServiceProvider extends ServiceProvider
      |  Constructor
      | -----------------------------------------------------------------
      */
+
     /**
      * Create a new service provider instance.
      *
@@ -68,16 +70,16 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function resolveBasePath()
     {
-        $filename = (new ReflectionClass(get_class($this)))
-            ->getFileName();
+        $filename = (new ReflectionClass($this))->getFileName();
 
-        return dirname(dirname($filename)); // TODO: Replace this by dirname($filename, 2) in PHP 7.
+        return dirname($filename, 2);
     }
 
     /* -----------------------------------------------------------------
      |  Getters & Setters
      | -----------------------------------------------------------------
      */
+
     /**
      * Get the base path of the package.
      *
@@ -202,6 +204,7 @@ abstract class PackageServiceProvider extends ServiceProvider
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Register the service provider.
      */
@@ -216,6 +219,7 @@ abstract class PackageServiceProvider extends ServiceProvider
      |  Package Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Register configs.
      *
@@ -352,6 +356,7 @@ abstract class PackageServiceProvider extends ServiceProvider
      |  Check Functions
      | ------------------------------------------------------------------------------------------------
      */
+
     /**
      * Check package name.
      *
@@ -361,20 +366,5 @@ abstract class PackageServiceProvider extends ServiceProvider
     {
         if (empty($this->vendor) || empty($this->package))
             throw new PackageException('You must specify the vendor/package name.');
-    }
-
-    /* -----------------------------------------------------------------
-     |  Deprecated Methods
-     | -----------------------------------------------------------------
-     */
-    /**
-     * Setup package path and stuff.
-     *
-     * @deprecated: Stop using this method starting arcanedev/support >= v4.2
-     */
-    protected function setup()
-    {
-        $this->checkPackageName();
-        $this->registerConfig();
     }
 }

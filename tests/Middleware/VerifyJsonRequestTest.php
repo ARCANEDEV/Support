@@ -27,9 +27,7 @@ class VerifyJsonRequestTest extends TestCase
     /** @test */
     public function it_can_pass_json_middleware()
     {
-        $methods = ['GET', 'POST', 'PUT', 'DELETE'];
-
-        foreach ($methods as $method) {
+        foreach (['GET', 'POST', 'PUT', 'DELETE'] as $method) {
             /** @var \Illuminate\Http\JsonResponse $response */
             $response = $this->route($method, 'middleware::json.param', [], [], [], [], [
                 'CONTENT_TYPE' => 'application/json'
@@ -48,7 +46,7 @@ class VerifyJsonRequestTest extends TestCase
             /** @var \Illuminate\Http\JsonResponse $response */
             $response = $this->route($method, 'middleware::json.param');
 
-            $this->assertInstanceOf('Illuminate\Http\JsonResponse', $response);
+            $this->assertInstanceOf(\Illuminate\Http\JsonResponse::class, $response);
             $this->assertEquals(400, $response->getStatusCode());
             $this->assertEquals('Request must be json', $response->getData());
         }
@@ -65,7 +63,7 @@ class VerifyJsonRequestTest extends TestCase
      */
     private function assertValidJsonResponse($response)
     {
-        $this->assertInstanceOf('Illuminate\Http\JsonResponse', $response);
+        $this->assertInstanceOf(\Illuminate\Http\JsonResponse::class, $response);
         $this->assertResponseOk();
         $this->assertJson($response->getContent());
 

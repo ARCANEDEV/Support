@@ -55,7 +55,7 @@ abstract class Command extends IlluminateCommand
      */
     protected function frame($text)
     {
-        $line   = '+' . str_repeat('-', strlen($text) + 4) . '+';
+        $line   = '+'.str_repeat('-', strlen($text) + 4).'+';
         $this->info($line);
         $this->info("|  $text  |");
         $this->info($line);
