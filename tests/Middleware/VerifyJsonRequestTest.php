@@ -17,23 +17,24 @@ class VerifyJsonRequestTest extends TestCase
     /** @test */
     public function it_can_get_json_response()
     {
-        $response = $this->route('GET', 'middleware::json.empty', [], [], [], [], [
+        $response = $this->call('GET', route('middleware::json.empty'), [], [], [], [
             'CONTENT_TYPE' => 'application/json'
         ]);
 
-        $this->assertValidJsonResponse($response);
+        $response->assertSuccessful();
+        $response->assertJson(['status' => 'success']);
     }
 
     /** @test */
     public function it_can_pass_json_middleware()
     {
         foreach (['GET', 'POST', 'PUT', 'DELETE'] as $method) {
-            /** @var \Illuminate\Http\JsonResponse $response */
-            $response = $this->route($method, 'middleware::json.param', [], [], [], [], [
+            $response = $this->call($method, route('middleware::json.param'), [], [], [], [
                 'CONTENT_TYPE' => 'application/json'
             ]);
 
-            $this->assertValidJsonResponse($response);
+            $response->assertSuccessful();
+            $response->assertJson(['status' => 'success']);
         }
     }
 
@@ -43,33 +44,14 @@ class VerifyJsonRequestTest extends TestCase
         $methods = ['GET', 'POST', 'PUT', 'DELETE'];
 
         foreach ($methods as $method) {
-            /** @var \Illuminate\Http\JsonResponse $response */
-            $response = $this->route($method, 'middleware::json.param');
+            $response = $this->call($method, route('middleware::json.param'));
 
-            $this->assertInstanceOf(\Illuminate\Http\JsonResponse::class, $response);
-            $this->assertEquals(400, $response->getStatusCode());
-            $this->assertEquals('Request must be json', $response->getData());
+            $response->assertStatus(400);
+            $response->assertJson([
+                'status'  => 'error',
+                'code'    => 400,
+                'message' => 'Request must be json',
+            ]);
         }
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Assert valid JSON Response.
-     *
-     * @param \Illuminate\Http\Response|\Illuminate\Http\JsonResponse $response
-     */
-    private function assertValidJsonResponse($response)
-    {
-        $this->assertInstanceOf(\Illuminate\Http\JsonResponse::class, $response);
-        $this->assertResponseOk();
-        $this->assertJson($response->getContent());
-
-        $json = $response->getData(true);
-
-        $this->assertArrayHasKey('status', $json);
-        $this->assertEquals('success', $json['status']);
     }
 }

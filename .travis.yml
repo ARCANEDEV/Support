@@ -13,7 +13,7 @@ matrix:
 
 before_script:
   - travis_retry composer self-update
-  - travis_retry composer install
+  - travis_retry composer install --prefer-source --no-interaction
 
 script:
   - composer validate

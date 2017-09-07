@@ -14,6 +14,7 @@ class ModelTest extends TestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+
     /** @var  \Arcanedev\Support\Bases\Model */
     protected $model;
 
@@ -44,7 +45,7 @@ class ModelTest extends TestCase
     {
         $expectations = [
             \Illuminate\Database\Eloquent\Model::class,
-            \Arcanedev\Support\Bases\Model::class,
+            \Arcanedev\Support\Database\Model::class,
         ];
 
         foreach ($expectations as $expected) {

@@ -41,7 +41,11 @@ class VerifyJsonRequest extends Middleware
             return $next($request);
         }
 
-        return response()->json('Request must be json', 400);
+        return response()->json([
+            'status'  => 'error',
+            'code'    => 400,
+            'message' => 'Request must be json',
+        ], 400);
     }
 
     /* ------------------------------------------------------------------------------------------------
