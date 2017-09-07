@@ -1,7 +1,7 @@
 <?php namespace Arcanedev\Support\Tests;
 
 use Illuminate\Routing\Router;
-use Orchestra\Testbench\BrowserKit\TestCase as BaseTestCase;
+use Orchestra\Testbench\TestCase as BaseTestCase;
 
 /**
  * Class     TestCase
@@ -15,6 +15,7 @@ abstract class TestCase extends BaseTestCase
      |  Other Functions
      | ------------------------------------------------------------------------------------------------
      */
+
     /**
      * Get fixture path
      *

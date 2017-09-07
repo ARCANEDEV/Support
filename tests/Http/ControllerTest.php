@@ -18,36 +18,24 @@ class ControllerTest extends TestCase
     /** @test */
     public function it_can_do_dummy_stuff()
     {
-        $response = $this->route('GET', 'dummy::index');
+        $response = $this->get(route('dummy::index'));
+        $response->assertSuccessful();
 
-        $this->assertResponseOk();
         $this->assertEquals('Dummy', $response->getContent());
 
-        $response = $this->route('GET', 'dummy::get', ['super']);
+        $response = $this->get(route('dummy::get', ['super']));
 
-        $this->assertResponseOk();
+        $response->assertSuccessful();
         $this->assertEquals('Super dummy', $response->getContent());
     }
 
     /** @test */
     public function it_can_throw_four_o_four_exception()
     {
-        try {
-            $response   = $this->route('GET', 'dummy::get', ['not-super']);
-            $statusCode = $response->getStatusCode();
-            $message    = $response->exception->getMessage();
+        $response   = $this->get(route('dummy::get', ['not-super']));
 
-            $this->assertInstanceOf(
-                NotFoundHttpException::class,
-                $response->exception
-            );
-        }
-        catch(NotFoundHttpException $e) {
-            $statusCode = $e->getStatusCode();
-            $message    = $e->getMessage();
-        }
-
-        $this->assertSame(404, $statusCode);
-        $this->assertSame('Super dummy not found !', $message);
+        $response->assertStatus(404);
+        $this->assertInstanceOf(NotFoundHttpException::class, $response->exception);
+        $this->assertSame('Super dummy not found !', $response->exception->getMessage());
     }
 }

@@ -19,34 +19,34 @@ class FormRequestTest extends TestCase
     /** @test */
     public function it_can_check_validation()
     {
-        $this->call('POST', 'form-request');
+        $response = $this->post('form-request');
+        $response->assertStatus(302);
 
-        $this->assertResponseStatus(302);
-
-        $this->call('POST', 'form-request', [
+        $response = $this->post('form-request', [
             'name'  => 'ARCANEDEV',
             'email' => 'arcanedev@example.com',
         ]);
 
-        $this->assertResponseOk();
-        $this->assertSame(json_encode([
+        $response->assertSuccessful();
+
+        $response->assertJson([
             'name'  => 'ARCANEDEV',
             'email' => 'arcanedev@example.com',
-        ]), $this->response->content());
+        ]);
     }
 
     /** @test */
     public function it_can_sanitize()
     {
-        $this->call('POST', 'form-request', [
+        $response = $this->post('form-request', [
             'name'  => 'Arcanedev',
             'email' => ' ARCANEDEV@example.COM ',
         ]);
 
-        $this->assertResponseOk();
-        $this->assertSame(json_encode([
+        $response->assertSuccessful();
+        $response->assertJson([
             'name'  => 'ARCANEDEV',
             'email' => 'arcanedev@example.com',
-        ]), $this->response->content());
+        ]);
     }
 }
