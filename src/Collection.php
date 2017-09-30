@@ -7,6 +7,8 @@ use Illuminate\Support\Collection as IlluminateCollection;
  *
  * @package  Arcanedev\Support
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ *
+ * @deprecated Use the basic laravel collection
  */
 class Collection extends IlluminateCollection
 {

@@ -40,6 +40,7 @@ abstract class RouteRegistrar
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Register and map routes.
      */
@@ -57,6 +58,7 @@ abstract class RouteRegistrar
      |  Other Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Call the router method.
      *
