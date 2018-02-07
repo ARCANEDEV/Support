@@ -1,5 +1,7 @@
 <?php namespace Arcanedev\Support\Traits;
 
+use Illuminate\Support\Arr;
+
 /**
  * Class     Configurable
  *
@@ -49,6 +51,6 @@ trait Configurable
      */
     protected function getConfig($key, $default = null)
     {
-        return array_get($this->configs, $key, $default);
+        return Arr::get($this->configs, $key, $default);
     }
 }
