@@ -170,10 +170,9 @@ class Stub
      */
     public static function createFromPath($path, array $replaces = [])
     {
-        $stub = static::create($path, $replaces);
-        $stub->setBasePath('');
-
-        return $stub;
+        return tap(new static($path, $replaces), function (self $stub) {
+            $stub->setBasePath('');
+        });
     }
 
     /**

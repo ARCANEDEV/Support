@@ -70,9 +70,9 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function resolveBasePath()
     {
-        $filename = (new ReflectionClass($this))->getFileName();
-
-        return dirname($filename, 2);
+        return dirname(
+            (new ReflectionClass($this))->getFileName(), 2
+        );
     }
 
     /* -----------------------------------------------------------------
@@ -253,7 +253,8 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function registerCommands($provider)
     {
-        if ($this->app->runningInConsole()) $this->app->register($provider);
+        if ($this->app->runningInConsole())
+            $this->app->register($provider);
     }
 
     /**
