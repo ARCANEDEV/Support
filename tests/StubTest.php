@@ -10,20 +10,24 @@ use Arcanedev\Support\Stub;
  */
 class StubTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Properties
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
-    /** @var Stub */
+
+    /** @var  \Arcanedev\Support\Stub */
     private $stub;
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
+
     public function setUp()
     {
         parent::setUp();
+
+        //
     }
 
     public function tearDown()
@@ -33,27 +37,32 @@ class StubTest extends TestCase
         parent::tearDown();
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Test Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Tests
+     | -----------------------------------------------------------------
      */
+
     /** @test */
     public function it_can_be_instantiated()
     {
-        $file = $this->getFixturesPath('stubs/composer.stub');
-        $this->stub = new Stub($file);
+        $this->stub = new Stub(
+            $file = $this->getFixturesPath('stubs/composer.stub')
+        );
 
-        $this->assertInstanceOf('Arcanedev\\Support\\Stub', $this->stub);
+        static::assertInstanceOf(\Arcanedev\Support\Stub::class, $this->stub);
+
         $fileContent = file_get_contents($file);
-        $this->assertEquals($fileContent, $this->stub->render());
-        $this->assertEquals($fileContent, (string) $this->stub);
+
+        static::assertEquals($fileContent, $this->stub->render());
+        static::assertEquals($fileContent, (string) $this->stub);
     }
 
     /** @test */
     public function it_can_create()
     {
-        $basePath   = $this->getFixturesPath('stubs');
-        Stub::setBasePath($basePath);
+        Stub::setBasePath(
+            $basePath = $this->getFixturesPath('stubs')
+        );
 
         $this->stub = Stub::create('composer.stub');
 
@@ -70,31 +79,32 @@ class StubTest extends TestCase
 
         $fixture = $this->getFixturesPath('stubs/composer.json');
 
-        $this->assertEquals(file_get_contents($fixture),$this->stub->render());
+        static::assertEquals(file_get_contents($fixture),$this->stub->render());
 
         $this->stub->saveTo($basePath, 'composer.json');
 
-        $this->assertEquals(file_get_contents($fixture), $this->stub->render());
+        static::assertEquals(file_get_contents($fixture), $this->stub->render());
     }
 
     /** @test */
     public function it_can_set_and_get_base_path()
     {
-        $basePath = $this->getFixturesPath('stubs');
-        Stub::setBasePath($basePath);
+        Stub::setBasePath(
+            $basePath = $this->getFixturesPath('stubs')
+        );
 
-        $this->assertEquals($basePath, Stub::getBasePath());
+        static::assertEquals($basePath, Stub::getBasePath());
     }
 
     /** @test */
     public function it_can_create_from_path()
     {
-        $path = $this->getFixturesPath('stubs') . '/composer.stub';
+        $this->stub = Stub::createFromPath(
+            $path = $this->getFixturesPath('stubs').'/composer.stub'
+        );
 
-        $this->stub = Stub::createFromPath($path);
-
-        $this->assertEmpty($this->stub->getBasePath());
-        $this->assertEquals($path, $this->stub->getPath());
-        $this->assertEmpty($this->stub->getReplaces());
+        static::assertEmpty($this->stub->getBasePath());
+        static::assertEquals($path, $this->stub->getPath());
+        static::assertEmpty($this->stub->getReplaces());
     }
 }

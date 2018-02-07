@@ -17,7 +17,7 @@ class PackageServiceProviderTest extends TestCase
      | -----------------------------------------------------------------
      */
 
-    /** @var \Arcanedev\Support\Tests\Stubs\TestPackageServiceProvider */
+    /** @var  \Arcanedev\Support\Tests\Stubs\TestPackageServiceProvider */
     private $provider;
 
     /* -----------------------------------------------------------------
@@ -57,7 +57,7 @@ class PackageServiceProviderTest extends TestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $this->provider);
+            static::assertInstanceOf($expected, $this->provider);
         }
     }
 
@@ -66,8 +66,8 @@ class PackageServiceProviderTest extends TestCase
     {
         $config = config('package');
 
-        $this->assertArrayHasKey('foo', $config);
-        $this->assertEquals($config['foo'], 'bar');
+        static::assertArrayHasKey('foo', $config);
+        static::assertEquals($config['foo'], 'bar');
     }
 
     /**

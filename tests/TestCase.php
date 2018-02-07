@@ -11,9 +11,9 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
  */
 abstract class TestCase extends BaseTestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Other Methods
+     | -----------------------------------------------------------------
      */
 
     /**
@@ -25,7 +25,7 @@ abstract class TestCase extends BaseTestCase
      */
     protected function getFixturesPath($path)
     {
-        return __DIR__ . '/fixtures/' . $path;
+        return __DIR__.'/fixtures/'.$path;
     }
 
     /**
