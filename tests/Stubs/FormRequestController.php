@@ -15,6 +15,7 @@ class FormRequestController extends Controller
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
     public function form(DummyFormRequest $request)
     {
         return $request->all();
