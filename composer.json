@@ -32,7 +32,5 @@
         "psr-4": {
             "Arcanedev\\Support\\Tests\\": "tests/"
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable" : true
+    }
 }
