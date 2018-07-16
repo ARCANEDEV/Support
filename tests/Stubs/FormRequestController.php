@@ -29,11 +29,6 @@ class DummyFormRequest extends FormRequest
      | -----------------------------------------------------------------
      */
 
-    public function authorize()
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -48,15 +43,26 @@ class DummyFormRequest extends FormRequest
     }
 
     /**
-     * Sanitize the inputs after the validation.
+     * Prepare the data before validation.
      *
-     * @return array
+     * @return void
      */
-    public function sanitize()
+    protected function prepareForValidation()
     {
-        return [
+        $this->merge([
             'name'  => strtoupper(trim($this->get('name'))),
+        ]);
+    }
+
+    /**
+     * Prepare the data after validation.
+     *
+     * @return void
+     */
+    protected function prepareAfterValidation()
+    {
+        $this->merge([
             'email' => strtolower(trim($this->get('email'))),
-        ];
+        ]);
     }
 }
