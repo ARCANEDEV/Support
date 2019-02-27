@@ -23,14 +23,14 @@ class ModelTest extends TestCase
      | -----------------------------------------------------------------
      */
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->model = new \Arcanedev\Support\Tests\Stubs\Models\Product;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->model);
 

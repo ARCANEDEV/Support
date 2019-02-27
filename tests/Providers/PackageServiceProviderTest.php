@@ -25,7 +25,7 @@ class PackageServiceProviderTest extends TestCase
      | -----------------------------------------------------------------
      */
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -34,7 +34,7 @@ class PackageServiceProviderTest extends TestCase
         $this->provider->register();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->provider);
 
@@ -70,14 +70,12 @@ class PackageServiceProviderTest extends TestCase
         static::assertEquals($config['foo'], 'bar');
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\Support\Exceptions\PackageException
-     * @expectedExceptionMessage  You must specify the vendor/package name.
-     */
+    /** @test */
     public function it_must_throw_a_package_exception()
     {
+        $this->expectException(\Arcanedev\Support\Exceptions\PackageException::class);
+        $this->expectExceptionMessage('You must specify the vendor/package name.');
+
         (new InvalidPackageServiceProvider($this->app))->register();
     }
 }
