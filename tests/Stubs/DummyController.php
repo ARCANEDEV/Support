@@ -27,11 +27,9 @@ class DummyController extends Controller
         return 'Dummy';
     }
 
-    public function getOne($slug)
+    public function show($slug)
     {
-        if ($slug !== 'super') {
-            return $this->pageNotFound('Super dummy not found !');
-        }
+        abort_unless($slug === 'super', 404, 'Super dummy not found !');
 
         return 'Super dummy';
     }

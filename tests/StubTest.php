@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\Support\Tests;
 
 use Arcanedev\Support\Stub;
+use Illuminate\Support\Str;
 
 /**
  * Class     StubTest
@@ -71,8 +72,8 @@ class StubTest extends TestCase
             'PACKAGE'           => 'package',
             'AUTHOR_NAME'       => 'ARCANEDEV',
             'AUTHOR_EMAIL'      => 'arcanedev.maroc@gmail.com',
-            'MODULE_NAMESPACE'  => studly_case('arcanedev'),
-            'STUDLY_NAME'       => studly_case('package'),
+            'MODULE_NAMESPACE'  => Str::studly('arcanedev'),
+            'STUDLY_NAME'       => Str::studly('package'),
         ]);
 
         $this->stub->save('composer.json');

@@ -68,7 +68,7 @@ abstract class TestCase extends BaseTestCase
 
             $router->get('{slug}', [
                 'as'    => 'dummy::get',
-                'uses'  => 'DummyController@getOne'
+                'uses'  => 'DummyController@show'
             ]);
         });
 

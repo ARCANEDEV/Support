@@ -103,14 +103,13 @@ abstract class ServiceProvider extends IlluminateServiceProvider
      * Register a service provider.
      *
      * @param  \Illuminate\Support\ServiceProvider|string  $provider
-     * @param  array                                       $options
      * @param  bool                                        $force
      *
      * @return \Illuminate\Support\ServiceProvider
      */
-    protected function registerProvider($provider, array $options = [], $force = false)
+    protected function registerProvider($provider, $force = false)
     {
-        return $this->app->register($provider, $options, $force);
+        return $this->app->register($provider, $force);
     }
 
     /**
@@ -129,15 +128,14 @@ abstract class ServiceProvider extends IlluminateServiceProvider
      * Register a console service provider.
      *
      * @param  \Illuminate\Support\ServiceProvider|string  $provider
-     * @param  array                                       $options
      * @param  bool                                        $force
      *
      * @return \Illuminate\Support\ServiceProvider|null
      */
-    protected function registerConsoleServiceProvider($provider, array $options = [], $force = false)
+    protected function registerConsoleServiceProvider($provider, $force = false)
     {
         if ($this->app->runningInConsole())
-            return $this->registerProvider($provider, $options, $force);
+            return $this->registerProvider($provider, $force);
 
         return null;
     }
