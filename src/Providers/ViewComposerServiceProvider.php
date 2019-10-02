@@ -1,6 +1,5 @@
 <?php namespace Arcanedev\Support\Providers;
 
-use Arcanedev\Support\ServiceProvider;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 
 /**

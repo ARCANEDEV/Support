@@ -1,6 +1,6 @@
 <?php namespace Arcanedev\Support\Tests\Stubs;
 
-use Arcanedev\Support\PackageServiceProvider;
+use Arcanedev\Support\Providers\PackageServiceProvider;
 
 /**
  * Class     TestPackageServiceProvider
