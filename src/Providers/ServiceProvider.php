@@ -57,14 +57,14 @@ abstract class ServiceProvider extends IlluminateServiceProvider
     }
 
     /**
-     * Register commands service provider.
+     * Register the package's custom Artisan commands when running in console.
      *
-     * @param  \Illuminate\Support\ServiceProvider|string  $provider
+     * @param  array  $commands
      */
-    protected function registerCommands($provider)
+    protected function registerCommands(array $commands)
     {
         if ($this->app->runningInConsole())
-            $this->app->register($provider);
+            $this->commands($commands);
     }
 
     /**
