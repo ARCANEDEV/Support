@@ -1,7 +1,8 @@
 <?php namespace Arcanedev\Support\Tests\Providers;
 
-use Arcanedev\Support\Tests\Stubs\InvalidPackageServiceProvider;
-use Arcanedev\Support\Tests\Stubs\TestPackageServiceProvider;
+use Arcanedev\Support\Tests\Stubs\{
+    InvalidPackageServiceProvider, TestPackageServiceProvider
+};
 use Arcanedev\Support\Tests\TestCase;
 
 /**
@@ -51,8 +52,8 @@ class PackageServiceProviderTest extends TestCase
     {
         $expectations = [
             \Illuminate\Support\ServiceProvider::class,
-            \Arcanedev\Support\ServiceProvider::class,
-            \Arcanedev\Support\PackageServiceProvider::class,
+            \Arcanedev\Support\Providers\ServiceProvider::class,
+            \Arcanedev\Support\Providers\PackageServiceProvider::class,
             \Arcanedev\Support\Tests\Stubs\TestPackageServiceProvider::class,
         ];
 
