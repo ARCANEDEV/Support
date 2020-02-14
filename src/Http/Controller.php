@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support\Http;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Http;
 
 use Illuminate\Routing\Controller as IlluminateController;
 
@@ -7,6 +11,8 @@ use Illuminate\Routing\Controller as IlluminateController;
  *
  * @package  Arcanedev\Support\Http
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ *
+ * @deprecated Use the `Illuminate\Routing\Controller` instead
  */
 abstract class Controller extends IlluminateController
 {

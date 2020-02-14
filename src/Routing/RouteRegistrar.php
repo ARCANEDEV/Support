@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support\Routing;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Routing;
 
 /**
  * Class     RouteRegistrar

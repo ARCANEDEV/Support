@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support;
 
 /**
  * Class     PackageServiceProvider

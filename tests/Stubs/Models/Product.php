@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support\Tests\Stubs\Models;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Tests\Stubs\Models;
 
 use Arcanedev\Support\Database\Model;
 

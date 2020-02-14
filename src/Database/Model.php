@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support\Database;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Database;
 
 use Arcanedev\Support\Traits\PrefixedModel;
 use Illuminate\Database\Eloquent\Model as Eloquent;

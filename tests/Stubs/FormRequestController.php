@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support\Tests\Stubs;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Tests\Stubs;
 
 use Arcanedev\Support\Http\Controller;
 use Arcanedev\Support\Http\FormRequest;
@@ -34,7 +38,7 @@ class DummyFormRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name'  => ['required', 'string', 'min:6'],
@@ -44,14 +48,12 @@ class DummyFormRequest extends FormRequest
 
     /**
      * Prepare the data before validation.
-     *
-     * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
-        $this->merge([
-            'name'  => strtoupper(trim($this->get('name'))),
-        ]);
+        $name = strtoupper(trim((string) $this->get('name')));
+
+        $this->merge(compact('name'));
     }
 
     /**
@@ -61,8 +63,8 @@ class DummyFormRequest extends FormRequest
      */
     protected function prepareAfterValidation()
     {
-        $this->merge([
-            'email' => strtolower(trim($this->get('email'))),
-        ]);
+        $email = strtolower(trim((string) $this->get('email')));
+
+        $this->merge(compact('email'));
     }
 }

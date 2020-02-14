@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support\Http;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Http;
 
 use Illuminate\Foundation\Http\FormRequest as BaseFormRequest;
 
@@ -20,7 +24,7 @@ abstract class FormRequest extends BaseFormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -37,7 +41,7 @@ abstract class FormRequest extends BaseFormRequest
      *
      * @return void
      */
-    public function validateResolved()
+    public function validateResolved(): void
     {
         parent::validateResolved();
 

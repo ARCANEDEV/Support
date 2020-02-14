@@ -1,8 +1,12 @@
-<?php namespace Arcanedev\Support\Tests\Providers;
+<?php
 
-use Arcanedev\Support\Tests\Stubs\{
-    InvalidPackageServiceProvider, TestPackageServiceProvider
-};
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Tests\Providers;
+
+use Arcanedev\Support\Exceptions\PackageException;
+use Arcanedev\Support\Tests\Stubs\InvalidPackageServiceProvider;
+use Arcanedev\Support\Tests\Stubs\TestPackageServiceProvider;
 use Arcanedev\Support\Tests\TestCase;
 
 /**
@@ -48,7 +52,7 @@ class PackageServiceProviderTest extends TestCase
      */
 
     /** @test */
-    public function it_can_be_instantiated()
+    public function it_can_be_instantiated(): void
     {
         $expectations = [
             \Illuminate\Support\ServiceProvider::class,
@@ -63,7 +67,7 @@ class PackageServiceProviderTest extends TestCase
     }
 
     /** @test */
-    public function it_can_register_config()
+    public function it_can_register_config(): void
     {
         $config = config('package');
 
@@ -72,9 +76,9 @@ class PackageServiceProviderTest extends TestCase
     }
 
     /** @test */
-    public function it_must_throw_a_package_exception()
+    public function it_must_throw_a_package_exception(): void
     {
-        $this->expectException(\Arcanedev\Support\Exceptions\PackageException::class);
+        $this->expectException(PackageException::class);
         $this->expectExceptionMessage('You must specify the vendor/package name.');
 
         (new InvalidPackageServiceProvider($this->app))->register();

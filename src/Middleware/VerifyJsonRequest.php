@@ -1,8 +1,13 @@
-<?php namespace Arcanedev\Support\Middleware;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Middleware;
 
 use Arcanedev\Support\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * Class     VerifyJsonRequest
@@ -43,9 +48,9 @@ class VerifyJsonRequest extends Middleware
 
         return response()->json([
             'status'  => 'error',
-            'code'    => 400,
-            'message' => 'Request must be json',
-        ], 400);
+            'code'    => Response::HTTP_BAD_REQUEST,
+            'message' => 'Request must be JSON',
+        ], Response::HTTP_BAD_REQUEST);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -64,10 +69,11 @@ class VerifyJsonRequest extends Middleware
     {
         $methods = $this->getMethods($methods);
 
-        return ! (
-            in_array($request->method(), $methods) &&
-            ! $request->isJson()
-        );
+        if ( ! in_array($request->method(), $methods)) {
+            return false;
+        }
+
+        return $request->isJson();
     }
 
     /**

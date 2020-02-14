@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support\Tests;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Tests;
 
 use Arcanedev\Support\Stub;
 use Illuminate\Support\Str;
@@ -44,7 +48,7 @@ class StubTest extends TestCase
      */
 
     /** @test */
-    public function it_can_be_instantiated()
+    public function it_can_be_instantiated(): void
     {
         $this->stub = new Stub(
             $file = $this->getFixturesPath('stubs/composer.stub')
@@ -59,7 +63,7 @@ class StubTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create()
+    public function it_can_create(): void
     {
         Stub::setBasePath(
             $basePath = $this->getFixturesPath('stubs')
@@ -88,7 +92,7 @@ class StubTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_and_get_base_path()
+    public function it_can_set_and_get_base_path(): void
     {
         Stub::setBasePath(
             $basePath = $this->getFixturesPath('stubs')
@@ -98,7 +102,7 @@ class StubTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_from_path()
+    public function it_can_create_from_path(): void
     {
         $this->stub = Stub::createFromPath(
             $path = $this->getFixturesPath('stubs').'/composer.stub'

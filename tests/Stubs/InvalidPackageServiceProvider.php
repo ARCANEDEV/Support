@@ -1,6 +1,10 @@
-<?php namespace Arcanedev\Support\Tests\Stubs;
+<?php
 
-use Arcanedev\Support\PackageServiceProvider;
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Tests\Stubs;
+
+use Arcanedev\Support\Providers\PackageServiceProvider;
 
 /**
  * Class     InvalidPackageServiceProvider

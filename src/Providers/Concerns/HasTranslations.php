@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support\Providers\Concerns;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Providers\Concerns;
 
 /**
  * Trait     HasTranslations
