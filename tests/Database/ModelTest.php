@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support\Tests\Database;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Tests\Database;
 
 use Arcanedev\Support\Tests\TestCase;
 
@@ -43,7 +47,7 @@ class ModelTest extends TestCase
      */
 
     /** @test */
-    public function it_can_be_instantiated()
+    public function it_can_be_instantiated(): void
     {
         $expectations = [
             \Illuminate\Database\Eloquent\Model::class,
@@ -56,13 +60,13 @@ class ModelTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_table_name_without_prefix()
+    public function it_can_get_table_name_without_prefix(): void
     {
         static::assertSame('products', $this->model->getTable());
     }
 
     /** @test */
-    public function it_can_set_and_get_prefix()
+    public function it_can_set_and_get_prefix(): void
     {
         $this->model->setPrefix($prefix = 'shop_');
 

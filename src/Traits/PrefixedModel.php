@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support\Traits;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Traits;
 
 /**
  * Trait     PrefixedModel

@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support\Bases;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Bases;
 
 use Arcanedev\Support\Exceptions\MissingPolicyException;
 use Illuminate\Support\Str;
@@ -9,6 +13,8 @@ use ReflectionClass;
  *
  * @package  Arcanedev\Support\Bases
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ *
+ * @deprecated Use the `arcanedev/laravel-policies` package instead
  */
 abstract class Policy
 {

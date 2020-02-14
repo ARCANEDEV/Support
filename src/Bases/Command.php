@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support\Bases;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Bases;
 
 use Illuminate\Console\Command as IlluminateCommand;
 use Symfony\Component\Console\Helper\TableSeparator;

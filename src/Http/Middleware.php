@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\Support\Http;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\Support\Http;
 
 /**
  * Class     Middleware
