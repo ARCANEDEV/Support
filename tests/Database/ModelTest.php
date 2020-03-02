@@ -19,7 +19,7 @@ class ModelTest extends TestCase
      | -----------------------------------------------------------------
      */
 
-    /** @var  \Arcanedev\Support\Database\Model */
+    /** @var  \Arcanedev\Support\Database\PrefixedModel */
     protected $model;
 
     /* -----------------------------------------------------------------
@@ -51,7 +51,7 @@ class ModelTest extends TestCase
     {
         $expectations = [
             \Illuminate\Database\Eloquent\Model::class,
-            \Arcanedev\Support\Database\Model::class,
+            \Arcanedev\Support\Database\PrefixedModel::class,
         ];
 
         foreach ($expectations as $expected) {

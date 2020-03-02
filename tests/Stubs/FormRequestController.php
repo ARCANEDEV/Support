@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Arcanedev\Support\Tests\Stubs;
 
-use Arcanedev\Support\Http\Controller;
-use Arcanedev\Support\Http\FormRequest;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Routing\Controller;
 
 /**
  * Class     FormRequestController
@@ -47,7 +47,7 @@ class DummyFormRequest extends FormRequest
     }
 
     /**
-     * Prepare the data before validation.
+     * Prepare the data for validation.
      */
     protected function prepareForValidation(): void
     {
@@ -57,11 +57,9 @@ class DummyFormRequest extends FormRequest
     }
 
     /**
-     * Prepare the data after validation.
-     *
-     * @return void
+     * Handle a passed validation attempt.
      */
-    protected function prepareAfterValidation()
+    protected function passedValidation(): void
     {
         $email = strtolower(trim((string) $this->get('email')));
 

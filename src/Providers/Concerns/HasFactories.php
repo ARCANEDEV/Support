@@ -23,7 +23,7 @@ trait HasFactories
     protected function publishFactories()
     {
         $this->publishes([
-            $this->getDatabasePath().DS.'factories' => database_path('factories'),
+            $this->getDatabasePath().DIRECTORY_SEPARATOR.'factories' => database_path('factories'),
         ], 'factories');
     }
 }

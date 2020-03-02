@@ -24,7 +24,7 @@ trait HasMigrations
      */
     protected function getMigrationsPath()
     {
-        return $this->getBasePath().DS.'database'.DS.'migrations';
+        return $this->getBasePath().DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations';
     }
 
     /**

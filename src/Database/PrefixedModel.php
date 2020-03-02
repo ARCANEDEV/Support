@@ -2,15 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Arcanedev\Support\Traits;
+namespace Arcanedev\Support\Database;
+
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
- * Trait     PrefixedModel
+ * Class     Model
  *
- * @package  Arcanedev\Support\Traits
+ * @package  Arcanedev\Support\Laravel
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-trait PrefixedModel
+abstract class PrefixedModel extends Eloquent
 {
     /* -----------------------------------------------------------------
      |  Properties
