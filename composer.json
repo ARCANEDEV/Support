@@ -19,7 +19,6 @@
     },
     "require-dev": {
         "orchestra/testbench": "^5.0",
-        "phpunit/phpcov":      "^6.0|^7.0",
         "phpunit/phpunit":     "^8.0|^9.0"
     },
     "autoload": {
@@ -35,7 +34,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "6.x-dev"
+            "dev-develop": "7.x-dev"
         }
     },
     "minimum-stability": "dev",
