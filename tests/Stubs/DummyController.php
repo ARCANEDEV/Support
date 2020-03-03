@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arcanedev\Support\Tests\Stubs;
 
-use Arcanedev\Support\Http\Controller;
+use Illuminate\Routing\Controller;
 
 /**
  * Class     DummyController

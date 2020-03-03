@@ -12,4 +12,10 @@ use Exception;
  * @package  Arcanedev\Support\Exceptions
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class PackageException extends Exception {}
+class PackageException extends Exception
+{
+    public static function unspecifiedName(): self
+    {
+        return new static('You must specify the vendor/package name.');
+    }
+}

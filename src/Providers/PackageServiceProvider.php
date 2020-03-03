@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Arcanedev\Support\Providers;
 
 use Arcanedev\Support\Exceptions\PackageException;
-use Arcanedev\Support\Providers\Concerns\{
-    HasConfig, HasFactories, HasMigrations, HasTranslations, HasViews
-};
+use Arcanedev\Support\Providers\Concerns\{HasConfig, HasFactories, HasMigrations, HasTranslations, HasViews};
 use Illuminate\Contracts\Foundation\Application;
 use ReflectionClass;
 
@@ -107,7 +105,7 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function getDatabasePath()
     {
-        return $this->getBasePath().DS.'database';
+        return $this->getBasePath().DIRECTORY_SEPARATOR.'database';
     }
 
     /**
@@ -119,7 +117,7 @@ abstract class PackageServiceProvider extends ServiceProvider
      */
     protected function getResourcesPath()
     {
-        return $this->getBasePath().DS.'resources';
+        return $this->getBasePath().DIRECTORY_SEPARATOR.'resources';
     }
 
     /* -----------------------------------------------------------------
@@ -156,9 +154,9 @@ abstract class PackageServiceProvider extends ServiceProvider
         $this->publishFactories();
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Check Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Check Methods
+     | -----------------------------------------------------------------
      */
 
     /**
@@ -166,9 +164,10 @@ abstract class PackageServiceProvider extends ServiceProvider
      *
      * @throws \Arcanedev\Support\Exceptions\PackageException
      */
-    private function checkPackageName()
+    private function checkPackageName(): void
     {
-        if (empty($this->vendor) || empty($this->package))
-            throw new PackageException('You must specify the vendor/package name.');
+        if (empty($this->vendor) || empty($this->package)) {
+            throw PackageException::unspecifiedName();
+        }
     }
 }

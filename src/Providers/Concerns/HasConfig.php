@@ -38,7 +38,7 @@ trait HasConfig
      */
     protected function getConfigFolder()
     {
-        return realpath($this->getBasePath().DS.'config');
+        return realpath($this->getBasePath().DIRECTORY_SEPARATOR.'config');
     }
 
     /**
@@ -58,7 +58,7 @@ trait HasConfig
      */
     protected function getConfigFile()
     {
-        return $this->getConfigFolder().DS."{$this->package}.php";
+        return $this->getConfigFolder().DIRECTORY_SEPARATOR."{$this->package}.php";
     }
 
     /**

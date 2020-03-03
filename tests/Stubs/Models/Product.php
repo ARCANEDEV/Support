@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arcanedev\Support\Tests\Stubs\Models;
 
-use Arcanedev\Support\Database\Model;
+use Arcanedev\Support\Database\PrefixedModel;
 
 /**
  * Class     Product
@@ -12,7 +12,7 @@ use Arcanedev\Support\Database\Model;
  * @package  Arcanedev\Support\Tests\Stubs\Models
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class Product extends Model
+class Product extends PrefixedModel
 {
     //
 }

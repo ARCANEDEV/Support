@@ -24,7 +24,7 @@ trait HasViews
      */
     protected function getViewsPath()
     {
-        return $this->getBasePath().DS.'resources'.DS.'views';
+        return $this->getBasePath().DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'views';
     }
 
     /**
@@ -34,7 +34,7 @@ trait HasViews
      */
     protected function getViewsDestinationPath()
     {
-        return $this->app['config']['view.paths'][0].DS.'vendor'.DS.$this->package;
+        return $this->app['config']['view.paths'][0].DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.$this->package;
     }
 
     /**
