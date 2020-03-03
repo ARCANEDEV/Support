@@ -36,7 +36,7 @@ trait HasConfig
      *
      * @return string
      */
-    protected function getConfigFolder()
+    protected function getConfigFolder(): string
     {
         return realpath($this->getBasePath().DIRECTORY_SEPARATOR.'config');
     }
@@ -46,7 +46,7 @@ trait HasConfig
      *
      * @return string
      */
-    protected function getConfigKey()
+    protected function getConfigKey(): string
     {
         return Str::slug($this->package);
     }
@@ -56,19 +56,9 @@ trait HasConfig
      *
      * @return string
      */
-    protected function getConfigFile()
+    protected function getConfigFile(): string
     {
         return $this->getConfigFolder().DIRECTORY_SEPARATOR."{$this->package}.php";
-    }
-
-    /**
-     * Get config file destination path.
-     *
-     * @return string
-     */
-    protected function getConfigFileDestination()
-    {
-        return config_path("{$this->package}.php");
     }
 
     /**
@@ -76,7 +66,7 @@ trait HasConfig
      *
      * @param  string  $separator
      */
-    protected function registerConfig($separator = '.')
+    protected function registerConfig(string $separator = '.'): void
     {
         $this->multiConfigs
             ? $this->registerMultipleConfigs($separator)
@@ -88,7 +78,7 @@ trait HasConfig
      *
      * @param  string  $separator
      */
-    private function registerMultipleConfigs($separator = '.')
+    private function registerMultipleConfigs(string $separator = '.'): void
     {
         foreach (glob($this->getConfigFolder().'/*.php') as $configPath) {
             $this->mergeConfigFrom(
@@ -99,11 +89,13 @@ trait HasConfig
 
     /**
      * Publish the config file.
+     *
+     * @param  string|null  $path
      */
-    protected function publishConfig()
+    protected function publishConfig(?string $path = null): void
     {
         $this->publishes([
-            $this->getConfigFile() => $this->getConfigFileDestination()
-        ], 'config');
+            $this->getConfigFile() => $path ?: config_path("{$this->package}.php"),
+        ], [$this->package, 'config', "{$this->package}-config"]);
     }
 }

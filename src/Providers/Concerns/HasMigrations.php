@@ -22,25 +22,27 @@ trait HasMigrations
      *
      * @return string
      */
-    protected function getMigrationsPath()
+    protected function getMigrationsPath(): string
     {
         return $this->getBasePath().DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations';
     }
 
     /**
      * Publish the migration files.
+     *
+     * @param  string|null  $path
      */
-    protected function publishMigrations()
+    protected function publishMigrations(?string $path = null): void
     {
         $this->publishes([
-            $this->getMigrationsPath() => database_path('migrations')
-        ], 'migrations');
+            $this->getMigrationsPath() => $path ?: database_path('migrations')
+        ], [$this->package, 'migrations', "{$this->package}-migrations"]);
     }
 
     /**
      * Load the migrations files.
      */
-    protected function loadMigrations()
+    protected function loadMigrations(): void
     {
         $this->loadMigrationsFrom($this->getMigrationsPath());
     }

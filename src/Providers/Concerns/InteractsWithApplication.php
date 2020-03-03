@@ -20,6 +20,18 @@ trait InteractsWithApplication
      */
 
     /**
+     * Register multiple service providers.
+     *
+     * @param  array  $providers
+     */
+    protected function registerProviders(array $providers)
+    {
+        foreach ($providers as $provider) {
+            $this->registerProvider($provider);
+        }
+    }
+
+    /**
      * Register a service provider.
      *
      * @param  \Illuminate\Support\ServiceProvider|string  $provider
@@ -30,18 +42,6 @@ trait InteractsWithApplication
     protected function registerProvider($provider, $force = false)
     {
         return $this->app->register($provider, $force);
-    }
-
-    /**
-     * Register multiple service providers.
-     *
-     * @param  array  $providers
-     */
-    protected function registerProviders(array $providers)
-    {
-        foreach ($providers as $provider) {
-            $this->registerProvider($provider);
-        }
     }
 
     /**

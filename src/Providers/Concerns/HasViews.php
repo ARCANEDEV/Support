@@ -22,9 +22,9 @@ trait HasViews
      *
      * @return string
      */
-    protected function getViewsPath()
+    protected function getViewsPath(): string
     {
-        return $this->getBasePath().DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'views';
+        return $this->getBasePath().DIRECTORY_SEPARATOR.'views';
     }
 
     /**
@@ -32,30 +32,27 @@ trait HasViews
      *
      * @return string
      */
-    protected function getViewsDestinationPath()
+    protected function getViewsDestinationPath(): string
     {
         return $this->app['config']['view.paths'][0].DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.$this->package;
     }
 
     /**
-     * Publish and load the views if $load argument is true.
+     * Publish the views.
      *
-     * @param  bool  $load
+     * @param  string|null  $path
      */
-    protected function publishViews($load = true)
+    protected function publishViews(?string $path = null): void
     {
         $this->publishes([
-            $this->getViewsPath() => $this->getViewsDestinationPath()
-        ], 'views');
-
-        if ($load)
-            $this->loadViews();
+            $this->getViewsPath() => $path ?: $this->getViewsDestinationPath(),
+        ], [$this->package, 'views', "{$this->package}-views"]);
     }
 
     /**
      * Load the views files.
      */
-    protected function loadViews()
+    protected function loadViews(): void
     {
         $this->loadViewsFrom($this->getViewsPath(), $this->package);
     }

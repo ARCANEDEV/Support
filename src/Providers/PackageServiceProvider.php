@@ -98,28 +98,6 @@ abstract class PackageServiceProvider extends ServiceProvider
         return $this->basePath;
     }
 
-    /**
-     * Get the base database path.
-     *
-     * @return string
-     */
-    protected function getDatabasePath()
-    {
-        return $this->getBasePath().DIRECTORY_SEPARATOR.'database';
-    }
-
-    /**
-     * Get the base resources path.
-     *
-     * @deprecated Use the getBasePath() instead!
-     *
-     * @return string
-     */
-    protected function getResourcesPath()
-    {
-        return $this->getBasePath().DIRECTORY_SEPARATOR.'resources';
-    }
-
     /* -----------------------------------------------------------------
      |  Main Methods
      | -----------------------------------------------------------------
