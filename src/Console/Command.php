@@ -10,7 +10,7 @@ use Symfony\Component\Console\Helper\TableSeparator;
 /**
  * Class     Command
  *
- * @package  Arcanedev\Support\Laravel\Bases
+ * @package  Arcanedev\Support\Console
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 abstract class Command extends IlluminateCommand
