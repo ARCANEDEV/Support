@@ -18,12 +18,32 @@ trait HasFactories
      */
 
     /**
-     * Publish the factories.
+     * Get the migrations path.
+     *
+     * @return string
      */
-    protected function publishFactories()
+    protected function getFactoriesPath(): string
+    {
+        return $this->getBasePath().DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'factories';
+    }
+
+    /**
+     * Publish the factories.
+     *
+     * @param  string|null  $path
+     */
+    protected function publishFactories(?string $path = null): void
     {
         $this->publishes([
-            $this->getDatabasePath().DS.'factories' => database_path('factories'),
-        ], 'factories');
+            $this->getFactoriesPath() => $path ?: database_path('factories'),
+        ], [$this->package, 'factories', "{$this->package}-factories"]);
+    }
+
+    /**
+     * Load the factories.
+     */
+    protected function loadFactories(): void
+    {
+        $this->loadFactoriesFrom($this->getFactoriesPath());
     }
 }

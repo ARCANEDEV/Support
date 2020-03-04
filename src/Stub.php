@@ -70,7 +70,7 @@ class Stub
         $path = $this->path;
 
         if ( ! empty(static::$basePath)) {
-            $path = static::$basePath.DS.ltrim($path, DS);
+            $path = static::$basePath.DIRECTORY_SEPARATOR.ltrim($path, DIRECTORY_SEPARATOR);
         }
 
         return $path;
@@ -211,7 +211,7 @@ class Stub
      */
     public function saveTo(string $path, string $filename): bool
     {
-        return file_put_contents($path.DS.$filename, $this->render()) !== false;
+        return file_put_contents($path.DIRECTORY_SEPARATOR.$filename, $this->render()) !== false;
     }
 
     /**

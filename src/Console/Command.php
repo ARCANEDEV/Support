@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Arcanedev\Support\Bases;
+namespace Arcanedev\Support\Console;
 
 use Illuminate\Console\Command as IlluminateCommand;
 use Symfony\Component\Console\Helper\TableSeparator;
@@ -10,7 +10,7 @@ use Symfony\Component\Console\Helper\TableSeparator;
 /**
  * Class     Command
  *
- * @package  Arcanedev\Support\Laravel\Bases
+ * @package  Arcanedev\Support\Console
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 abstract class Command extends IlluminateCommand

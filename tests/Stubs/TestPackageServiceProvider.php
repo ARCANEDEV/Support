@@ -51,8 +51,8 @@ class TestPackageServiceProvider extends PackageServiceProvider
      *
      * @return string
      */
-    protected function getConfigFolder()
+    protected function getConfigFolder(): string
     {
-        return realpath($this->getBasePath().DS.'fixtures'.DS.'config');
+        return realpath($this->getBasePath().DIRECTORY_SEPARATOR.'fixtures'.DIRECTORY_SEPARATOR.'config');
     }
 }
