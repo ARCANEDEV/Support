@@ -48,7 +48,7 @@ trait HasConfig
      */
     protected function getConfigKey(): string
     {
-        return Str::slug($this->package);
+        return Str::slug($this->getPackageName());
     }
 
     /**
@@ -58,7 +58,17 @@ trait HasConfig
      */
     protected function getConfigFile(): string
     {
-        return $this->getConfigFolder().DIRECTORY_SEPARATOR."{$this->package}.php";
+        return $this->getConfigFolder().DIRECTORY_SEPARATOR."{$this->getPackageName()}.php";
+    }
+
+    /**
+     * Get the config files (paths).
+     *
+     * @return array|false
+     */
+    protected function configFilesPaths()
+    {
+        return glob($this->getConfigFolder().DIRECTORY_SEPARATOR.'*.php');
     }
 
     /**
@@ -70,7 +80,15 @@ trait HasConfig
     {
         $this->multiConfigs
             ? $this->registerMultipleConfigs($separator)
-            : $this->mergeConfigFrom($this->getConfigFile(), $this->getConfigKey());
+            : $this->registerSingleConfig();
+    }
+
+    /**
+     * Register a single config file.
+     */
+    protected function registerSingleConfig(): void
+    {
+        $this->mergeConfigFrom($this->getConfigFile(), $this->getConfigKey());
     }
 
     /**
@@ -78,9 +96,9 @@ trait HasConfig
      *
      * @param  string  $separator
      */
-    private function registerMultipleConfigs(string $separator = '.'): void
+    protected function registerMultipleConfigs(string $separator = '.'): void
     {
-        foreach (glob($this->getConfigFolder().'/*.php') as $configPath) {
+        foreach ($this->configFilesPaths() as $configPath) {
             $this->mergeConfigFrom(
                 $configPath, $this->getConfigKey().$separator.basename($configPath, '.php')
             );
@@ -94,8 +112,35 @@ trait HasConfig
      */
     protected function publishConfig(?string $path = null): void
     {
+        $this->multiConfigs
+            ? $this->publishMultipleConfigs()
+            : $this->publishSingleConfig($path);
+    }
+
+    /**
+     * Publish a single config file.
+     *
+     * @param  string|null  $path
+     */
+    protected function publishSingleConfig(?string $path = null): void
+    {
         $this->publishes([
-            $this->getConfigFile() => $path ?: config_path("{$this->package}.php"),
-        ], [$this->package, 'config', "{$this->package}-config"]);
+            $this->getConfigFile() => $path ?: config_path("{$this->getPackageName()}.php"),
+        ], $this->getPublishedTags('config'));
+    }
+
+    /**
+     * Publish multiple config files.
+     */
+    protected function publishMultipleConfigs(): void
+    {
+        $paths   = [];
+        $package = $this->getVendorName().DIRECTORY_SEPARATOR.$this->getPackageName();
+
+        foreach ($this->configFilesPaths() as $file) {
+            $paths[$file] = config_path($package.DIRECTORY_SEPARATOR.basename($file));
+        }
+
+        $this->publishes($paths, $this->getPublishedTags('config'));
     }
 }

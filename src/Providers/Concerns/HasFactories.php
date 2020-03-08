@@ -36,7 +36,7 @@ trait HasFactories
     {
         $this->publishes([
             $this->getFactoriesPath() => $path ?: database_path('factories'),
-        ], [$this->package, 'factories', "{$this->package}-factories"]);
+        ], $this->getPublishedTags('factories'));
     }
 
     /**

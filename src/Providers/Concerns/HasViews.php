@@ -34,7 +34,7 @@ trait HasViews
      */
     protected function getViewsDestinationPath(): string
     {
-        return $this->app['config']['view.paths'][0].DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.$this->package;
+        return $this->app['config']['view.paths'][0].DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.$this->getPackageName();
     }
 
     /**
@@ -46,7 +46,7 @@ trait HasViews
     {
         $this->publishes([
             $this->getViewsPath() => $path ?: $this->getViewsDestinationPath(),
-        ], [$this->package, 'views', "{$this->package}-views"]);
+        ], $this->getPublishedTags('views'));
     }
 
     /**
@@ -54,6 +54,6 @@ trait HasViews
      */
     protected function loadViews(): void
     {
-        $this->loadViewsFrom($this->getViewsPath(), $this->package);
+        $this->loadViewsFrom($this->getViewsPath(), $this->getPackageName());
     }
 }
