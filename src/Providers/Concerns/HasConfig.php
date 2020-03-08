@@ -44,11 +44,18 @@ trait HasConfig
     /**
      * Get config key.
      *
+     * @param  bool    $withVendor
+     * @param  string  $separator
+     *
      * @return string
      */
-    protected function getConfigKey(): string
+    protected function getConfigKey(bool $withVendor = false, string $separator = '.'): string
     {
-        return Str::slug($this->getPackageName());
+        $key = $withVendor
+            ? $this->getVendorName().' '.$this->getPackageName()
+            : $this->getPackageName();
+
+        return Str::slug($key, $separator);
     }
 
     /**
@@ -98,10 +105,10 @@ trait HasConfig
      */
     protected function registerMultipleConfigs(string $separator = '.'): void
     {
-        foreach ($this->configFilesPaths() as $configPath) {
-            $this->mergeConfigFrom(
-                $configPath, $this->getConfigKey().$separator.basename($configPath, '.php')
-            );
+        foreach ($this->configFilesPaths() as $path) {
+            $key = $this->getConfigKey(true, $separator).$separator.basename($path, '.php');
+
+            $this->mergeConfigFrom($path, $key);
         }
     }
 
@@ -135,7 +142,7 @@ trait HasConfig
     protected function publishMultipleConfigs(): void
     {
         $paths   = [];
-        $package = $this->getVendorName().DIRECTORY_SEPARATOR.$this->getPackageName();
+        $package = $this->getConfigKey(true, DIRECTORY_SEPARATOR);
 
         foreach ($this->configFilesPaths() as $file) {
             $paths[$file] = config_path($package.DIRECTORY_SEPARATOR.basename($file));

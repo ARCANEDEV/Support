@@ -190,6 +190,6 @@ abstract class PackageServiceProvider extends ServiceProvider
 
         return array_map(function ($name) {
             return Str::slug($name);
-        }, [$package, $tag, $package.'-'.$tag]);
+        }, [$this->getVendorName(), $package, $tag, $package.'-'.$tag]);
     }
 }
