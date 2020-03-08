@@ -34,7 +34,7 @@ trait HasAssets
      */
     protected function assetsDestinationPath(): string
     {
-        return base_path('assets'.DIRECTORY_SEPARATOR.$this->package);
+        return base_path('assets'.DIRECTORY_SEPARATOR.$this->getPackageName());
     }
 
     /* -----------------------------------------------------------------

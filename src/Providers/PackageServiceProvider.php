@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Arcanedev\Support\Providers;
 
 use Arcanedev\Support\Exceptions\PackageException;
-use Arcanedev\Support\Providers\Concerns\{HasConfig, HasFactories, HasMigrations, HasTranslations, HasViews};
+use Arcanedev\Support\Providers\Concerns\{
+    HasAssets, HasConfig, HasFactories, HasMigrations, HasTranslations, HasViews
+};
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Str;
 use ReflectionClass;
 
 /**
@@ -22,7 +25,8 @@ abstract class PackageServiceProvider extends ServiceProvider
      | -----------------------------------------------------------------
      */
 
-    use HasConfig,
+    use HasAssets,
+        HasConfig,
         HasFactories,
         HasMigrations,
         HasTranslations,
@@ -43,9 +47,9 @@ abstract class PackageServiceProvider extends ServiceProvider
     /**
      * Package name.
      *
-     * @var string
+     * @var string|null
      */
-    protected $package = '';
+    protected $package;
 
     /**
      * Package base path.
@@ -98,6 +102,26 @@ abstract class PackageServiceProvider extends ServiceProvider
         return $this->basePath;
     }
 
+    /**
+     * Get the vendor name.
+     *
+     * @return string
+     */
+    protected function getVendorName(): string
+    {
+        return $this->vendor;
+    }
+
+    /**
+     * Get the package name.
+     *
+     * @return string|null
+     */
+    protected function getPackageName(): ?string
+    {
+        return $this->package;
+    }
+
     /* -----------------------------------------------------------------
      |  Main Methods
      | -----------------------------------------------------------------
@@ -120,16 +144,15 @@ abstract class PackageServiceProvider extends ServiceProvider
 
     /**
      * Publish all the package files.
-     *
-     * @param  bool  $load
      */
-    protected function publishAll($load = true)
+    protected function publishAll(): void
     {
+        $this->publishAssets();
         $this->publishConfig();
-        $this->publishMigrations();
-        $this->publishViews($load);
-        $this->publishTranslations($load);
         $this->publishFactories();
+        $this->publishMigrations();
+        $this->publishTranslations();
+        $this->publishViews();
     }
 
     /* -----------------------------------------------------------------
@@ -142,10 +165,31 @@ abstract class PackageServiceProvider extends ServiceProvider
      *
      * @throws \Arcanedev\Support\Exceptions\PackageException
      */
-    private function checkPackageName(): void
+    protected function checkPackageName(): void
     {
-        if (empty($this->vendor) || empty($this->package)) {
+        if (empty($this->getVendorName()) || empty($this->getPackageName())) {
             throw PackageException::unspecifiedName();
         }
+    }
+
+    /* -----------------------------------------------------------------
+     |  Other Methods
+     | -----------------------------------------------------------------
+     */
+
+    /**
+     * Get the published tags.
+     *
+     * @param  string  $tag
+     *
+     * @return array
+     */
+    protected function getPublishedTags(string $tag): array
+    {
+        $package = $this->getPackageName();
+
+        return array_map(function ($name) {
+            return Str::slug($name);
+        }, [$package, $tag, $package.'-'.$tag]);
     }
 }

@@ -36,7 +36,7 @@ trait HasMigrations
     {
         $this->publishes([
             $this->getMigrationsPath() => $path ?: database_path('migrations')
-        ], [$this->package, 'migrations', "{$this->package}-migrations"]);
+        ], $this->getPublishedTags('migrations'));
     }
 
     /**

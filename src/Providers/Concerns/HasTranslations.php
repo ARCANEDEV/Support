@@ -34,7 +34,7 @@ trait HasTranslations
      */
     protected function getTranslationsDestinationPath(): string
     {
-        return $this->app['path.lang'].DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.$this->package;
+        return $this->app['path.lang'].DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.$this->getPackageName();
     }
 
     /**
@@ -46,7 +46,7 @@ trait HasTranslations
     {
         $this->publishes([
             $this->getTranslationsPath() => $path ?: $this->getTranslationsDestinationPath(),
-        ], [$this->package, 'translations', "{$this->package}-translations"]);
+        ], $this->getPublishedTags('translations'));
     }
 
     /**
@@ -56,7 +56,7 @@ trait HasTranslations
     {
         $path = $this->getTranslationsPath();
 
-        $this->loadTranslationsFrom($path, $this->package);
+        $this->loadTranslationsFrom($path, $this->getPackageName());
         $this->loadJsonTranslationsFrom($path);
     }
 }
