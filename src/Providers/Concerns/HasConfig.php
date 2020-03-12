@@ -51,11 +51,11 @@ trait HasConfig
      */
     protected function getConfigKey(bool $withVendor = false, string $separator = '.'): string
     {
-        $key = $withVendor
-            ? $this->getVendorName().' '.$this->getPackageName()
-            : $this->getPackageName();
+        $package = Str::slug($this->getPackageName());
 
-        return Str::slug($key, $separator);
+        return $withVendor
+            ? Str::slug($this->getVendorName()).$separator.$package
+            : $package;
     }
 
     /**
