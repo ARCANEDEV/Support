@@ -9,7 +9,6 @@ use Illuminate\Routing\Controller;
 /**
  * Class     DummyController
  *
- * @package  Arcanedev\Support\Tests\Stubs
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class DummyController extends Controller

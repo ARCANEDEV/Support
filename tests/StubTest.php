@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
 /**
  * Class     StubTest
  *
- * @package  Arcanedev\Support\Tests
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class StubTest extends TestCase

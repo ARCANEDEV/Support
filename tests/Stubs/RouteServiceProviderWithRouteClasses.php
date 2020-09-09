@@ -9,7 +9,6 @@ use Arcanedev\Support\Providers\RouteServiceProvider;
 /**
  * Class     RouteServiceProviderWithRouteClasses
  *
- * @package  Arcanedev\Support\Tests\Stubs
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class RouteServiceProviderWithRouteClasses extends RouteServiceProvider

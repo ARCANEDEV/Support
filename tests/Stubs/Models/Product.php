@@ -9,7 +9,6 @@ use Arcanedev\Support\Database\PrefixedModel;
 /**
  * Class     Product
  *
- * @package  Arcanedev\Support\Tests\Stubs\Models
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class Product extends PrefixedModel

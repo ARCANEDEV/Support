@@ -5,14 +5,11 @@ declare(strict_types=1);
 namespace Arcanedev\Support\Tests;
 
 use Arcanedev\Support\Tests\Stubs\RouteServiceProviderWithRouteClasses;
-use Illuminate\Contracts\Routing\Registrar;
-use Illuminate\Routing\Router;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 /**
  * Class     TestCase
  *
- * @package  Arcanedev\Support\Tests
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 abstract class TestCase extends BaseTestCase

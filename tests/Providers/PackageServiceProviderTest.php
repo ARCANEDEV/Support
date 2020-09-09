@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace Arcanedev\Support\Tests\Providers;
 
 use Arcanedev\Support\Exceptions\PackageException;
-use Arcanedev\Support\Tests\Stubs\InvalidPackageServiceProvider;
-use Arcanedev\Support\Tests\Stubs\TestPackageServiceProvider;
+use Arcanedev\Support\Tests\Stubs\{InvalidPackageServiceProvider, TestPackageServiceProvider};
 use Arcanedev\Support\Tests\TestCase;
 
 /**
  * Class     PackageServiceProviderTest
  *
- * @package  Arcanedev\Support\Tests\Providers
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class PackageServiceProviderTest extends TestCase
@@ -72,7 +70,7 @@ class PackageServiceProviderTest extends TestCase
         $config = config('package');
 
         static::assertArrayHasKey('foo', $config);
-        static::assertEquals($config['foo'], 'bar');
+        static::assertEquals('bar', $config['foo']);
     }
 
     /** @test */
