@@ -9,7 +9,6 @@ use Arcanedev\Support\Providers\PackageServiceProvider;
 /**
  * Class     TestPackageServiceProvider
  *
- * @package  Arcanedev\Support\Tests\Stubs
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class TestPackageServiceProvider extends PackageServiceProvider

@@ -9,7 +9,6 @@ use Arcanedev\Support\Tests\TestCase;
 /**
  * Class     ModelTest
  *
- * @package  Arcanedev\Support\Tests\Bases
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ModelTest extends TestCase

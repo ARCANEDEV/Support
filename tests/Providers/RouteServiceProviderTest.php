@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Arcanedev\Support\Tests\Providers;
 
-use Arcanedev\Support\Tests\Stubs\RouteServiceProviderWithRouteClasses;
 use Arcanedev\Support\Tests\TestCase;
 
 /**
  * Class     RouteServiceProviderTest
  *
- * @package  Arcanedev\Support\Tests\Providers
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class RouteServiceProviderTest extends TestCase

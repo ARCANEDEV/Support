@@ -10,7 +10,6 @@ use Illuminate\Routing\Controller;
 /**
  * Class     FormRequestController
  *
- * @package  Arcanedev\Support\Tests\Stubs
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class FormRequestController extends Controller

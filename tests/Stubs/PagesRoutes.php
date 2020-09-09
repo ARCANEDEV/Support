@@ -9,7 +9,6 @@ use Arcanedev\Support\Routing\RouteRegistrar;
 /**
  * Class     PagesRoutes
  *
- * @package  Arcanedev\Support\Tests\Stubs
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class PagesRoutes extends RouteRegistrar

@@ -11,7 +11,6 @@ use Illuminate\Routing\Router;
 /**
  * Class     VerifyJsonRequestTest
  *
- * @package  Arcanedev\Support\Tests\Middleware
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class VerifyJsonRequestTest extends TestCase

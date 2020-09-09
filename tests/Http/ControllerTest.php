@@ -12,7 +12,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * Class     ControllerTest
  *
- * @package  Arcanedev\Support\Tests\Http
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ControllerTest extends TestCase

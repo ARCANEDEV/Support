@@ -11,7 +11,6 @@ use Illuminate\Routing\Router;
 /**
  * Class     FormRequestTest
  *
- * @package  Arcanedev\Support\Tests\Http
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class FormRequestTest extends TestCase
