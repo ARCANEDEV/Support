@@ -13,13 +13,13 @@
     "type":    "library",
     "license": "MIT",
     "require": {
-        "php": "^7.3|^8.0",
-        "illuminate/contracts": "^8.0",
-        "illuminate/support": "^8.0"
+        "php": "^7.4|^8.0",
+        "illuminate/contracts": "^9.0",
+        "illuminate/support": "^9.0"
     },
     "require-dev": {
-        "laravel/framework": "^8.19",
-        "orchestra/testbench-core": "^6.4",
+        "laravel/framework": "^9.0",
+        "orchestra/testbench-core": "^7.0",
         "phpunit/phpunit": "^9.3.3"
     },
     "autoload": {
@@ -40,7 +40,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-develop": "8.x-dev"
+            "dev-develop": "9.x-dev"
         }
     },
     "config": {
