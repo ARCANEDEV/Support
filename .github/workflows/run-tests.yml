@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
       - name: Cache dependencies
         uses: actions/cache@v2
@@ -33,7 +35,7 @@ jobs:
           tools: composer:v2
 
       - name: Install dependencies
-        run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+        run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
       - name: Execute tests
         run: |
@@ -42,5 +44,5 @@ jobs:
 
       - name: Scrutinizer CI
         run: |
-          wget https://scrutinizer-ci.com/ocular.phar
-          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+          composer require scrutinizer/ocular --dev
+          vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
