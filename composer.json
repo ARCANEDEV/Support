@@ -14,11 +14,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
-        "illuminate/contracts": "^8.0",
-        "illuminate/support": "^8.0"
+        "illuminate/contracts": "^8.0|^9.0",
+        "illuminate/support": "^8.0|^9.0"
     },
     "require-dev": {
-        "laravel/framework": "^8.19",
+        "laravel/framework": "^8.19|^9.0",
         "orchestra/testbench-core": "^6.4",
         "phpunit/phpunit": "^9.3.3"
     },
