@@ -27,7 +27,7 @@ class PagesRoutes extends RouteRegistrar
 
     public function map(): void
     {
-        $this->name('public::')->middleware('bindings')->group(function () {
+        $this->name('public::')->middleware('web')->group(function () {
             $this->get('/', function () {
                 return 'Welcome';
             })->name('index'); // public::index
