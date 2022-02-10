@@ -42,7 +42,7 @@ jobs:
           mkdir -p build/logs
           vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
-      - name: Scrutinizer CI
-        run: |
-          composer require scrutinizer/ocular --dev
-          vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
+#      - name: Scrutinizer CI
+#        run: |
+#          composer require scrutinizer/ocular --dev
+#          vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
