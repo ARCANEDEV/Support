@@ -37,13 +37,6 @@ class PackageServiceProviderTest extends TestCase
         $this->provider->register();
     }
 
-    public function tearDown(): void
-    {
-        unset($this->provider);
-
-        parent::tearDown();
-    }
-
     /* -----------------------------------------------------------------
      |  Tests
      | -----------------------------------------------------------------
