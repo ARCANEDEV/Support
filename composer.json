@@ -14,13 +14,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
-        "illuminate/contracts": "^9.0",
-        "illuminate/support": "^9.0"
+        "illuminate/contracts": "^10.0",
+        "illuminate/support": "^10.0"
     },
     "require-dev": {
-        "laravel/framework": "^9.0",
-        "orchestra/testbench-core": "^7.0",
-        "phpunit/phpunit": "^9.5.8"
+        "laravel/framework": "^10.0",
+        "orchestra/testbench-core": "^8.0",
+        "phpunit/phpunit": "^9.5.10"
     },
     "autoload": {
         "psr-4": {
