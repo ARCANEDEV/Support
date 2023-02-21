@@ -13,14 +13,14 @@
     "type":    "library",
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
-        "illuminate/contracts": "^9.0",
-        "illuminate/support": "^9.0"
+        "php": "^8.1",
+        "illuminate/contracts": "^9.0 || ^v10.0.3",
+        "illuminate/support": "^9.0 || ^v10.0.3"
     },
     "require-dev": {
-        "laravel/framework": "^9.0",
-        "orchestra/testbench-core": "^7.0",
-        "phpunit/phpunit": "^9.5.8"
+        "laravel/framework": "^9.0 || ^v10.0.3",
+        "orchestra/testbench-core": "^7.0 ||^v8.0.2",
+        "phpunit/phpunit": "^9.6.3"
     },
     "autoload": {
         "psr-4": {
